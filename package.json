@@ -37,7 +37,6 @@
 	},
 	"packageManager": "yarn@3.5.1",
 	"lint-staged": {
-		"**/*": "prettier --write --ignore-unknown",
 		"*.{ts,tsx}": "eslint --cache --fix",
 		"*.{js,css,md}": "prettier --write"
 	}
