@@ -13,5 +13,7 @@
 		"titleBar.activeForeground": "#e6e5f4",
 		"contrastBorder": "#343f52"
 	},
-	"prettier.enable": true
+	"prettier.enable": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"prettier.prettierPath": ".yarn/sdks/prettier/index.js"
 }
