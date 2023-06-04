@@ -14,7 +14,7 @@ import { UniversalTransition } from 'echarts/features';
 
 import type { ECharts, ComposeOption, SetOptionOpts } from 'echarts/core';
 import type { BarSeriesOption, LineSeriesOption } from 'echarts/charts';
-import type { TitleComponentOption, GridComponentOption, LegendComponentOption } from 'echarts/components';
+import type { TitleComponentOption, GridComponentOption, LegendComponentOption, TooltipComponentOption } from 'echarts/components';
 // Register the required components
 use([
 	LineChart,
@@ -31,7 +31,7 @@ use([
 
 // Combine an Option type with only required components and charts via ComposeOption
 export type EChartsOption = ComposeOption<
-	BarSeriesOption | TitleComponentOption | GridComponentOption | LegendComponentOption | LineSeriesOption
+	BarSeriesOption | TitleComponentOption | GridComponentOption | LegendComponentOption | LineSeriesOption | TooltipComponentOption
 >;
 
 export interface ReactEChartsProps {

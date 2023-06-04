@@ -1,5 +1,6 @@
 import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
 import React, { useEffect, useState } from 'react';
+import type { CallbackDataParams } from 'echarts/types/dist/shared';
 
 interface DataItem {
 	name: string;
@@ -22,13 +23,15 @@ let value = Math.random() * 1000;
 for (let i = 0; i < 1000; i++) {
 	data.push(randomData());
 }
+
 const initialOption: EChartsOption = {
 	tooltip: {
 		trigger: 'axis',
-		formatter: function (params: any) {
-			params = params[0];
+
+		formatter: function (params) {
+			params = (params as CallbackDataParams[])[0];
 			const date = new Date(params.name);
-			return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+			return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + (params.value as Array<[]>)[1];
 		},
 		axisPointer: {
 			animation: false
