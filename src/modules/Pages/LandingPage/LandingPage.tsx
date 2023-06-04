@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button, Grid, Typography, styled, useTheme } from '@mui/material';
 import { Navbar } from 'modules/Pages/LandingPage/Navbar';
+import useEchartsTheme from 'config/echarts/useEchartsTheme';
 
-import InfiniteTime from 'components/charts/InfiniteTime';
+const InfiniteTime = React.lazy(() => import('components/charts/InfiniteTime'));
 
 const LandingPage: React.FC = () => {
 	const theme = useTheme();
 
+	useEchartsTheme();
 	return (
 		<>
 			<Navbar />

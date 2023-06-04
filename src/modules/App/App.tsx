@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 
-import { LandingPage } from '../Pages/LandingPage';
-import './App.css';
-import useEchartsTheme from 'config/echarts/useEchartsTheme';
+const LandingPage = React.lazy(() => import('../Pages/LandingPage/LandingPage'));
+
 declare module '@mui/material/styles' {
 	interface Palette {
 		customBg: { primary: string; secondary: string; gradient: string };
@@ -37,11 +36,12 @@ const App: React.FC = () => {
 		})
 	);
 
-	useEchartsTheme();
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<LandingPage />
+			<Suspense fallback={<h1>Hey there, still loading...</h1>}>
+				<LandingPage />
+			</Suspense>
 		</ThemeProvider>
 	);
 };

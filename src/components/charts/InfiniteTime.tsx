@@ -1,5 +1,5 @@
-import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
 import React, { useEffect, useState } from 'react';
+import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
 import type { CallbackDataParams } from 'echarts/types/dist/shared';
 
 interface DataItem {
@@ -33,6 +33,7 @@ const initialOption: EChartsOption = {
 			const date = new Date(params.name);
 			return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + (params.value as Array<[]>)[1];
 		},
+
 		axisPointer: {
 			animation: false
 		}
@@ -65,7 +66,7 @@ const initialOption: EChartsOption = {
 		duration: 300
 	},
 	animation: 'auto',
-	animationDuration: 50000,
+	animationDuration: 1000,
 	animationDurationUpdate: 500,
 	animationEasing: 'cubicInOut',
 	animationEasingUpdate: 'cubicInOut',

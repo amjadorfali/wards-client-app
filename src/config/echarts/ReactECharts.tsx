@@ -1,37 +1,41 @@
 import { useRef, useEffect, CSSProperties } from 'react';
-import { CanvasRenderer } from 'echarts/renderers';
 import { init, getInstanceByDom, use } from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
 import { LineChart } from 'echarts/charts';
 import {
-	LegendComponent,
 	GridComponent,
-	TooltipComponent,
-	ToolboxComponent,
-	TitleComponent,
-	DataZoomComponent
+	TooltipComponent
+	// LegendComponent,
+	// ToolboxComponent,
+	// TitleComponent,
+	// DataZoomComponent
 } from 'echarts/components';
-import { UniversalTransition } from 'echarts/features';
+// import { UniversalTransition } from 'echarts/features';
 
 import type { ECharts, ComposeOption, SetOptionOpts } from 'echarts/core';
-import type { BarSeriesOption, LineSeriesOption } from 'echarts/charts';
-import type { TitleComponentOption, GridComponentOption, LegendComponentOption, TooltipComponentOption } from 'echarts/components';
+import type { LineSeriesOption } from 'echarts/charts';
+import type { GridComponentOption, TooltipComponentOption } from 'echarts/components';
 // Register the required components
 use([
 	LineChart,
-
-	LegendComponent,
 	GridComponent,
 	TooltipComponent,
-	TitleComponent,
-	ToolboxComponent, // A group of utility tools, which includes export, data view, dynamic type switching, data area zooming, and reset.
-	DataZoomComponent, // Used in Line Graph Charts
-	CanvasRenderer, // If you only need to use the canvas rendering mode, the bundle will not include the SVGRenderer module, which is not needed.
-	UniversalTransition
+	CanvasRenderer // If you only need to use the canvas rendering mode, the bundle will not include the SVGRenderer module, which is not needed.
+
+	// LegendComponent,
+	// TitleComponent,
+	// ToolboxComponent, // A group of utility tools, which includes export, data view, dynamic type switching, data area zooming, and reset.
+	// DataZoomComponent, // Used in Line Graph Charts
+	// UniversalTransition
 ]);
 
 // Combine an Option type with only required components and charts via ComposeOption
 export type EChartsOption = ComposeOption<
-	BarSeriesOption | TitleComponentOption | GridComponentOption | LegendComponentOption | LineSeriesOption | TooltipComponentOption
+	// | TitleComponentOption
+	| GridComponentOption
+	// LegendComponentOption |
+	| LineSeriesOption
+	| TooltipComponentOption
 >;
 
 export interface ReactEChartsProps {
