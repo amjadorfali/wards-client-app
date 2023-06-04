@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
 import type { CallbackDataParams } from 'echarts/types/dist/shared';
+import useEchartsTheme from 'config/echarts/useEchartsTheme';
 
 interface DataItem {
 	name: string;
@@ -82,6 +83,7 @@ interface Props {
 }
 const InfiniteTime: React.FC<Props> = ({ ReactChartsComponentProps }) => {
 	const [option, setOptions] = useState<EChartsOption>(initialOption);
+	useEchartsTheme();
 	useEffect(() => {
 		const interval = setInterval(function () {
 			for (let i = 0; i < 5; i++) {

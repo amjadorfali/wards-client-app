@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 
 const LandingPage = React.lazy(() => import('../Pages/LandingPage/LandingPage'));
@@ -39,9 +39,7 @@ const App: React.FC = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Suspense fallback={<h1>Hey there, still loading...</h1>}>
-				<LandingPage />
-			</Suspense>
+			<LandingPage />
 		</ThemeProvider>
 	);
 };

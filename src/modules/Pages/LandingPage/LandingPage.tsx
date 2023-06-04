@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Button, Grid, Typography, styled, useTheme } from '@mui/material';
 import { Navbar } from 'modules/Pages/LandingPage/Navbar';
-import useEchartsTheme from 'config/echarts/useEchartsTheme';
-
 const InfiniteTime = React.lazy(() => import('components/charts/InfiniteTime'));
 
 const LandingPage: React.FC = () => {
 	const theme = useTheme();
 
-	useEchartsTheme();
 	return (
 		<>
 			<Navbar />
@@ -45,8 +42,10 @@ const LandingPage: React.FC = () => {
 				</Grid>
 
 				<Grid container item xs={12} justifyContent={'center'}>
-					<Grid item xs={11}>
-						<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
+					<Grid item xs={12} sx={{ pt: 10, px: 2 }}>
+						<Suspense fallback={<>Hey there, still loading...</>}>
+							<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
+						</Suspense>
 					</Grid>
 				</Grid>
 			</Grid>
