@@ -2,8 +2,11 @@ import React from 'react';
 import { Button, Grid, Typography, styled, useTheme } from '@mui/material';
 import { Navbar } from 'modules/Pages/LandingPage/Navbar';
 
+import InfiniteTime from 'components/charts/InfiniteTime';
+
 const LandingPage: React.FC = () => {
 	const theme = useTheme();
+
 	return (
 		<>
 			<Navbar />
@@ -13,11 +16,12 @@ const LandingPage: React.FC = () => {
 				sx={{
 					minHeight: '100vh',
 					background: theme.palette.customBg.gradient,
+					position: 'relative',
 					//Responsive layout
-					pt: { xs: 10, md: 0 },
-					pb: { md: 10 },
+					pt: { xs: 15, md: 10 },
 					alignContent: { md: 'center' }
 				}}
+				gap={15}
 			>
 				<Grid container item xs={12} justifyContent={'center'} height={'fit-content'} gap={3}>
 					<Grid item xs={12}>
@@ -35,6 +39,12 @@ const LandingPage: React.FC = () => {
 						<Button variant="contained" color="primary" size="medium" sx={{ textTransform: 'capitalize' }}>
 							Get Started
 						</Button>
+					</Grid>
+				</Grid>
+
+				<Grid container item xs={12} justifyContent={'center'}>
+					<Grid item xs={11}>
+						<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
 					</Grid>
 				</Grid>
 			</Grid>

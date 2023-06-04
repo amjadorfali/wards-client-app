@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@m
 
 import { LandingPage } from '../Pages/LandingPage';
 import './App.css';
+import useEchartsTheme from 'config/echarts/useEchartsTheme';
 declare module '@mui/material/styles' {
 	interface Palette {
 		customBg: { primary: string; secondary: string; gradient: string };
@@ -35,6 +36,8 @@ const App: React.FC = () => {
 			}
 		})
 	);
+
+	useEchartsTheme();
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
