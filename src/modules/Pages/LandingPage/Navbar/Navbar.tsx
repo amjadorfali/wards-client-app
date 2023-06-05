@@ -33,8 +33,16 @@ const Navbar: React.FC = () => {
 		setDrawerOpen(false);
 	};
 
+	/* From https://css.glass */
 	return (
-		<AppBar position="fixed" sx={{ backdropFilter: 'blur(5px)', bgcolor: theme.palette.customBg.primary }}>
+		<AppBar
+			position="fixed"
+			sx={{
+				bgcolor: theme.palette.customBg.primary,
+				background: theme.palette.customBg.header,
+				backdropFilter: 'blur(5.2px)'
+			}}
+		>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -69,7 +77,14 @@ const Navbar: React.FC = () => {
 						</IconButton>
 
 						<Drawer
-							sx={{ '.MuiDrawer-paper': { width: '100%', bgcolor: theme.palette.customBg.primary } }}
+							sx={{
+								'.MuiDrawer-paper': {
+									width: '100%',
+									bgcolor: theme.palette.customBg.primary,
+									background: theme.palette.customBg.header,
+									backdropFilter: 'blur(5.2px)'
+								}
+							}}
 							anchor={'left'}
 							open={drawerOpen}
 							onClose={handleCloseNavMenu}
