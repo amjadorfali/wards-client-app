@@ -37,7 +37,14 @@ const HeroSection: React.FC = () => {
 			</Grid>
 
 			<Grid container item xs={12} justifyContent={'center'}>
-				<Grid component={Paper} elevation={10} item xs={12} md={7} sx={{ px: 2, mb: -7, background: theme.palette.customBg.primary }}>
+				<Grid
+					component={Paper}
+					elevation={10}
+					item
+					xs={12}
+					md={7}
+					sx={{ px: 2, mb: -7, background: theme.palette.customBg.primary, minHeight: '35rem' }}
+				>
 					<Suspense fallback={<>Hey there, still loading...</>}>
 						<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
 					</Suspense>
