@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Button, Grid, Paper, Typography, styled, useTheme } from '@mui/material';
+import { Button, Grid, Paper, Typography, useTheme } from '@mui/material';
 const InfiniteTime = React.lazy(() => import('components/charts/InfiniteTime'));
 const HeroSection: React.FC = () => {
 	const theme = useTheme();
@@ -21,7 +21,9 @@ const HeroSection: React.FC = () => {
 				<Grid item xs={12}>
 					<Typography variant="h1" color={'text.secondary'} align="center">
 						Analytics for <br />
-						<StyledTitleSpan>Developers</StyledTitleSpan>
+						<Typography variant="body1" sx={{ ...theme.typography.h1 }} display={'inline'} color="primary.main">
+							Developers
+						</Typography>
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
@@ -30,7 +32,7 @@ const HeroSection: React.FC = () => {
 					</Typography>
 				</Grid>
 				<Grid item xs={12} container justifyContent={'center'}>
-					<Button variant="contained" color="primary" size="medium" sx={{ textTransform: 'capitalize' }}>
+					<Button variant="contained" color="primary" size="large" sx={{ textTransform: 'capitalize' }}>
 						Get Started
 					</Button>
 				</Grid>
@@ -54,7 +56,3 @@ const HeroSection: React.FC = () => {
 	);
 };
 export default HeroSection;
-
-const StyledTitleSpan = styled('span')(({ theme }) => ({
-	color: theme.palette.primary.main
-}));

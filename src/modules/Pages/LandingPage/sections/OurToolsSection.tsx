@@ -22,7 +22,10 @@ const OurToolsSection: React.FC = () => {
 						<Typography variant="h2" textAlign={'center'} color={'text.secondary'}>
 							Built on powerful
 							<br />
-							<StyledTitleSpan>enterprise</StyledTitleSpan> tech.
+							<Typography variant="body1" display={'inline'} sx={{ ...theme.typography.h2 }} color={'lighterPrimary.1'}>
+								enterprise
+							</Typography>{' '}
+							tech.
 						</Typography>
 					</Grid>
 					<Grid item xs={12}>
@@ -92,9 +95,6 @@ const OurToolsSection: React.FC = () => {
 export default OurToolsSection;
 
 //TODO: Cleanup styles and use theme
-const StyledTitleSpan = styled('span')(({ theme }) => ({
-	color: theme.palette.lighterPrimary['1']
-}));
 
 const LotusIconWrapper = styled('div')`
 	font-size: 12px;
