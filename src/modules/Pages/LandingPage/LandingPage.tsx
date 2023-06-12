@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 
-import { Navbar } from 'modules/Pages/LandingPage/Navbar';
 import HeroSection from './sections/HeroSection';
 import { SS_KEY_scroll } from 'hooks';
 const SummarySection = React.lazy(() => import('./sections/SummarySection'));
@@ -15,7 +14,6 @@ import { ScrollRestoration } from 'react-router-dom';
 const LandingPage: React.FC = () => {
 	return (
 		<>
-			<Navbar />
 			<ScrollRestoration getKey={(location) => location.pathname} storageKey={SS_KEY_scroll} />
 			<HeroSection />
 			<Suspense fallback={<>You're not supposed to be looking here just yet</>}>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Navbar } from 'modules/Pages/LandingPage/Navbar';
 const LandingPage = React.lazy(() => import('../Pages/LandingPage/LandingPage'));
+// const DummyPage = React.lazy(() => import('../Pages/DummyPage/DummyPage'));
 
 interface CustomBg {
 	secondaryGradient: string;
@@ -116,6 +118,7 @@ const App: React.FC = () => {
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 
+			<Navbar />
 			<RouterProvider router={router} />
 		</ThemeProvider>
 	);
