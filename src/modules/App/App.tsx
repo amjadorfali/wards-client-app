@@ -1,6 +1,6 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
-
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const LandingPage = React.lazy(() => import('../Pages/LandingPage/LandingPage'));
 
 interface CustomBg {
@@ -103,10 +103,20 @@ const App: React.FC = () => {
 		})
 	);
 
+	const router = createBrowserRouter([
+		{
+			path: '/',
+			element: <LandingPage />,
+
+			children: []
+		}
+	]);
+
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<LandingPage />
+
+			<RouterProvider router={router} />
 		</ThemeProvider>
 	);
 };

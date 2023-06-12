@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 //TODO: Work on a cool animations for this section
 // import { ReactComponent as StreamingIcon } from 'assets/streaming.svg';
 import { Grid, Typography } from '@mui/material';
+import { useMaintainScroll } from 'hooks';
 
 import { useAnimate, useInView } from 'framer-motion';
 
@@ -9,6 +10,9 @@ const SummarySection: React.FC = () => {
 	const [scope, animate] = useAnimate<HTMLDivElement>();
 	const isInView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
 
+	//This is maintaining the scroll for all the landing page, not just this section
+	//It needs to be called here for now due to Lazy Loading sections
+	useMaintainScroll();
 	useEffect(() => {
 		if (isInView) {
 			animate(scope.current, { opacity: 1, scale: [0.5, 1], y: [100, 0] }, { duration: 0.5, delay: 0.3 });
