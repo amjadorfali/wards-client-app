@@ -16,6 +16,7 @@
 		"@mui/icons-material": "^5.11.16",
 		"@mui/material": "^5.13.3",
 		"echarts": "^5.4.2",
+		"framer-motion": "^10.12.16",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-markdown": "^8.0.7",
@@ -38,6 +39,7 @@
 		"prettier": "2.8.8",
 		"typescript": "^5.0.2",
 		"vite": "^4.3.9",
+		"vite-imagetools": "^5.0.4",
 		"vite-plugin-svgr": "^3.2.0",
 		"vite-tsconfig-paths": "^4.2.0"
 	},

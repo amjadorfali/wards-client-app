@@ -8,22 +8,24 @@ interface DataItem {
 	value: [string, number];
 }
 
+const data: DataItem[] = [];
+let now = new Date(2020, 1, 1);
+const oneDay = 24 * 3600 * 1000;
+let value = Math.random() * 8 - 4;
+
 function randomData(): DataItem {
 	now = new Date(+now + oneDay);
-	value = value + Math.random() * 21 - 10;
+	value += Math.random() * 8 - 4;
 	return {
 		name: now.toString(),
 		value: [[now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'), Math.round(value)]
 	};
 }
 
-const data: DataItem[] = [];
-let now = new Date(1997, 9, 3);
-const oneDay = 24 * 3600 * 1000;
-let value = Math.random() * 1000;
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 400; i++) {
 	data.push(randomData());
 }
+//TODO: Look into https://echarts.apache.org/en/option.html#series-line.data
 
 const initialOption: EChartsOption = {
 	tooltip: {
@@ -33,26 +35,20 @@ const initialOption: EChartsOption = {
 			params = (params as CallbackDataParams[])[0];
 			const date = new Date(params.name);
 			return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + (params.value as Array<[]>)[1];
-		},
-
-		axisPointer: {
-			animation: false
 		}
 	},
 	xAxis: {
 		type: 'time',
 		splitLine: {
 			show: false
-		},
-		animation: true
+		}
 	},
 	yAxis: {
 		type: 'value',
 		boundaryGap: [0, '100%'],
 		splitLine: {
 			show: false
-		},
-		animation: true
+		}
 	},
 	series: [
 		{
@@ -61,21 +57,7 @@ const initialOption: EChartsOption = {
 			showSymbol: false,
 			data: data
 		}
-	],
-	stateAnimation: {
-		easing: 'cubicOut',
-		duration: 300
-	},
-	animation: 'auto',
-	animationDuration: 1000,
-	animationDurationUpdate: 500,
-	animationEasing: 'cubicInOut',
-	animationEasingUpdate: 'cubicInOut',
-	animationThreshold: 2000,
-	progressiveThreshold: 3000,
-	progressive: 400,
-	hoverLayerThreshold: 3000,
-	useUTC: false
+	]
 };
 
 interface Props {
@@ -86,11 +68,10 @@ const InfiniteTime: React.FC<Props> = ({ ReactChartsComponentProps }) => {
 	useEchartsTheme();
 	useEffect(() => {
 		const interval = setInterval(function () {
-			for (let i = 0; i < 5; i++) {
+			for (let i = 0; i < 10; i++) {
 				data.shift();
 				data.push(randomData());
 			}
-
 			setOptions((prev) => ({
 				...prev,
 				series: [

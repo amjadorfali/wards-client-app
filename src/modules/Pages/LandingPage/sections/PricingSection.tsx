@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	Card,
 	CardActionArea,
@@ -13,7 +13,12 @@ import {
 	useTheme
 } from '@mui/material';
 
+import FortniteImg from '/fortnite.webp';
+import DotaImg from 'assets/dota.png?w=1000&h=1050&format=webp&imagetools';
+import OverwatchImg from 'assets/overwatch.png?w=1000&h=1050&format=webp&imagetools';
+
 import { Check } from '@mui/icons-material';
+import { useAnimate, useInView } from 'framer-motion';
 
 interface CardProps {
 	color: string;
@@ -64,42 +69,61 @@ const CustomCard: React.FC<CardProps> = ({ color, image, title, subtitle, featur
 	);
 };
 
+const elements = {
+	card1: 'card1',
+	card2: 'card2',
+	card3: 'card3'
+};
+
 export const PricingSection: React.FC = () => {
 	const theme = useTheme();
+
+	const [scope, animate] = useAnimate<HTMLDivElement>();
+	const inView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
+
+	useEffect(() => {
+		if (inView) {
+			animate(Object.keys(elements).map((id) => [`#${id}`, { opacity: 1, scale: [0, 1.1, 1] }, { duration: 0.7, at: '-0.3' }]));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [inView]);
+
 	return (
-		<Grid sx={{ justifyContent: { xs: 'center', md: 'space-around' }, gap: { xs: 10, md: 0 } }} py={30} container>
-			<Grid item xs={7} md={3}>
-				<CustomCard
-					price="$ 0"
-					priceDescription="Free, forever"
-					features={['3 Team members', 'Basic Support', 'Fack off']}
-					color={theme.palette.primary.main}
-					title={'Hobby'}
-					subtitle={'Kill yourself'}
-					image={'https://progameguides.com/wp-content/uploads/2019/10/fortnite-outfit-scratch.jpg'}
-				/>
-			</Grid>
-			<Grid item xs={7} md={3}>
-				<CustomCard
-					price="$ 4"
-					priceDescription="per month"
-					features={['All Free features', '3 Team members', 'Priority Support', 'Just the tip']}
-					color={theme.palette.secondary.main}
-					title={'Supporter'}
-					subtitle={'You have hope'}
-					image={'https://images5.alphacoders.com/690/thumb-1920-690653.png'}
-				/>
-			</Grid>
-			<Grid item xs={7} md={3}>
-				<CustomCard
-					price="$ 30"
-					priceDescription="per month"
-					features={['All Supporter features', '10 Team members', 'Live support', 'On Demand sexis']}
-					color={theme.palette.lighterPrimary['4']}
-					title={'Business'}
-					subtitle={'Wahesh Qaser'}
-					image={'https://steamcdn-a.akamaihd.net/apps/dota2/images/blog/play/dota_heroes.png'}
-				/>
+		<Grid py={30} container>
+			<Grid container item ref={scope} sx={{ justifyContent: { xs: 'center', md: 'space-around' }, gap: { xs: 10, md: 0 } }}>
+				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.card1} md={3}>
+					<CustomCard
+						price="$ 0"
+						priceDescription="Free, forever"
+						features={['3 Team members', 'Basic Support', 'Fack off']}
+						color={theme.palette.primary.main}
+						title={'Hobby'}
+						subtitle={'Kill yourself'}
+						image={FortniteImg}
+					/>
+				</Grid>
+				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.card2} md={3}>
+					<CustomCard
+						price="$ 4"
+						priceDescription="per month"
+						features={['All Free features', '3 Team members', 'Priority Support', 'Just the tip']}
+						color={theme.palette.secondary.main}
+						title={'Supporter'}
+						subtitle={'You have hope'}
+						image={OverwatchImg}
+					/>
+				</Grid>
+				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.card3} md={3}>
+					<CustomCard
+						price="$ 30"
+						priceDescription="per month"
+						features={['All Supporter features', '10 Team members', 'Live support', 'On Demand sexis']}
+						color={theme.palette.lighterPrimary['4']}
+						title={'Business'}
+						subtitle={'Wahesh Qaser'}
+						image={DotaImg}
+					/>
+				</Grid>
 			</Grid>
 		</Grid>
 	);

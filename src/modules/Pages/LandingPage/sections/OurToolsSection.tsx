@@ -1,9 +1,73 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Grid, Typography, styled, useTheme } from '@mui/material';
 import { ReactComponent as OctaconIcon } from 'assets/octagon.svg';
 import { ReactComponent as LotusIcon } from 'assets/lotus.svg';
+import { stagger, useAnimate, useInView } from 'framer-motion';
 
+const headingElements = {
+	title: 'title',
+	subtitle: 'subtitle'
+};
+const bigIconElements = {
+	icon: 'icon'
+};
+const textElements = {
+	text1: 'text1',
+	text2: 'text2',
+	text3: 'text3',
+	text4: 'text4',
+	text5: 'text5'
+};
+
+const staggerAnimation = stagger(0.25);
 const OurToolsSection: React.FC = () => {
+	const [scope, animate] = useAnimate<HTMLDivElement>();
+	const [headingRef, bigIconRef, textRef] = [useRef(null), useRef(null), useRef(null)];
+	const [headingInView, bigIconInView, textInView] = [
+		useInView(headingRef, { once: true, margin: '0px 0px -35% 0px' }),
+		useInView(bigIconRef, { once: true, margin: '0px 0px -35% 0px' }),
+		useInView(textRef, { once: true, margin: '0px 0px -35% 0px' })
+	];
+
+	useEffect(() => {
+		if (headingInView) {
+			animate(
+				[
+					...Object.keys(headingElements).map((id) => [
+						`#${id}`,
+						{ opacity: 1, scale: [0.5, 1], y: [100, 0] },
+						{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
+					])
+				],
+				{}
+			);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [headingInView]);
+
+	useEffect(() => {
+		if (bigIconInView) {
+			animate(`#${bigIconElements.icon}`, { opacity: 1, scale: [0.5, 1], y: [100, 0] }, { duration: 0.5, delay: staggerAnimation });
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [bigIconInView]);
+
+	useEffect(() => {
+		if (textInView) {
+			animate(
+				[
+					...Object.keys(textElements).map((id) => [
+						`#${id}`,
+						{ opacity: 1, scale: [0.5, 1], y: [100, 0] },
+						{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
+					])
+				],
+				{}
+			);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [textInView]);
+
 	const theme = useTheme();
 	return (
 		<>
@@ -16,28 +80,34 @@ const OurToolsSection: React.FC = () => {
 					minHeight: '120vh',
 					background: theme.palette.customBg.secondaryGradient
 				}}
+				ref={scope}
 			>
 				<Grid item container xs={12} justifyContent={'center'} gap={2}>
-					<Grid item xs={12}>
-						<Typography variant="h2" textAlign={'center'} color={'text.secondary'}>
-							Built on powerful
-							<br />
-							<Typography variant="body1" display={'inline'} sx={{ ...theme.typography.h2 }} color={'lighterPrimary.1'}>
-								enterprise
-							</Typography>{' '}
-							tech.
-						</Typography>
+					{/* Heading */}
+					<Grid item container ref={headingRef}>
+						<Grid item xs={12}>
+							<Typography sx={{ opacity: 0 }} id={headingElements.title} variant="h2" textAlign={'center'} color={'text.secondary'}>
+								Built on powerful
+								<br />
+								<Typography variant="body1" display={'inline'} sx={{ ...theme.typography.h2 }} color={'lighterPrimary.1'}>
+									enterprise
+								</Typography>{' '}
+								tech.
+							</Typography>
+						</Grid>
+						<Grid item xs={12}>
+							<Typography sx={{ opacity: 0 }} id={headingElements.subtitle} variant="subtitle1" textAlign={'center'}>
+								We use the latest software to power your data.
+								<br />
+								Used by the biggest enterprises today, our
+								<br />
+								stack has stood the test of time.
+							</Typography>
+						</Grid>
 					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle1" textAlign={'center'}>
-							We use the latest software to power your data.
-							<br />
-							Used by the biggest enterprises today, our
-							<br />
-							stack has stood the test of time.
-						</Typography>
-					</Grid>
-					<Grid item sx={{ position: 'relative', height: '15rem' }}>
+					{/* Big icon */}
+
+					<Grid item ref={bigIconRef} id={bigIconElements.icon} sx={{ position: 'relative', height: '15rem', opacity: 0 }}>
 						<ShadowBox />
 						<StyledOctaconIcon />
 
@@ -58,33 +128,60 @@ const OurToolsSection: React.FC = () => {
 							</NumberOutline>
 						</NumberWrapper>
 					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle1" fontWeight={600} textAlign={'center'}>
-							Lotus 3
-						</Typography>
-					</Grid>
-					<Grid item xs={12}>
-						<Typography variant="subtitle1" fontWeight={600} textAlign={'center'} sx={{ color: theme.palette.lighterPrimary['1'] }}>
-							Globally available
-						</Typography>
-					</Grid>
+					{/* Text */}
+					<Grid item container ref={textRef}>
+						<Grid item xs={12}>
+							<Typography sx={{ opacity: 0 }} id={textElements.text1} variant="subtitle1" fontWeight={600} textAlign={'center'}>
+								Lotus 3
+							</Typography>
+						</Grid>
+						<Grid item xs={12}>
+							<Typography
+								id={textElements.text2}
+								variant="subtitle1"
+								fontWeight={600}
+								textAlign={'center'}
+								sx={{ color: theme.palette.lighterPrimary['1'], opacity: 0 }}
+							>
+								Globally available
+							</Typography>
+						</Grid>
 
-					<Grid item xs={12}>
-						<Typography variant="subtitle1" fontWeight={600} textAlign={'center'} sx={{ color: theme.palette.lighterPrimary['2'] }}>
-							Up to 1 million data points/s
-						</Typography>
-					</Grid>
+						<Grid item xs={12}>
+							<Typography
+								id={textElements.text3}
+								variant="subtitle1"
+								fontWeight={600}
+								textAlign={'center'}
+								sx={{ color: theme.palette.lighterPrimary['2'], opacity: 0 }}
+							>
+								Up to 1 million data points/s
+							</Typography>
+						</Grid>
 
-					<Grid item xs={12}>
-						<Typography variant="subtitle1" fontWeight={600} textAlign={'center'} sx={{ color: theme.palette.lighterPrimary['3'] }}>
-							Up to 10 global data centers in parallel
-						</Typography>
-					</Grid>
+						<Grid item xs={12}>
+							<Typography
+								id={textElements.text4}
+								variant="subtitle1"
+								fontWeight={600}
+								textAlign={'center'}
+								sx={{ color: theme.palette.lighterPrimary['3'], opacity: 0 }}
+							>
+								Up to 10 global data centers in parallel
+							</Typography>
+						</Grid>
 
-					<Grid item xs={12}>
-						<Typography variant="subtitle1" fontWeight={600} textAlign={'center'} sx={{ color: theme.palette.lighterPrimary['4'] }}>
-							Up to 100PB fast storage per team account
-						</Typography>
+						<Grid item xs={12}>
+							<Typography
+								id={textElements.text5}
+								variant="subtitle1"
+								fontWeight={600}
+								textAlign={'center'}
+								sx={{ color: theme.palette.lighterPrimary['4'], opacity: 0 }}
+							>
+								Up to 100PB fast storage per team account
+							</Typography>
+						</Grid>
 					</Grid>
 				</Grid>
 			</Grid>
@@ -160,6 +257,7 @@ const NumberWrapper = styled('div')`
 
 const NumberOutline = styled('div')`
 	box-sizing: border-box;
+
 	-webkit-font-smoothing: inherit;
 	cursor: inherit;
 	pointer-events: unset;
