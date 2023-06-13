@@ -4,7 +4,6 @@ import {
 	Box,
 	Toolbar,
 	IconButton,
-	Typography,
 	Container,
 	Button,
 	Drawer,
@@ -14,15 +13,18 @@ import {
 	ListItemIcon,
 	ListItemText,
 	useTheme,
-	Grid
+	Grid,
+	Link
 } from '@mui/material';
 import { Menu as MenuIcon, Adb as AdbIcon } from '@mui/icons-material';
-
+import { Link as RouterLink } from 'react-router-dom';
+import { RoutesConfig } from 'modules/App/App';
 const pages = ['Products', 'Pricing', 'Docs', 'About'];
 const actions = ['Sign In', 'Sign Up'];
 
 const Navbar: React.FC = () => {
 	const theme = useTheme();
+
 	const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
 
 	const handleOpenNavMenu = () => {
@@ -46,23 +48,22 @@ const Navbar: React.FC = () => {
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-					<Typography
-						variant="h6"
+					<Link
+						to="/"
+						underline="none"
+						component={RouterLink}
 						noWrap
-						component="a"
-						href="/"
 						sx={{
+							...theme.typography.h6,
 							mr: 2,
 							display: { xs: 'none', md: 'flex' },
 							fontFamily: 'monospace',
 							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none'
+							letterSpacing: '.3rem'
 						}}
 					>
 						LOGO
-					</Typography>
+					</Link>
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
 						<IconButton
@@ -92,7 +93,7 @@ const Navbar: React.FC = () => {
 							<List>
 								{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
 									<ListItem key={text}>
-										<ListItemButton onClick={handleCloseNavMenu}>
+										<ListItemButton component={RouterLink} to={RoutesConfig.dummy} onClick={handleCloseNavMenu}>
 											<ListItemIcon sx={{ color: theme.palette.primary.main }}>
 												{index % 2 === 0 ? <AdbIcon /> : <AdbIcon />}
 											</ListItemIcon>
@@ -103,37 +104,51 @@ const Navbar: React.FC = () => {
 							</List>
 
 							<Grid container wrap="wrap" direction={'column'} p={2} gap={2}>
-								<Button onClick={handleCloseNavMenu} size="large" color="primary" variant="outlined">
+								<Button
+									component={RouterLink}
+									to={RoutesConfig.dummy}
+									onClick={handleCloseNavMenu}
+									size="large"
+									color="primary"
+									variant="outlined"
+								>
 									Sign In
 								</Button>
-								<Button onClick={handleCloseNavMenu} size="large" color="primary" variant="contained">
+								<Button
+									component={RouterLink}
+									to={RoutesConfig.dummy}
+									onClick={handleCloseNavMenu}
+									size="large"
+									color="primary"
+									variant="contained"
+								>
 									Sign Up
 								</Button>
 							</Grid>
 						</Drawer>
 					</Box>
 					<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-					<Typography
-						variant="h5"
+
+					<Link
+						to="/"
+						underline="none"
+						component={RouterLink}
 						noWrap
-						component="a"
-						href=""
 						sx={{
+							...theme.typography.h5,
 							mr: 2,
-							display: { xs: 'flex', md: 'none' },
 							flexGrow: 1,
+							display: { xs: 'flex', md: 'none' },
 							fontFamily: 'monospace',
 							fontWeight: 700,
-							letterSpacing: '.3rem',
-							color: 'inherit',
-							textDecoration: 'none'
+							letterSpacing: '.3rem'
 						}}
 					>
 						LOGO
-					</Typography>
+					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} justifyContent={'center'}>
 						{pages.map((page) => (
-							<Button key={page} sx={{ my: 2, color: 'white', display: 'block' }}>
+							<Button component={RouterLink} to={RoutesConfig.dummy} key={page} sx={{ my: 2, color: 'white', display: 'block' }}>
 								{page}
 							</Button>
 						))}
@@ -141,7 +156,14 @@ const Navbar: React.FC = () => {
 
 					<Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }} gap={2} justifyContent={'flex-end'}>
 						{actions.map((action) => (
-							<Button variant="outlined" color="secondary" key={action} sx={{ my: 2, color: 'white', display: 'block' }}>
+							<Button
+								component={RouterLink}
+								to={RoutesConfig.dummy}
+								variant="outlined"
+								color="secondary"
+								key={action}
+								sx={{ my: 2, color: 'white', display: 'block' }}
+							>
 								{action}
 							</Button>
 						))}

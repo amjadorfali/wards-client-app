@@ -1,9 +1,9 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Navbar } from 'modules/Pages/LandingPage/Navbar';
-const LandingPage = React.lazy(() => import('../Pages/LandingPage/LandingPage'));
-// const DummyPage = React.lazy(() => import('../Pages/DummyPage/DummyPage'));
+const Root = React.lazy(() => import('modules/Pages/Root/Root'));
+const LandingPage = React.lazy(() => import('modules/Pages/LandingPage/LandingPage'));
+const DummyPage = React.lazy(() => import('modules/Pages/DummyPage/DummyPage'));
 
 interface CustomBg {
 	secondaryGradient: string;
@@ -40,6 +40,10 @@ declare module '@mui/material/styles' {
 	}
 }
 
+export enum RoutesConfig {
+	home = '/',
+	dummy = '/coming-soon'
+}
 const App: React.FC = () => {
 	//TODO: Think of an alternative to this (Wide range of colors)
 	const theme = responsiveFontSizes(
@@ -107,18 +111,24 @@ const App: React.FC = () => {
 
 	const router = createBrowserRouter([
 		{
-			path: '/',
-			element: <LandingPage />,
-
-			children: []
+			path: RoutesConfig.home,
+			element: <Root />,
+			children: [
+				{
+					element: <LandingPage />,
+					index: true
+				},
+				{
+					element: <DummyPage />,
+					path: RoutesConfig.dummy
+				}
+			]
 		}
 	]);
 
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-
-			<Navbar />
 			<RouterProvider router={router} />
 		</ThemeProvider>
 	);
