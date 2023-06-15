@@ -33,7 +33,7 @@ const Config: { text: string; url: RoutesConfig }[] = [
 const Footer: React.FC = () => {
 	const theme = useTheme();
 	return (
-		<Grid sx={{ pt: { xs: 15, md: 10 } }} gap={3} container>
+		<Grid gap={3} container>
 			<Grid item xs={12}>
 				<Divider sx={{ background: theme.palette.textTertiary }} />
 			</Grid>

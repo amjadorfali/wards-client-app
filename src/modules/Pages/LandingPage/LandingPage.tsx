@@ -8,7 +8,6 @@ const CodeSection = React.lazy(() => import('./sections/CodeSection'));
 const FeaturesSection = React.lazy(() => import('./sections/FeaturesSection'));
 const PricingSection = React.lazy(() => import('./sections/PricingSection'));
 const CallToActionSection = React.lazy(() => import('./sections/CallToActionSection'));
-const Footer = React.lazy(() => import('./sections/Footer'));
 
 const LandingPage: React.FC = () => {
 	return (
@@ -21,7 +20,6 @@ const LandingPage: React.FC = () => {
 				<FeaturesSection />
 				<PricingSection />
 				<CallToActionSection />
-				<Footer />
 			</Suspense>
 		</>
 	);
