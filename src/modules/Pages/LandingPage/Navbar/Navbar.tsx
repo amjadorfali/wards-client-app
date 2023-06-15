@@ -16,10 +16,17 @@ import {
 	Grid,
 	Link
 } from '@mui/material';
-import { Menu as MenuIcon, Adb as AdbIcon } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
+import { Menu as MenuIcon } from '@mui/icons-material';
+import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
+import SavingsIcon from '@mui/icons-material/Savings';
+import InfoIcon from '@mui/icons-material/Info';
+import BookIcon from '@mui/icons-material/Book';
+
 import { RoutesConfig } from 'modules/App/App';
+
 const pages = ['Products', 'Pricing', 'Docs', 'About'];
+const icons = [MonitorHeartIcon, SavingsIcon, BookIcon, InfoIcon];
 const actions = ['Sign In', 'Sign Up'];
 
 const Navbar: React.FC = () => {
@@ -47,7 +54,7 @@ const Navbar: React.FC = () => {
 		>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+					<MonitorHeartIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 					<Link
 						to="/"
 						underline="none"
@@ -62,7 +69,7 @@ const Navbar: React.FC = () => {
 							letterSpacing: '.3rem'
 						}}
 					>
-						LOGO
+						Ops
 					</Link>
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -91,16 +98,17 @@ const Navbar: React.FC = () => {
 							onClose={handleCloseNavMenu}
 						>
 							<List>
-								{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-									<ListItem key={text}>
-										<ListItemButton component={RouterLink} to={RoutesConfig.dummy} onClick={handleCloseNavMenu}>
-											<ListItemIcon sx={{ color: theme.palette.primary.main }}>
-												{index % 2 === 0 ? <AdbIcon /> : <AdbIcon />}
-											</ListItemIcon>
-											<ListItemText sx={{ color: theme.palette.secondary.main }} primary={text} />
-										</ListItemButton>
-									</ListItem>
-								))}
+								{pages.map((text, index) => {
+									const Icon = icons[index];
+									return (
+										<ListItem key={text}>
+											<ListItemButton component={RouterLink} to={RoutesConfig.dummy} onClick={handleCloseNavMenu}>
+												<ListItemIcon children={<Icon />} sx={{ color: theme.palette.primary.main }} />
+												<ListItemText sx={{ color: theme.palette.secondary.main }} primary={text} />
+											</ListItemButton>
+										</ListItem>
+									);
+								})}
 							</List>
 
 							<Grid container wrap="wrap" direction={'column'} p={2} gap={2}>
@@ -127,7 +135,7 @@ const Navbar: React.FC = () => {
 							</Grid>
 						</Drawer>
 					</Box>
-					<AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+					<MonitorHeartIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
 
 					<Link
 						to="/"
@@ -144,7 +152,7 @@ const Navbar: React.FC = () => {
 							letterSpacing: '.3rem'
 						}}
 					>
-						LOGO
+						Ops
 					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} justifyContent={'center'}>
 						{pages.map((page) => (

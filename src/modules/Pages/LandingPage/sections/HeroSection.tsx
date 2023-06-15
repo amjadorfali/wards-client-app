@@ -13,6 +13,12 @@ const ids = {
 	graph: 'graph'
 };
 
+const content = {
+	title: ['Simply', { special: 'Monitoring' }],
+	subtitle: 'Stay ahead of potential issues with our advanced Monitoring solution.',
+	callToAction: 'Start Monitoring Now'
+};
+
 const HeroSection: React.FC = () => {
 	const theme = useTheme();
 	const [scope, animate] = useAnimate<HTMLDivElement>();
@@ -48,15 +54,23 @@ const HeroSection: React.FC = () => {
 			<Grid container item xs={12} justifyContent={'center'} height={'fit-content'} gap={3}>
 				<Grid item xs={12}>
 					<Typography variant="h1" color={'text.secondary'} align="center">
-						Analytics for <br />
-						<Typography variant="body1" sx={{ ...theme.typography.h1 }} display={'inline'} color="primary.main">
-							Developers
-						</Typography>
+						{content.title.map((text) =>
+							typeof text === 'string' ? (
+								text
+							) : (
+								<>
+									<br />
+									<Typography variant="body1" sx={{ ...theme.typography.h1 }} display={'inline'} color="primary.main">
+										{text.special}
+									</Typography>
+								</>
+							)
+						)}
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
 					<Typography sx={{ opacity: 0 }} id={ids.subtitle} variant="subtitle1" align="center">
-						Easy to install. Unlimited power.
+						{content.subtitle}
 					</Typography>
 				</Grid>
 				<Grid item xs={12} container justifyContent={'center'}>
@@ -67,7 +81,7 @@ const HeroSection: React.FC = () => {
 						color="primary"
 						size="large"
 					>
-						Get Started
+						{content.callToAction}
 					</Button>
 				</Grid>
 			</Grid>

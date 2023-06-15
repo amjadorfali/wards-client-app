@@ -8,9 +8,7 @@ const headingElements = {
 	title: 'title',
 	subtitle: 'subtitle'
 };
-const bigIconElements = {
-	icon: 'icon'
-};
+
 const textElements = {
 	text1: 'text1',
 	text2: 'text2',
@@ -19,51 +17,56 @@ const textElements = {
 	text5: 'text5'
 };
 
+const content: {
+	title: (string | { special: string })[];
+	subtitle: string[];
+	features: { [key in keyof typeof textElements]: string };
+} = {
+	title: ['Powered by', { special: 'Cutting-Edge' }, 'Technologies'],
+	subtitle: ['Leveraging industry-leading tools', 'for superior monitoring capabilities.'],
+	features: {
+		text1: 'RemoteOps',
+		text2: 'Regional Monitoring',
+		text3: 'Robust & Seamless Operations',
+		text4: 'Real-Time Monitoring with Speed and Precision',
+		text5: 'Efficient Team Collaboration, Management, and Operations'
+	}
+};
+
 const staggerAnimation = stagger(0.25);
+const headingAnimationSequence = Object.keys(headingElements).map((id) => [
+	`#${id}`,
+	{ opacity: 1, scale: [0.5, 1] },
+	{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
+]);
+
+const textAnimationSequence = Object.keys(textElements).map((id) => [
+	`#${id}`,
+	{ opacity: 1, scale: [0.5, 1] },
+	{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
+]);
+
 const OurToolsSection: React.FC = () => {
 	const [scope, animate] = useAnimate<HTMLDivElement>();
-	const [headingRef, bigIconRef, textRef] = [useRef(null), useRef(null), useRef(null)];
-	const [headingInView, bigIconInView, textInView] = [
+	const [headingRef, textRef] = [useRef(null), useRef(null)];
+	const [headingInView, textInView] = [
 		useInView(headingRef, { once: true, margin: '0px 0px -35% 0px' }),
-		useInView(bigIconRef, { once: true, margin: '0px 0px -35% 0px' }),
-		useInView(textRef, { once: true, margin: '0px 0px -35% 0px' })
+		useInView(textRef, {
+			once: true,
+			margin: '0px 0px -35% 0px'
+		})
 	];
 
 	useEffect(() => {
 		if (headingInView) {
-			animate(
-				[
-					...Object.keys(headingElements).map((id) => [
-						`#${id}`,
-						{ opacity: 1, scale: [0.5, 1], y: [100, 0] },
-						{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
-					])
-				],
-				{}
-			);
+			animate([...headingAnimationSequence], {});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [headingInView]);
 
 	useEffect(() => {
-		if (bigIconInView) {
-			animate(`#${bigIconElements.icon}`, { opacity: 1, scale: [0.5, 1], y: [100, 0] }, { duration: 0.5, delay: staggerAnimation });
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bigIconInView]);
-
-	useEffect(() => {
 		if (textInView) {
-			animate(
-				[
-					...Object.keys(textElements).map((id) => [
-						`#${id}`,
-						{ opacity: 1, scale: [0.5, 1], y: [100, 0] },
-						{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
-					])
-				],
-				{}
-			);
+			animate([...textAnimationSequence], {});
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [textInView]);
@@ -87,27 +90,34 @@ const OurToolsSection: React.FC = () => {
 					<Grid item container ref={headingRef}>
 						<Grid item xs={12}>
 							<Typography sx={{ opacity: 0 }} id={headingElements.title} variant="h2" textAlign={'center'} color={'text.secondary'}>
-								Built on powerful
-								<br />
-								<Typography variant="body1" display={'inline'} sx={{ ...theme.typography.h2 }} color={'lighterPrimary.1'}>
-									enterprise
-								</Typography>{' '}
-								tech.
+								{content.title.map((text) =>
+									typeof text === 'string' ? (
+										<>
+											{text}
+											<br />
+										</>
+									) : (
+										<Typography variant="body1" display={'inline'} sx={{ ...theme.typography.h2 }} color={'lighterPrimary.1'}>
+											{text.special}
+										</Typography>
+									)
+								)}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
 							<Typography sx={{ opacity: 0 }} id={headingElements.subtitle} variant="subtitle1" textAlign={'center'}>
-								We use the latest software to power your data.
-								<br />
-								Used by the biggest enterprises today, our
-								<br />
-								stack has stood the test of time.
+								{content.subtitle.map((text) => (
+									<>
+										{text}
+										<br />
+									</>
+								))}
 							</Typography>
 						</Grid>
 					</Grid>
 					{/* Big icon */}
 
-					<Grid item ref={bigIconRef} id={bigIconElements.icon} sx={{ position: 'relative', height: '15rem', opacity: 0 }}>
+					<Grid item sx={{ position: 'relative', height: '15rem' }}>
 						<ShadowBox />
 						<StyledOctaconIcon />
 
@@ -129,10 +139,10 @@ const OurToolsSection: React.FC = () => {
 						</NumberWrapper>
 					</Grid>
 					{/* Text */}
-					<Grid item container ref={textRef}>
+					<Grid item container ref={textRef} gap={2}>
 						<Grid item xs={12}>
 							<Typography sx={{ opacity: 0 }} id={textElements.text1} variant="subtitle1" fontWeight={600} textAlign={'center'}>
-								Lotus 3
+								{content.features.text1}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
@@ -143,7 +153,7 @@ const OurToolsSection: React.FC = () => {
 								textAlign={'center'}
 								sx={{ color: theme.palette.lighterPrimary['1'], opacity: 0 }}
 							>
-								Globally available
+								{content.features.text2}
 							</Typography>
 						</Grid>
 
@@ -155,7 +165,7 @@ const OurToolsSection: React.FC = () => {
 								textAlign={'center'}
 								sx={{ color: theme.palette.lighterPrimary['2'], opacity: 0 }}
 							>
-								Up to 1 million data points/s
+								{content.features.text3}
 							</Typography>
 						</Grid>
 
@@ -167,7 +177,7 @@ const OurToolsSection: React.FC = () => {
 								textAlign={'center'}
 								sx={{ color: theme.palette.lighterPrimary['3'], opacity: 0 }}
 							>
-								Up to 10 global data centers in parallel
+								{content.features.text4}
 							</Typography>
 						</Grid>
 
@@ -179,7 +189,7 @@ const OurToolsSection: React.FC = () => {
 								textAlign={'center'}
 								sx={{ color: theme.palette.lighterPrimary['4'], opacity: 0 }}
 							>
-								Up to 100PB fast storage per team account
+								{content.features.text5}
 							</Typography>
 						</Grid>
 					</Grid>

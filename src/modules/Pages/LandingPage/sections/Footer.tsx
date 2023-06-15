@@ -1,24 +1,26 @@
 import React from 'react';
 import { Divider, Grid, Link, ListItemText, Typography, useTheme } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Config = [
 	{
 		title: 'Solutions',
-		links: ['Cron', 'Health checks', 'Status badge', 'Analytics']
+		links: ['Cron', 'Health checks', 'Alarms']
 	},
 	{
 		title: 'Support',
-		links: ['Pricing', 'Docs', 'Guides', 'SDKs']
+		links: ['Pricing', 'Docs', 'SDKs']
 	},
 	{
 		title: 'Company',
-		links: ['About', 'Blog', 'Partners']
+		links: ['About us', 'Contact us']
 	},
 	{
 		title: 'Legal',
-		links: ['Claim', 'Privacy', 'Terms']
+		links: ['Terms of service', 'Privacy Policy']
 	}
 ];
+
 const Footer: React.FC = () => {
 	const theme = useTheme();
 	return (
@@ -49,7 +51,11 @@ const Footer: React.FC = () => {
 						<Grid item xs={6} height={'100%'}>
 							{links.map((link) => (
 								<ListItemText key={link}>
-									<Link href="#">{link}</Link>
+									<Link href="/"></Link>
+
+									<Link to="/" component={RouterLink} noWrap>
+										{link}
+									</Link>
 								</ListItemText>
 							))}
 						</Grid>

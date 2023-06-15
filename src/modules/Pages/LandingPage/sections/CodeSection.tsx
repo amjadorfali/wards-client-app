@@ -11,7 +11,17 @@ const elements = {
 	codeBlock: 'codeBlock',
 	bashBlock: 'bashBlock'
 };
+
+const content = {
+	title: ['Seamless Integration with', { special: 'Our Robust SDKs' }],
+	subtitle: 'Effortlessly incorporate our service into your applications.'
+};
 const staggerAnimation = stagger(0.3);
+
+const animationSequence = Object.keys(elements)
+	.filter((id) => id != elements.codeBlock)
+	.map((id) => [`#${id}`, { opacity: 1, scale: [0.5, 1] }, { duration: 0.5, delay: staggerAnimation, at: '-0.2' }]);
+
 const CodeSection: React.FC = () => {
 	const theme = useTheme();
 	const [scope, animate] = useAnimate<HTMLDivElement>();
@@ -19,16 +29,8 @@ const CodeSection: React.FC = () => {
 
 	useEffect(() => {
 		if (inView) {
-			animate(
-				[
-					...Object.keys(elements)
-						.filter((id) => id != elements.codeBlock)
-						.map((id) => [`#${id}`, { opacity: 1, scale: [0.5, 1] }, { duration: 0.5, delay: staggerAnimation, at: '-0.2' }])
-				],
-				{}
-			);
-
-			animate(`#${elements.codeBlock}`, { opacity: 1, scale: [0.5, 1], y: [100, 0] }, { duration: 0.5 });
+			animate([...animationSequence], {});
+			animate(`#${elements.codeBlock}`, { opacity: 1, scale: [0.5, 1] }, { duration: 0.5 });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inView]);
@@ -47,14 +49,19 @@ const CodeSection: React.FC = () => {
 		>
 			<Grid item xs={11} sm={5} lg={3} container sx={{}} gap={3}>
 				<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2" color={'text.secondary'}>
-					Our features at your
-					<Typography variant="body1" sx={{ ...theme.typography.h2 }} display={'inline'} color={'tertiary'}>
-						{' '}
-						fingertips.
-					</Typography>
+					{content.title.map((text) =>
+						typeof text === 'string' ? (
+							text
+						) : (
+							<Typography variant="body1" sx={{ ...theme.typography.h2 }} display={'inline'} color={'tertiary'}>
+								{' '}
+								{text.special}
+							</Typography>
+						)
+					)}
 				</Typography>
 				<Typography sx={{ opacity: 0 }} id={elements.subtitle} variant="subtitle1">
-					Our Client is a query builder that composes the way you think and gets auto-generated.
+					{content.subtitle}
 				</Typography>
 
 				<Grid item xs={11} sx={{ opacity: 0 }} id={elements.bashBlock} md={12}>

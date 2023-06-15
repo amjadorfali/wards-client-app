@@ -1,4 +1,3 @@
 ```bash
-npm install node
-npm install bash
+npm install remoteOps
 ```

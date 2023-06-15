@@ -1,20 +1,23 @@
 ```js
-/**
- * Get all conversions
- * with id
- * filtered by
- * page and country.
+const monitor =
+ new remoteOps.Monitor();
+
+/** send a heartbeat event
+ * with a message
  */
-await analytics.events
-	.find({
-		where: {
-			page: '/pricing',
-			country: 'NL'
-		}
-	})
-	.conversions({
-		where: {
-			id: 231
-		}
-	});
+
+monitor
+.ping(
+    { message: 'Alive' }
+);
+
+/** 
+ * include counts
+ * & error counts
+ */
+monitor
+.ping({ 
+    count: 100,
+    error_count: 3 
+});
 ```

@@ -6,6 +6,10 @@ import { useMaintainScroll } from 'hooks';
 
 import { useAnimate, useInView } from 'framer-motion';
 
+const content = {
+	title: ['Maximize Application Performance', 'with Enhanced Monitoring'],
+	subtitle: ['Gain full visibility and ensure peak', 'efficiency with our comprehensive Monitoring service.']
+};
 const SummarySection: React.FC = () => {
 	const [scope, animate] = useAnimate<HTMLDivElement>();
 	const isInView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
@@ -15,7 +19,7 @@ const SummarySection: React.FC = () => {
 	useMaintainScroll();
 	useEffect(() => {
 		if (isInView) {
-			animate(scope.current, { opacity: 1, scale: [0.5, 1], y: [100, 0] }, { duration: 0.5, delay: 0.3 });
+			animate(scope.current, { opacity: 1, scale: [0.5, 1] }, { duration: 0.5, delay: 0.3 });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isInView]);
@@ -25,10 +29,20 @@ const SummarySection: React.FC = () => {
 			<Grid py={20} container justifyContent={'center'} alignContent={'center'}>
 				<Grid sx={{ opacity: 0 }} ref={scope} item xs={12} md={12} textAlign={'center'}>
 					<Typography variant="h2">
-						Empower your team <br /> with good data
+						{content.title.map((text) => (
+							<>
+								{text}
+								<br />
+							</>
+						))}
 					</Typography>
 					<Typography variant="subtitle1" px={3} pt={3}>
-						We collect events from your web & mobile apps and provide <br /> a complete data toolkit for every team in your company.
+						{content.subtitle.map((text) => (
+							<>
+								{text}
+								<br />
+							</>
+						))}
 					</Typography>
 				</Grid>
 				<Grid container item xs={10} md={8} justifyContent={'center'}>

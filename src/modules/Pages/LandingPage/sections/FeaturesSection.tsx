@@ -3,43 +3,46 @@ import React, { useEffect } from 'react';
 
 import TroubleshootOutlinedIcon from '@mui/icons-material/TroubleshootOutlined';
 import { useAnimate, useInView } from 'framer-motion';
-
-const ContentConfig = {
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+const content = {
 	title: (theme: Theme) => (
 		<>
-			Powerful
+			Empower Your
 			<Typography variant="body1" sx={{ ...theme.typography.h2 }} display={'inline'} color="primary.main">
 				{' '}
-				reporting
+				Monitoring
 			</Typography>
 		</>
 	),
-	subtitle: [
-		'We use the latest software to power your data.',
-		'Used by the biggest enterprises today, our stack has stood the test of time.'
-	],
+	subtitle: ['Unlock a comprehensive set of features', ' tailored to enhance your monitoring experience.'],
 	button: 'Get Started',
-
 	list: [
 		{
-			title: 'Powerful reporting',
+			title: 'Health-checks',
 			subtitle:
-				'We use the latest software to power your data. Used by the biggest enterprises today, our stack has stood the test of time.'
+				'Schedule automated cron-based health-checks to ensure timely pings, promptly detecting and alerting you to any disruptions.',
+			Icon: HealthAndSafetyIcon
 		},
 		{
-			title: 'Awesome features',
+			title: 'Log Tracking',
 			subtitle:
-				'We use the latest software to power your data. Used by the biggest enterprises today, our stack has stood the test of time.'
+				'Capture detailed logs of all API calls, providing valuable insights into the health and performance of your applications.',
+			Icon: FindInPageIcon
+		},
+
+		{
+			title: 'API monitoring',
+			subtitle: 'Monitor the response and request times of your APIs, enabling you to identify and address performance bottlenecks.',
+			Icon: QueryStatsIcon
 		},
 		{
-			title: 'here we come',
+			title: 'Real-time Alarms',
 			subtitle:
-				'We use the latest software to power your data. Used by the biggest enterprises today, our stack has stood the test of time.'
-		},
-		{
-			title: 'Almost there',
-			subtitle:
-				'We use the latest software to power your data. Used by the biggest enterprises today, our stack has stood the test of time.'
+				'Receive instant notifications and alarms when health-checks fail, empowering you to take immediate action and prevent potential downtime.',
+			Icon: AccessAlarmIcon
 		}
 	]
 };
@@ -50,6 +53,10 @@ const elements = {
 	listItem: 'listItem',
 	avatar: 'avatar'
 };
+const animationSequence = Object.keys(elements)
+	.filter((id) => id !== elements.avatar)
+	.map((id) => [`#${id}`, { opacity: 1 }, { duration: 0.7, at: '<' }]);
+
 const FeaturesSection: React.FC = () => {
 	const theme = useTheme();
 
@@ -58,12 +65,7 @@ const FeaturesSection: React.FC = () => {
 
 	useEffect(() => {
 		if (inView) {
-			animate(
-				Object.keys(elements)
-					.filter((id) => id !== elements.avatar)
-					.map((id) => [`#${id}`, { opacity: 1, y: [100, 0] }, { duration: 0.7, at: '<' }])
-			);
-
+			animate([...animationSequence], {});
 			animate(`#${elements.avatar}`, { opacity: 1, scale: [0, 1] }, { duration: 0.7 });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,10 +89,10 @@ const FeaturesSection: React.FC = () => {
 				<Grid container item xs={10} sm={4} lg={3} xl={2} justifyContent={'center'} gap={30} alignContent={'center'}>
 					<Grid item container gap={2}>
 						<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2">
-							{ContentConfig.title(theme)}
+							{content.title(theme)}
 						</Typography>
 						<Typography variant="subtitle1" sx={{ opacity: 0 }} id={elements.subtitle}>
-							{ContentConfig.subtitle.map((text) => (
+							{content.subtitle.map((text) => (
 								<React.Fragment key={text}>
 									{text}
 									<br />
@@ -98,15 +100,15 @@ const FeaturesSection: React.FC = () => {
 							))}
 						</Typography>
 						<Button variant="contained" size="large" color="primary" sx={{ textTransform: 'capitalize' }}>
-							{ContentConfig.button}
+							{content.button}
 						</Button>
 					</Grid>
 
-					{ContentConfig.list.map(({ title, subtitle }) => (
+					{content.list.map(({ title, subtitle, Icon }) => (
 						<Grid key={title} item container sx={{ opacity: 0 }} id={elements.listItem} gap={2} wrap={'wrap'}>
 							<Grid item xs={12}>
 								<Avatar sx={{ bgcolor: theme.palette.primary.main, width: '3rem', height: '3rem' }}>
-									<TroubleshootOutlinedIcon sx={{ width: '2rem', height: '2rem' }} />
+									<Icon sx={{ width: '2rem', height: '2rem' }} />
 								</Avatar>
 							</Grid>
 
