@@ -1,78 +1,59 @@
 import React from 'react';
 import { Divider, Grid, Link, ListItemText, Typography, useTheme } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-
-const Config = [
+import CopyrightIcon from '@mui/icons-material/Copyright';
+import { RoutesConfig } from 'modules/App/App';
+const Config: { text: string; url: RoutesConfig }[] = [
 	{
-		title: 'Solutions',
-		links: ['Cron', 'Health checks', 'Alarms']
+		text: 'Terms',
+		url: RoutesConfig.dummy
 	},
 	{
-		title: 'Support',
-		links: ['Pricing', 'Docs', 'SDKs']
+		text: 'Privacy',
+		url: RoutesConfig.dummy
 	},
 	{
-		title: 'Company',
-		links: ['About us', 'Contact us']
+		text: 'Pricing',
+		url: RoutesConfig.dummy
 	},
 	{
-		title: 'Legal',
-		links: ['Terms of service', 'Privacy Policy']
+		text: 'FAQ',
+		url: RoutesConfig.dummy
+	},
+	{
+		text: 'API',
+		url: RoutesConfig.dummy
+	},
+	{
+		text: 'Status',
+		url: RoutesConfig.dummy
 	}
 ];
 
 const Footer: React.FC = () => {
 	const theme = useTheme();
 	return (
-		<Grid
-			sx={{
-				background: theme.palette.customBg.gradient,
-				//Responsive layout
-				pt: { xs: 15, md: 10 },
-				alignContent: { md: 'center' }
-			}}
-			gap={3}
-			container
-		>
-			<Grid
-				item
-				xs={12}
-				alignItems={'stretch'}
-				container
-				sx={{ p: 3, gap: { xs: 2, sm: 0 }, justifyContent: { xs: 'start', sm: 'center' } }}
-			>
-				{Config.map(({ links, title }) => (
-					<Grid container key={title} item xs={6} sm={3} md={2} justifyContent={'center'} gap={0.1}>
-						<Grid item xs={6}>
-							<Typography variant="h6" color={'text.secondary'}>
-								{title}
-							</Typography>
-						</Grid>
-						<Grid item xs={6} height={'100%'}>
-							{links.map((link) => (
-								<ListItemText key={link}>
-									<Link href="/"></Link>
-
-									<Link to="/" component={RouterLink} noWrap>
-										{link}
-									</Link>
-								</ListItemText>
-							))}
-						</Grid>
-					</Grid>
-				))}
-			</Grid>
-
+		<Grid sx={{ pt: { xs: 15, md: 10 } }} gap={3} container>
 			<Grid item xs={12}>
 				<Divider sx={{ background: theme.palette.textTertiary }} />
 			</Grid>
 
-			<Grid container item xs={12} justifyContent={'space-between'} alignContent={'center'} gap={2} p={1}>
-				<Grid item xs={12} md={3} container sx={{ justifyContent: { xs: 'center', md: 'flex-start' } }}>
-					<Typography variant="subtitle2">All rights reserved</Typography>
+			<Grid container item xs={12} justifyContent={'center'} p={2} gap={2}>
+				<Grid container item sm={5} lg={3}>
+					<Typography variant="subtitle2" display={'flex'} alignItems={'center'} gap={1}>
+						<CopyrightIcon /> 2023 RemoteOps, Inc
+					</Typography>
 				</Grid>
-				<Grid item xs={12} md={3} container sx={{ justifyContent: { xs: 'center', md: 'right' } }}>
-					<Typography variant="subtitle2">All rights reserved</Typography>
+				<Grid item container gap={2} sm={5} lg={4}>
+					{Config.map(({ text, url }) => (
+						<Grid key={text} item>
+							<ListItemText>
+								<Link to={url} component={RouterLink} noWrap>
+									{text}
+								</Link>
+							</ListItemText>
+						</Grid>
+					))}
 				</Grid>
 			</Grid>
 		</Grid>
