@@ -9,7 +9,6 @@ const HeroSection: React.FC = () => {
 			container
 			sx={{
 				minHeight: '100vh',
-				background: theme.palette.customBg.gradient,
 				position: 'relative',
 				//Responsive layout
 				alignContent: 'center'
@@ -24,9 +23,9 @@ const HeroSection: React.FC = () => {
 				</Grid>
 
 				<BounceWrapper item xs={12} container justifyContent="center" gap={3}>
-					<Grid item className="ball" sx={{ background: theme.palette.textTertiary }} />
-					<Grid item className="ball" sx={{ background: theme.palette.textTertiary }} />
-					<Grid item className="ball" sx={{ background: theme.palette.textTertiary }} />
+					<Grid item className="ball" sx={{ background: theme.palette.primary.main }} />
+					<Grid item className="ball" sx={{ background: theme.palette.primary.main }} />
+					<Grid item className="ball" sx={{ background: theme.palette.primary.main }} />
 				</BounceWrapper>
 			</Grid>
 		</Grid>

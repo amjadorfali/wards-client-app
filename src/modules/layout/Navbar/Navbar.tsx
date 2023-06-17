@@ -27,11 +27,13 @@ import { RoutesConfig } from 'modules/App/App';
 
 const pages = ['Products', 'Pricing', 'Docs', 'About'];
 const icons = [MonitorHeartIcon, SavingsIcon, BookIcon, InfoIcon];
-const actions = ['Sign In', 'Sign Up'];
+const actions = [
+	{ text: 'Sign In', link: RoutesConfig.signIn },
+	{ text: 'Sign Up', link: RoutesConfig.signUp }
+];
 
 const Navbar: React.FC = () => {
 	const theme = useTheme();
-
 	const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
 
 	const handleOpenNavMenu = () => {
@@ -41,14 +43,12 @@ const Navbar: React.FC = () => {
 	const handleCloseNavMenu = () => {
 		setDrawerOpen(false);
 	};
-
 	/* From https://css.glass */
 	return (
 		<AppBar
 			position="fixed"
 			sx={{
-				bgcolor: theme.palette.customBg.primary,
-				background: theme.palette.customBg.header,
+				background: theme.palette.background.paper,
 				backdropFilter: 'blur(5.2px)'
 			}}
 		>
@@ -66,7 +66,8 @@ const Navbar: React.FC = () => {
 							display: { xs: 'none', md: 'flex' },
 							fontFamily: 'monospace',
 							fontWeight: 700,
-							letterSpacing: '.3rem'
+							letterSpacing: '.3rem',
+							color: theme.palette.primary.light
 						}}
 					>
 						Ops
@@ -88,8 +89,6 @@ const Navbar: React.FC = () => {
 							sx={{
 								'.MuiDrawer-paper': {
 									width: '100%',
-									bgcolor: theme.palette.customBg.primary,
-									background: theme.palette.customBg.header,
 									backdropFilter: 'blur(5.2px)'
 								}
 							}}
@@ -104,7 +103,7 @@ const Navbar: React.FC = () => {
 										<ListItem key={text}>
 											<ListItemButton component={RouterLink} to={RoutesConfig.dummy} onClick={handleCloseNavMenu}>
 												<ListItemIcon children={<Icon />} sx={{ color: theme.palette.primary.main }} />
-												<ListItemText sx={{ color: theme.palette.secondary.main }} primary={text} />
+												<ListItemText primary={text} />
 											</ListItemButton>
 										</ListItem>
 									);
@@ -114,7 +113,7 @@ const Navbar: React.FC = () => {
 							<Grid container wrap="wrap" direction={'column'} p={2} gap={2}>
 								<Button
 									component={RouterLink}
-									to={RoutesConfig.dummy}
+									to={RoutesConfig.signIn}
 									onClick={handleCloseNavMenu}
 									size="large"
 									color="primary"
@@ -124,7 +123,7 @@ const Navbar: React.FC = () => {
 								</Button>
 								<Button
 									component={RouterLink}
-									to={RoutesConfig.dummy}
+									to={RoutesConfig.signUp}
 									onClick={handleCloseNavMenu}
 									size="large"
 									color="primary"
@@ -149,7 +148,8 @@ const Navbar: React.FC = () => {
 							display: { xs: 'flex', md: 'none' },
 							fontFamily: 'monospace',
 							fontWeight: 700,
-							letterSpacing: '.3rem'
+							letterSpacing: '.3rem',
+							color: theme.palette.secondary.light
 						}}
 					>
 						Ops
@@ -163,16 +163,16 @@ const Navbar: React.FC = () => {
 					</Box>
 
 					<Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }} gap={2} justifyContent={'flex-end'}>
-						{actions.map((action) => (
+						{actions.map(({ link, text }) => (
 							<Button
 								component={RouterLink}
-								to={RoutesConfig.dummy}
+								to={link}
 								variant="outlined"
 								color="secondary"
-								key={action}
+								key={link}
 								sx={{ my: 2, color: 'white', display: 'block' }}
 							>
-								{action}
+								{text}
 							</Button>
 						))}
 					</Box>

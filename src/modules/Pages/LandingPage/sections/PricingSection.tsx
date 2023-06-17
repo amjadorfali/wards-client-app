@@ -31,6 +31,7 @@ interface CardProps {
 }
 
 const CustomCard: React.FC<CardProps> = ({ color, image, title, subtitle, features, price, priceDescription }) => {
+	const theme = useTheme();
 	return (
 		<CardActionArea
 			sx={{
@@ -42,22 +43,22 @@ const CustomCard: React.FC<CardProps> = ({ color, image, title, subtitle, featur
 			<Card elevation={10} sx={{ borderRadius: 16 }}>
 				<CardMedia sx={{ width: '100%', height: '0', pb: '75%', bgcolor: 'rgba(0, 0, 0, 0.08)' }} image={image} />
 				<CardContent sx={{ bgcolor: color }}>
-					<Typography sx={{ textTransform: 'uppercase' }} color={'text.secondary'} variant={'h4'}>
+					<Typography sx={{ textTransform: 'uppercase' }} variant={'h4'}>
 						{title}
 					</Typography>
-					<Typography color={'secondary'} variant="subtitle1">
-						{subtitle}
-					</Typography>
+					<Typography variant="subtitle1">{subtitle}</Typography>
+					<br />
 
-					<Typography variant="h4" color={'text.secondary'}>
-						{price}
-					</Typography>
-					<Typography variant="subtitle1" color={'text.secondary'}>
-						{priceDescription}
-					</Typography>
+					<Typography variant="h4">{price}</Typography>
+					<br />
+
+					<Typography>{priceDescription}</Typography>
 					<List>
 						{features.map((feature) => (
-							<ListItem key={feature}>
+							<ListItem
+								sx={{ color: theme.palette.secondary.contrastText, stroke: theme.palette.secondary.contrastText }}
+								key={feature}
+							>
 								<ListItemIcon>{<Check />}</ListItemIcon>
 								<ListItemText>{feature}</ListItemText>
 							</ListItem>
@@ -79,7 +80,7 @@ type ContentValue = Omit<CardProps, 'color'>;
 const content: { [key in keyof typeof elements]: ContentValue } = {
 	hobby: {
 		title: 'Hobby',
-		subtitle: 'Try out everything Simply-Monitoring can do, absolutely free',
+		subtitle: 'Try out everything RemoteOps can do, absolutely free',
 		price: '$ 0',
 		priceDescription: 'Free, forever',
 		features: ['Real-time monitoring and log tracking', '5 health-checks and alarms', 'Basic Support'],
@@ -117,7 +118,7 @@ export const PricingSection: React.FC = () => {
 	const theme = useTheme();
 
 	const [scope, animate] = useAnimate<HTMLDivElement>();
-	const inView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
+	const inView = useInView(scope, { once: true, margin: '0px 0px -22% 0px' });
 
 	useEffect(() => {
 		if (inView) {
@@ -130,13 +131,13 @@ export const PricingSection: React.FC = () => {
 		<Grid py={30} container>
 			<Grid container item ref={scope} sx={{ justifyContent: { xs: 'center', md: 'space-around' }, gap: { xs: 10, md: 0 } }}>
 				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.hobby} md={3}>
-					<CustomCard color={theme.palette.primary.main} {...content.hobby} />
+					<CustomCard color={theme.palette.primary.light} {...content.hobby} />
 				</Grid>
 				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.supporter} md={3}>
-					<CustomCard color={theme.palette.textTertiary || ''} {...content.supporter} />
+					<CustomCard color={theme.palette.primary.main} {...content.supporter} />
 				</Grid>
 				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.business} md={3}>
-					<CustomCard color={theme.palette.lighterPrimary['4']} {...content.business} />
+					<CustomCard color={theme.palette.primary.dark} {...content.business} />
 				</Grid>
 			</Grid>
 		</Grid>

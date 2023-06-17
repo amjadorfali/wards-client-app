@@ -36,13 +36,13 @@ const content: {
 const staggerAnimation = stagger(0.25);
 const headingAnimationSequence = Object.keys(headingElements).map((id) => [
 	`#${id}`,
-	{ opacity: 1, scale: [0.5, 1] },
+	{ y: [40, 0], opacity: 1 },
 	{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
 ]);
 
 const textAnimationSequence = Object.keys(textElements).map((id) => [
 	`#${id}`,
-	{ opacity: 1, scale: [0.5, 1] },
+	{ y: [40, 0], opacity: 1 },
 	{ duration: 0.5, delay: staggerAnimation, at: '-0.2' }
 ]);
 
@@ -50,10 +50,10 @@ const OurToolsSection: React.FC = () => {
 	const [scope, animate] = useAnimate<HTMLDivElement>();
 	const [headingRef, textRef] = [useRef(null), useRef(null)];
 	const [headingInView, textInView] = [
-		useInView(headingRef, { once: true, margin: '0px 0px -35% 0px' }),
+		useInView(headingRef, { once: true, margin: '0px 0px -22% 0px' }),
 		useInView(textRef, {
 			once: true,
-			margin: '0px 0px -35% 0px'
+			margin: '0px 0px -22% 0px'
 		})
 	];
 
@@ -74,43 +74,39 @@ const OurToolsSection: React.FC = () => {
 	const theme = useTheme();
 	return (
 		<>
-			<Grid
-				pt={20}
-				container
-				justifyContent={'center'}
-				alignContent={'center'}
-				sx={{
-					minHeight: '120vh',
-					background: theme.palette.customBg.secondaryGradient
-				}}
-				ref={scope}
-			>
+			<Grid pt={20} container justifyContent={'center'} alignContent={'center'} ref={scope}>
 				<Grid item container xs={12} justifyContent={'center'} gap={2}>
 					{/* Heading */}
-					<Grid item container ref={headingRef}>
+					<Grid item container ref={headingRef} gap={4}>
 						<Grid item xs={12}>
-							<Typography sx={{ opacity: 0 }} id={headingElements.title} variant="h2" textAlign={'center'} color={'text.secondary'}>
+							<Typography sx={{ opacity: 0 }} id={headingElements.title} variant="h2" textAlign={'center'}>
 								{content.title.map((text) =>
 									typeof text === 'string' ? (
-										<>
+										<React.Fragment key={text}>
 											{text}
 											<br />
-										</>
+										</React.Fragment>
 									) : (
-										<Typography variant="body1" display={'inline'} sx={{ ...theme.typography.h2 }} color={'lighterPrimary.1'}>
-											{text.special}
+										<Typography
+											key={text.special}
+											variant="body1"
+											display={'inline'}
+											sx={{ ...theme.typography.h2 }}
+											color={'primary'}
+										>
+											{text.special}{' '}
 										</Typography>
 									)
 								)}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
-							<Typography sx={{ opacity: 0 }} id={headingElements.subtitle} variant="subtitle1" textAlign={'center'}>
+							<Typography sx={{ opacity: 0 }} id={headingElements.subtitle} textAlign={'center'}>
 								{content.subtitle.map((text) => (
-									<>
+									<React.Fragment key={text}>
 										{text}
 										<br />
-									</>
+									</React.Fragment>
 								))}
 							</Typography>
 						</Grid>
@@ -141,54 +137,30 @@ const OurToolsSection: React.FC = () => {
 					{/* Text */}
 					<Grid item container ref={textRef} gap={2}>
 						<Grid item xs={12}>
-							<Typography sx={{ opacity: 0 }} id={textElements.text1} variant="subtitle1" fontWeight={600} textAlign={'center'}>
+							<Typography sx={{ opacity: 0 }} color={'secondary.dark'} id={textElements.text1} fontWeight={600} textAlign={'center'}>
 								{content.features.text1}
 							</Typography>
 						</Grid>
 						<Grid item xs={12}>
-							<Typography
-								id={textElements.text2}
-								variant="subtitle1"
-								fontWeight={600}
-								textAlign={'center'}
-								sx={{ color: theme.palette.lighterPrimary['1'], opacity: 0 }}
-							>
+							<Typography sx={{ opacity: 0 }} color={'secondary.main'} id={textElements.text2} fontWeight={600} textAlign={'center'}>
 								{content.features.text2}
 							</Typography>
 						</Grid>
 
 						<Grid item xs={12}>
-							<Typography
-								id={textElements.text3}
-								variant="subtitle1"
-								fontWeight={600}
-								textAlign={'center'}
-								sx={{ color: theme.palette.lighterPrimary['2'], opacity: 0 }}
-							>
+							<Typography sx={{ opacity: 0 }} color={'primary.light'} id={textElements.text3} fontWeight={600} textAlign={'center'}>
 								{content.features.text3}
 							</Typography>
 						</Grid>
 
 						<Grid item xs={12}>
-							<Typography
-								id={textElements.text4}
-								variant="subtitle1"
-								fontWeight={600}
-								textAlign={'center'}
-								sx={{ color: theme.palette.lighterPrimary['3'], opacity: 0 }}
-							>
+							<Typography sx={{ opacity: 0 }} color={'primary.main'} id={textElements.text4} fontWeight={600} textAlign={'center'}>
 								{content.features.text4}
 							</Typography>
 						</Grid>
 
 						<Grid item xs={12}>
-							<Typography
-								id={textElements.text5}
-								variant="subtitle1"
-								fontWeight={600}
-								textAlign={'center'}
-								sx={{ color: theme.palette.lighterPrimary['4'], opacity: 0 }}
-							>
+							<Typography sx={{ opacity: 0 }} color={'primary.dark'} id={textElements.text5} fontWeight={600} textAlign={'center'}>
 								{content.features.text5}
 							</Typography>
 						</Grid>

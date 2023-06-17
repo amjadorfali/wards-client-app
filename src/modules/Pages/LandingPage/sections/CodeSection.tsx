@@ -25,7 +25,7 @@ const animationSequence = Object.keys(elements)
 const CodeSection: React.FC = () => {
 	const theme = useTheme();
 	const [scope, animate] = useAnimate<HTMLDivElement>();
-	const inView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
+	const inView = useInView(scope, { once: true, margin: '0px 0px -30% 0px' });
 
 	useEffect(() => {
 		if (inView) {
@@ -51,9 +51,9 @@ const CodeSection: React.FC = () => {
 				<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2" color={'text.secondary'}>
 					{content.title.map((text) =>
 						typeof text === 'string' ? (
-							text
+							<React.Fragment key={text}>{text}</React.Fragment>
 						) : (
-							<Typography variant="body1" sx={{ ...theme.typography.h2 }} display={'inline'} color={'tertiary'}>
+							<Typography key={text.special} variant="body1" sx={{ ...theme.typography.h2 }} display={'inline'} color={'tertiary'}>
 								{' '}
 								{text.special}
 							</Typography>

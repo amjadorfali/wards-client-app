@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Grid, Link, ListItemText, Typography, useTheme } from '@mui/material';
+import { Divider, Grid, Link, ListItemText, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import { RoutesConfig } from 'modules/App/App';
@@ -31,16 +31,15 @@ const Config: { text: string; url: RoutesConfig }[] = [
 ];
 
 const Footer: React.FC = () => {
-	const theme = useTheme();
 	return (
 		<Grid gap={3} container>
 			<Grid item xs={12}>
-				<Divider sx={{ background: theme.palette.textTertiary }} />
+				<Divider />
 			</Grid>
 
 			<Grid container item xs={12} justifyContent={'center'} p={2} gap={2}>
 				<Grid container item sm={5} lg={3}>
-					<Typography variant="subtitle2" display={'flex'} alignItems={'center'} gap={1}>
+					<Typography display={'flex'} alignItems={'center'} gap={1}>
 						<CopyrightIcon /> 2023 RemoteOps, Inc
 					</Typography>
 				</Grid>

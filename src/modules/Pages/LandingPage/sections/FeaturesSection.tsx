@@ -7,6 +7,9 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
+import { RoutesConfig } from 'modules/App/App';
+import { Link as RouterLink } from 'react-router-dom';
+
 const content = {
 	title: (theme: Theme) => (
 		<>
@@ -18,7 +21,7 @@ const content = {
 		</>
 	),
 	subtitle: ['Unlock a comprehensive set of features', ' tailored to enhance your monitoring experience.'],
-	button: 'Get Started',
+	button: { text: 'Get Started', link: RoutesConfig.signUp },
 	list: [
 		{
 			title: 'Health-checks',
@@ -61,12 +64,12 @@ const FeaturesSection: React.FC = () => {
 	const theme = useTheme();
 
 	const [scope, animate] = useAnimate<HTMLDivElement>();
-	const inView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
+	const inView = useInView(scope, { once: true, margin: '0px 0px -22% 0px' });
 
 	useEffect(() => {
 		if (inView) {
 			animate([...animationSequence], {});
-			animate(`#${elements.avatar}`, { opacity: 1, scale: [0, 1] }, { duration: 0.7 });
+			animate(`#${elements.avatar}`, { y: [40, 0], opacity: 1 }, { duration: 0.7 });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inView]);
@@ -91,7 +94,7 @@ const FeaturesSection: React.FC = () => {
 						<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2">
 							{content.title(theme)}
 						</Typography>
-						<Typography variant="subtitle1" sx={{ opacity: 0 }} id={elements.subtitle}>
+						<Typography sx={{ opacity: 0 }} id={elements.subtitle}>
 							{content.subtitle.map((text) => (
 								<React.Fragment key={text}>
 									{text}
@@ -99,8 +102,15 @@ const FeaturesSection: React.FC = () => {
 								</React.Fragment>
 							))}
 						</Typography>
-						<Button variant="contained" size="large" color="primary" sx={{ textTransform: 'capitalize' }}>
-							{content.button}
+						<Button
+							component={RouterLink}
+							to={content.button.link}
+							variant="contained"
+							size="large"
+							color="primary"
+							sx={{ textTransform: 'capitalize' }}
+						>
+							{content.button.text}
 						</Button>
 					</Grid>
 
@@ -114,7 +124,7 @@ const FeaturesSection: React.FC = () => {
 
 							<Typography variant="h4">{title}</Typography>
 
-							<Typography variant="subtitle2">{subtitle}</Typography>
+							<Typography>{subtitle}</Typography>
 						</Grid>
 					))}
 				</Grid>

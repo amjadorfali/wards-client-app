@@ -12,14 +12,14 @@ const content = {
 };
 const SummarySection: React.FC = () => {
 	const [scope, animate] = useAnimate<HTMLDivElement>();
-	const isInView = useInView(scope, { once: true, margin: '0px 0px -35% 0px' });
+	const isInView = useInView(scope, { once: true, margin: '0px 0px -22% 0px' });
 
 	//This is maintaining the scroll for all the landing page, not just this section
 	//It needs to be called here for now due to Lazy Loading sections
 	useMaintainScroll();
 	useEffect(() => {
 		if (isInView) {
-			animate(scope.current, { opacity: 1, scale: [0.5, 1] }, { duration: 0.5, delay: 0.3 });
+			animate(scope.current, { y: [40, 0], opacity: 1 }, { duration: 0.5, delay: 0.3 });
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isInView]);
@@ -30,18 +30,18 @@ const SummarySection: React.FC = () => {
 				<Grid sx={{ opacity: 0 }} ref={scope} item xs={12} md={12} textAlign={'center'}>
 					<Typography variant="h2">
 						{content.title.map((text) => (
-							<>
+							<React.Fragment key={text}>
 								{text}
 								<br />
-							</>
+							</React.Fragment>
 						))}
 					</Typography>
-					<Typography variant="subtitle1" px={3} pt={3}>
+					<Typography color="text.secondary" px={3} pt={3}>
 						{content.subtitle.map((text) => (
-							<>
+							<React.Fragment key={text}>
 								{text}
 								<br />
-							</>
+							</React.Fragment>
 						))}
 					</Typography>
 				</Grid>

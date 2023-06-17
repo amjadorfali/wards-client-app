@@ -1,83 +1,37 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 const Root = React.lazy(() => import('modules/Pages/Root/Root'));
 const LandingPage = React.lazy(() => import('modules/Pages/LandingPage/LandingPage'));
 const DummyPage = React.lazy(() => import('modules/Pages/DummyPage/DummyPage'));
-
-interface CustomBg {
-	secondaryGradient: string;
-	primary: string;
-	gradient: string;
-	header: string;
-	tertiaryGradient: string;
-}
-
-declare module '@mui/material/styles' {
-	interface Palette {
-		customBg: CustomBg;
-		lighterPrimary: {
-			1: string;
-			2: string;
-			3: string;
-			4: string;
-		};
-		darkerPrimary: string;
-		tertiary?: string;
-		textTertiary?: string;
-	}
-	interface PaletteOptions {
-		customBg?: CustomBg;
-		lighterPrimary?: {
-			1: string;
-			2: string;
-			3: string;
-			4: string;
-		};
-		darkerPrimary?: string;
-		tertiary?: string;
-		textTertiary?: string;
-	}
-}
+const SignIn = React.lazy(() => import('modules/Pages/Auth/SignIn'));
+const SignUp = React.lazy(() => import('modules/Pages/Auth/SignUp'));
 
 export enum RoutesConfig {
 	home = '/',
-	dummy = '/coming-soon'
+	dummy = '/coming-soon',
+	signIn = '/sign-in',
+	signUp = '/sign-up'
 }
 const App: React.FC = () => {
-	//TODO: Think of an alternative to this (Wide range of colors)
+	//TODO : Choose appropriate colors https://m2.material.io/inline-tools/color/
 	const theme = responsiveFontSizes(
 		createTheme({
 			palette: {
-				mode: 'light',
+				mode: 'dark',
+				background: {
+					default: '#0b0c14',
+					paper: '#141521d8'
+				},
 				primary: {
-					main: '#7855FF'
+					main: '#5c64d4'
 				},
+
 				secondary: {
-					main: '#E8E3FD'
-				},
-				text: {
-					primary: '#101012',
-					secondary: '#FFFF'
-				},
-				textTertiary: '#9593a8',
-				//TODO: If possible, make this into a component config instead
-				customBg: {
-					primary: '#111013',
-					gradient: `radial-gradient(94% 58.3%at 50.3% 82.6%,#2a2541 0%, #111013 100%)`,
-					secondaryGradient: `radial-gradient(75% 50%at 50% 44.9%,#352541 0%,#111013 100%)`,
-					tertiaryGradient: `radial-gradient(94% 92.9%at 100% 96.1%,#413025 0%, #111013 100%)`,
-					header: 'rgba(17, 16, 19, 0.87)'
-				},
-				darkerPrimary: '#413025',
-				tertiary: '#ffcbad',
-				lighterPrimary: {
-					'1': '#e563b0',
-					'2': '#e76fd1',
-					'3': '#ea80ff',
-					'4': '#ae70ff'
+					main: '#bbc2f7'
 				}
 			},
+
 			typography: {
 				h1: {
 					fontWeight: 700,
@@ -97,18 +51,22 @@ const App: React.FC = () => {
 				},
 				subtitle1: {
 					fontWeight: 400,
-					fontSize: 28,
-					color: '#9593a8'
+					fontSize: 28
 				},
 				subtitle2: {
 					fontWeight: 400,
-					fontSize: 20,
-					color: '#9593a8'
+					fontSize: 20
+				},
+				body1: {
+					fontSize: 20
 				}
 			}
 		})
 	);
 
+	//TODO: Add to notion https://betterstack.com/uptime?_ga=2.146380724.1853390323.1686930936-684077241.1686930936&_gl=1*1xj9iun*_gcl_au*MTgwNDcyNzA3OC4xNjg2OTMwOTM2
+
+	//Read more https://m2.material.io/design/color/the-color-system.html
 	const router = createBrowserRouter([
 		{
 			path: RoutesConfig.home,
@@ -121,6 +79,19 @@ const App: React.FC = () => {
 				{
 					element: <DummyPage />,
 					path: RoutesConfig.dummy
+				},
+				{
+					element: <SignIn />,
+					path: RoutesConfig.signIn
+				},
+				{
+					element: <SignUp />,
+					path: RoutesConfig.signUp
+				},
+				{
+					// Route guard
+					path: '*',
+					element: <Navigate to={RoutesConfig.home} />
 				}
 			]
 		}

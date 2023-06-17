@@ -2,6 +2,8 @@ import React, { Suspense, useEffect } from 'react';
 import { Button, Grid, Paper, Typography, useTheme } from '@mui/material';
 const InfiniteTime = React.lazy(() => import('components/charts/InfiniteTime'));
 import { useAnimate, stagger } from 'framer-motion';
+import { RoutesConfig } from 'modules/App/App';
+import { Link as RouterLink } from 'react-router-dom';
 
 const staggerAnimation = stagger(0.25);
 
@@ -16,7 +18,7 @@ const ids = {
 const content = {
 	title: ['Simply', { special: 'Monitoring' }],
 	subtitle: 'Stay ahead of potential issues with our advanced Monitoring solution.',
-	callToAction: 'Start Monitoring Now'
+	callToAction: { text: 'Start Monitoring Now', link: RoutesConfig.signUp }
 };
 
 const HeroSection: React.FC = () => {
@@ -28,7 +30,7 @@ const HeroSection: React.FC = () => {
 			[
 				...Object.keys(ids).map((id) => [
 					`#${id}`,
-					{ scale: [0, 1], opacity: 1, ease: 'easeOut' },
+					{ y: [40, 0], opacity: 1, ease: 'easeOut' },
 					{ duration: 0.8, delay: ids.subtitle === id ? 0.5 : staggerAnimation, at: '-0.4' }
 				])
 			],
@@ -40,12 +42,10 @@ const HeroSection: React.FC = () => {
 		<Grid
 			container
 			sx={{
-				minHeight: '80vh',
-				background: theme.palette.customBg.gradient,
+				minHeight: '90vh',
 				position: 'relative',
 				//Responsive layout
 				pt: { xs: 15, md: 10 },
-
 				alignContent: { md: 'center' }
 			}}
 			gap={15}
@@ -53,23 +53,23 @@ const HeroSection: React.FC = () => {
 		>
 			<Grid container item xs={12} justifyContent={'center'} height={'fit-content'} gap={3}>
 				<Grid item xs={12}>
-					<Typography variant="h1" color={'text.secondary'} align="center">
+					<Typography variant="h1" align="center">
 						{content.title.map((text) =>
 							typeof text === 'string' ? (
-								text
+								<React.Fragment key={text}> {text}</React.Fragment>
 							) : (
-								<>
+								<React.Fragment key={text.special}>
 									<br />
-									<Typography variant="body1" sx={{ ...theme.typography.h1 }} display={'inline'} color="primary.main">
+									<Typography variant="body1" sx={{ ...theme.typography.h1 }} display={'inline'} color="primary">
 										{text.special}
 									</Typography>
-								</>
+								</React.Fragment>
 							)
 						)}
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<Typography sx={{ opacity: 0 }} id={ids.subtitle} variant="subtitle1" align="center">
+					<Typography id={ids.subtitle} sx={{ opacity: 0 }} align="center">
 						{content.subtitle}
 					</Typography>
 				</Grid>
@@ -80,22 +80,16 @@ const HeroSection: React.FC = () => {
 						variant="contained"
 						color="primary"
 						size="large"
+						component={RouterLink}
+						to={content.callToAction.link}
 					>
-						{content.callToAction}
+						{content.callToAction.text}
 					</Button>
 				</Grid>
 			</Grid>
 
-			<Grid container item xs={12} justifyContent={'center'}>
-				<Grid
-					component={Paper}
-					elevation={10}
-					item
-					xs={12}
-					md={7}
-					sx={{ px: 2, mb: -7, background: theme.palette.customBg.primary, minHeight: '35rem', opacity: 0 }}
-					id={ids.graph}
-				>
+			<Grid pt={10} container item xs={12} justifyContent={'center'}>
+				<Grid component={Paper} elevation={10} item xs={12} md={7} sx={{ px: 2, opacity: 0, minHeight: '35rem' }} id={ids.graph}>
 					<Suspense fallback={<>Hey there, still loading...</>}>
 						<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
 					</Suspense>
