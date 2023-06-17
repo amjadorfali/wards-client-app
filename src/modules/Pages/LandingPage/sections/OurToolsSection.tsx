@@ -74,7 +74,7 @@ const OurToolsSection: React.FC = () => {
 	const theme = useTheme();
 	return (
 		<>
-			<Grid pt={20} container justifyContent={'center'} alignContent={'center'} ref={scope}>
+			<Grid pt={20} pb={5} container justifyContent={'center'} alignContent={'center'} ref={scope}>
 				<Grid item container xs={12} justifyContent={'center'} gap={2}>
 					{/* Heading */}
 					<Grid item container ref={headingRef} gap={4}>

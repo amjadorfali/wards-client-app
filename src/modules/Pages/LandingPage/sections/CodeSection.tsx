@@ -36,7 +36,7 @@ const CodeSection: React.FC = () => {
 	}, [inView]);
 
 	return (
-		<Grid container justifyContent={'center'} gap={10} alignContent={'flex-end'} pt={20} ref={scope}>
+		<Grid container justifyContent={'center'} gap={10} alignContent={'flex-end'} pt={20} ref={scope} bgcolor={'background.paper'}>
 			<Grid item xs={11} sm={5} lg={3} container gap={3} alignContent={'flex-end'}>
 				<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2">
 					{content.title.map((text) =>

@@ -13,7 +13,7 @@ import {
 	useTheme
 } from '@mui/material';
 
-import HobbyTierImg from 'assets/hobby.jpg';
+import HobbyTierImg from 'assets/hobby.jpg?w=1000&h=1050&format=webp&imagetools';
 import SupporterTierImg from 'assets/supporter.png?w=1000&h=1050&format=webp&imagetools';
 import BusinessTierImg from 'assets/business.jpeg?w=1000&h=1050&format=webp&imagetools';
 
@@ -128,7 +128,7 @@ export const PricingSection: React.FC = () => {
 	}, [inView]);
 
 	return (
-		<Grid py={30} container>
+		<Grid py={30} container bgcolor={'secondary.main'}>
 			<Grid container item ref={scope} sx={{ justifyContent: { xs: 'center', md: 'space-around' }, gap: { xs: 10, md: 0 } }}>
 				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.hobby} md={3}>
 					<CustomCard color={theme.palette.primary.light} {...content.hobby} />

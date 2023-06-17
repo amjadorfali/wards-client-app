@@ -14,6 +14,13 @@ export default defineConfig({
 		port: 3000
 	},
 	build: {
-		chunkSizeWarningLimit: 500 // default
+		chunkSizeWarningLimit: 650, //TODO: 500 is default, revert to 500 later once you figure out chunking react-syntax-highlighter
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					echarts: ['echarts']
+				}
+			}
+		}
 	}
 });

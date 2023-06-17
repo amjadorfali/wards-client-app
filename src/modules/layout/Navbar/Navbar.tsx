@@ -22,8 +22,7 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import SavingsIcon from '@mui/icons-material/Savings';
 import InfoIcon from '@mui/icons-material/Info';
 import BookIcon from '@mui/icons-material/Book';
-
-import { RoutesConfig } from 'modules/App/App';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 
 const pages = ['Products', 'Pricing', 'Docs', 'About'];
 const icons = [MonitorHeartIcon, SavingsIcon, BookIcon, InfoIcon];

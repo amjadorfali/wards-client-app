@@ -1,18 +1,13 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { LandingPage } from 'modules/Pages/LandingPage';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 const Root = React.lazy(() => import('modules/Pages/Root/Root'));
-const LandingPage = React.lazy(() => import('modules/Pages/LandingPage/LandingPage'));
 const DummyPage = React.lazy(() => import('modules/Pages/DummyPage/DummyPage'));
 const SignIn = React.lazy(() => import('modules/Pages/Auth/SignIn'));
 const SignUp = React.lazy(() => import('modules/Pages/Auth/SignUp'));
 
-export enum RoutesConfig {
-	home = '/',
-	dummy = '/coming-soon',
-	signIn = '/sign-in',
-	signUp = '/sign-up'
-}
 const App: React.FC = () => {
 	//TODO : Choose appropriate colors https://m2.material.io/inline-tools/color/
 	const theme = responsiveFontSizes(

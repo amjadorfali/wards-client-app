@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Typography, styled, useTheme } from '@mui/material';
 
-const HeroSection: React.FC = () => {
+const HeroSection: React.FC<{ loadOnly?: boolean }> = ({ loadOnly = false }) => {
 	const theme = useTheme();
 
 	return (
@@ -16,11 +16,13 @@ const HeroSection: React.FC = () => {
 			gap={15}
 		>
 			<Grid container item xs={12} justifyContent={'center'} height={'fit-content'} gap={10}>
-				<Grid item xs={12}>
-					<Typography variant="h1" color={'text.secondary'} align="center">
-						Coming Soon
-					</Typography>
-				</Grid>
+				{!loadOnly && (
+					<Grid item xs={12}>
+						<Typography variant="h1" color={'text.secondary'} align="center">
+							Coming Soon
+						</Typography>
+					</Grid>
+				)}
 
 				<BounceWrapper item xs={12} container justifyContent="center" gap={3}>
 					<Grid item className="ball" sx={{ background: theme.palette.primary.main }} />

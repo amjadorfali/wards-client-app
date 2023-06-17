@@ -26,7 +26,7 @@ const SummarySection: React.FC = () => {
 
 	return (
 		<>
-			<Grid py={20} container justifyContent={'center'} alignContent={'center'}>
+			<Grid py={20} bgcolor={'background.paper'} container justifyContent={'center'} alignContent={'center'}>
 				<Grid sx={{ opacity: 0 }} ref={scope} item xs={12} md={12} textAlign={'center'}>
 					<Typography variant="h2">
 						{content.title.map((text) => (

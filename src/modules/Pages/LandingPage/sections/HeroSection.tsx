@@ -2,8 +2,8 @@ import React, { Suspense, useEffect } from 'react';
 import { Button, Grid, Paper, Typography, useTheme } from '@mui/material';
 const InfiniteTime = React.lazy(() => import('components/charts/InfiniteTime'));
 import { useAnimate, stagger } from 'framer-motion';
-import { RoutesConfig } from 'modules/App/App';
 import { Link as RouterLink } from 'react-router-dom';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 
 const staggerAnimation = stagger(0.25);
 
@@ -88,9 +88,17 @@ const HeroSection: React.FC = () => {
 				</Grid>
 			</Grid>
 
-			<Grid pt={10} container item xs={12} justifyContent={'center'}>
-				<Grid component={Paper} elevation={10} item xs={12} md={7} sx={{ px: 2, opacity: 0, minHeight: '35rem' }} id={ids.graph}>
-					<Suspense fallback={<>Hey there, still loading...</>}>
+			<Grid sx={{ pt: 25 }} container item xs={12} justifyContent={'center'}>
+				<Grid
+					component={Paper}
+					elevation={10}
+					item
+					xs={12}
+					md={7}
+					sx={{ px: 2, opacity: 0, minHeight: '35rem', mb: -5 }}
+					id={ids.graph}
+				>
+					<Suspense>
 						<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
 					</Suspense>
 				</Grid>

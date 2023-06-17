@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button, Grid, Typography } from '@mui/material';
-import { RoutesConfig } from 'modules/App/App';
 import { Link as RouterLink } from 'react-router-dom';
-
+import { RoutesConfig } from 'config/Routes/routeConfig';
 const content = {
 	title: "Take Control of Your Application's Performance Today",
 	subtitle: 'Sign up now and experience the power of our comprehensive service.',

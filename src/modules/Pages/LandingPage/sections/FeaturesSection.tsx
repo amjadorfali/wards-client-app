@@ -7,8 +7,8 @@ import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
-import { RoutesConfig } from 'modules/App/App';
 import { Link as RouterLink } from 'react-router-dom';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 
 const content = {
 	title: (theme: Theme) => (

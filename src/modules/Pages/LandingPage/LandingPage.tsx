@@ -13,7 +13,7 @@ const LandingPage: React.FC = () => {
 	return (
 		<>
 			<HeroSection />
-			<Suspense fallback={<>You're not supposed to be looking here just yet</>}>
+			<Suspense>
 				<SummarySection />
 				<OurToolsSection />
 				<CodeSection />

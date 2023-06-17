@@ -2,7 +2,7 @@ import React from 'react';
 import { Divider, Grid, Link, ListItemText, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import CopyrightIcon from '@mui/icons-material/Copyright';
-import { RoutesConfig } from 'modules/App/App';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 const Config: { text: string; url: RoutesConfig }[] = [
 	{
 		text: 'Terms',
