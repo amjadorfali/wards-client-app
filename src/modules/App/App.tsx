@@ -6,16 +6,12 @@ import { RoutesConfig } from 'config/Routes/routeConfig';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { Amplify } from '@aws-amplify/core';
-import awsExports from 'aws-exports';
-
 const Root = React.lazy(() => import('modules/Pages/Root/Root'));
 const DummyPage = React.lazy(() => import('modules/Pages/DummyPage/DummyPage'));
 const SignIn = React.lazy(() => import('modules/Pages/Auth/SignIn'));
 const SignUp = React.lazy(() => import('modules/Pages/Auth/SignUp'));
 
 const queryClient = new QueryClient();
-Amplify.configure(awsExports);
 
 const App: React.FC = () => {
 	//TODO : Choose appropriate colors https://m2.material.io/inline-tools/color/
