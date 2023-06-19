@@ -91,7 +91,7 @@ const content: { [key in keyof typeof elements]: ContentValue } = {
 		subtitle: 'A complete monitoring platform',
 		price: '$ 4',
 		priceDescription: 'per month',
-		features: ['All features from the Free plan', '20 health-checks and alarms', 'Advanced data visualization', 'Priority Support'],
+		features: ['All features from the Hobby plan', '20 health-checks and alarms', 'Advanced data visualization', 'Priority Support'],
 		image: SupporterTierImg
 	},
 	business: {
