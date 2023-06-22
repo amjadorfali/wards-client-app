@@ -5,7 +5,11 @@ import { ScrollRestoration } from 'react-router-dom';
 import { Navbar } from 'modules/layout/Navbar';
 import { Footer } from 'modules/layout/Footer';
 import DummyPage from 'modules/Pages/DummyPage/DummyPage';
+import useLogger from '../Auth/hooks/useLogger';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Root: React.FC = () => {
+	useLogger();
 	return (
 		<>
 			<ScrollRestoration getKey={({ pathname }) => pathname} storageKey={SS_KEY_scroll} />
@@ -14,6 +18,7 @@ const Root: React.FC = () => {
 				<Outlet />
 			</Suspense>
 			<Footer />
+			<ToastContainer />
 		</>
 	);
 };

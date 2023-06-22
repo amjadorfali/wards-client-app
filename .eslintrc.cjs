@@ -17,6 +17,7 @@ module.exports = {
 	rules: {
 		'react-refresh/only-export-components': 'warn',
 		'@tanstack/query/exhaustive-deps': 'error',
-		'@tanstack/query/prefer-query-object-syntax': 'error'
+		'@tanstack/query/prefer-query-object-syntax': 'error',
+		'no-debugger': 'warn'
 	}
 };
