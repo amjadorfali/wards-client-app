@@ -29,8 +29,7 @@ const listener = (data: HubCapsule) => {
 		case 'autoSignIn':
 			logger.info('auto sign in successful');
 			// eslint-disable-next-line no-case-declarations
-			const user = data.payload.data;
-			console.log(user);
+			// const user = data.payload.data;
 			// Redirect user to dashboard
 			// assign user
 			break;
@@ -78,7 +77,7 @@ const listener = (data: HubCapsule) => {
 			logger.info('user deletion successful');
 			break;
 		case 'updateUserAttributes':
-			console.log(data.payload.data);
+			// console.log(data.payload.data);
 			logger.info('user attributes update successful');
 			// Handle verify new user attr
 

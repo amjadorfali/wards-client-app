@@ -39,14 +39,12 @@ const SignIn: React.FC = () => {
 			{
 				onSuccess: () => refetchUser(),
 				onError: (error) => {
-					console.log(error);
 					setUserMessage(error.message);
 
 					if (error.name === 'UserNotConfirmedException') {
 						setUserToConfirm(email);
 					}
-				},
-				onSettled: (data) => console.log('data', data)
+				}
 			}
 		);
 	};
@@ -55,7 +53,6 @@ const SignIn: React.FC = () => {
 
 		forgetPassword.forgotPasswordMutation.mutate(email, {
 			onError: (error) => {
-				console.log('error', error);
 				setUserMessage(error.message);
 			},
 			onSuccess: () => {
@@ -75,7 +72,6 @@ const SignIn: React.FC = () => {
 			},
 			{
 				onError: (error) => {
-					console.log('error', error);
 					setUserMessage(error.message);
 				},
 				onSuccess: () => handleSignIn(email, password)
@@ -85,7 +81,7 @@ const SignIn: React.FC = () => {
 
 	const handleVerifyEmail = (code: string) => {
 		setUserMessage(undefined);
-		if (!userToConfirm) return console.log('Oops, something went wrong!');
+		if (!userToConfirm) return;
 		confirmSignUp.mutate(
 			{ code, username: userToConfirm },
 			{
@@ -95,7 +91,6 @@ const SignIn: React.FC = () => {
 				},
 				onError: (error) => {
 					setUserMessage(error.message);
-					console.log(error);
 				}
 			}
 		);
@@ -103,7 +98,7 @@ const SignIn: React.FC = () => {
 
 	const handlResendCode = () => {
 		setUserMessage(undefined);
-		if (!userToConfirm) return console.log('Oops, something went wrong!');
+		if (!userToConfirm) return;
 
 		resendSignUp.mutate(userToConfirm, {
 			onSuccess: () => {
@@ -111,7 +106,6 @@ const SignIn: React.FC = () => {
 			},
 			onError: (error) => {
 				setUserMessage(error.message);
-				console.log(error);
 			}
 		});
 	};

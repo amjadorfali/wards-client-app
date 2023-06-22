@@ -36,18 +36,15 @@ const SignUp: React.FC = () => {
 			{ email, password },
 			{
 				onSuccess: (data) => {
-					console.log('data sign up res', data);
 					if (!data.userConfirmed) {
 						setUserDetails(data.user);
 						setValidateUserAttrOpen(true);
 					}
 				},
 				onError: (error) => {
-					console.log(error);
 					setUserMessage(error.message);
-					if (error.name === 'UsernameExistsException') {
-						console.log('user already exists');
-					}
+					// if (error.name === 'UsernameExistsException') {
+					// }
 				}
 			}
 		);
@@ -55,7 +52,7 @@ const SignUp: React.FC = () => {
 
 	const handleVerifyEmail = (code: string) => {
 		setUserMessage(undefined);
-		if (!userDetails) return console.log('Oops, something went wrong!');
+		if (!userDetails) return;
 		confirmSignUp.mutate(
 			{ code, username: userDetails.getUsername() },
 			{
@@ -64,7 +61,6 @@ const SignUp: React.FC = () => {
 				},
 				onError: (error) => {
 					setUserMessage(error.message);
-					console.log(error);
 				}
 			}
 		);
@@ -72,7 +68,7 @@ const SignUp: React.FC = () => {
 
 	const handlResendCode = () => {
 		setUserMessage(undefined);
-		if (!userDetails) return console.log('Oops, something went wrong!');
+		if (!userDetails) return;
 
 		resendSignUp.mutate(userDetails.getUsername(), {
 			onSuccess: () => {
@@ -80,7 +76,6 @@ const SignUp: React.FC = () => {
 			},
 			onError: (error) => {
 				setUserMessage(error.message);
-				console.log(error);
 			}
 		});
 	};
