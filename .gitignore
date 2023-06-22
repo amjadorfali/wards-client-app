@@ -56,3 +56,10 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+#amplify ignore for now, till i figure out how/where to store secrets
+team-provider-info.json
+backend-config.json
+parameters.json
+#amplify ignore for now end
+
