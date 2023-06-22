@@ -2,12 +2,11 @@ import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { SS_KEY_scroll } from 'hooks';
 import { ScrollRestoration } from 'react-router-dom';
-import { Navbar } from 'modules/layout/Navbar';
-import { Footer } from 'modules/layout/Footer';
-import DummyPage from 'modules/Pages/DummyPage/DummyPage';
-import useLogger from '../Auth/hooks/useLogger';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import DummyPage from 'modules/Root/Pages/DummyPage/DummyPage';
+import useLogger from './Pages/Auth/hooks/useLogger';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+
 const Root: React.FC = () => {
 	useLogger();
 	return (
@@ -18,7 +17,6 @@ const Root: React.FC = () => {
 				<Outlet />
 			</Suspense>
 			<Footer />
-			<ToastContainer />
 		</>
 	);
 };

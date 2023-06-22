@@ -28,7 +28,6 @@ const listener = (data: HubCapsule) => {
 			break;
 		case 'autoSignIn':
 			logger.info('auto sign in successful');
-			// eslint-disable-next-line no-case-declarations
 			// const user = data.payload.data;
 			// Redirect user to dashboard
 			// assign user

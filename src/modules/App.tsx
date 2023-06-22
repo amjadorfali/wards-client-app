@@ -1,15 +1,18 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
-import { LandingPage } from 'modules/Pages/LandingPage';
+import { LandingPage } from 'modules/Root/Pages/LandingPage';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
-const Root = React.lazy(() => import('modules/Pages/Root/Root'));
-const DummyPage = React.lazy(() => import('modules/Pages/DummyPage/DummyPage'));
-const SignIn = React.lazy(() => import('modules/Pages/Auth/SignIn'));
-const SignUp = React.lazy(() => import('modules/Pages/Auth/SignUp'));
+const Root = React.lazy(() => import('modules/Root/Root'));
+const DummyPage = React.lazy(() => import('modules/Root/Pages/DummyPage/DummyPage'));
+const SignIn = React.lazy(() => import('modules/Root/Pages/Auth/SignIn'));
+const SignUp = React.lazy(() => import('modules/Root/Pages/Auth/SignUp'));
+const Dashboard = React.lazy(() => import('modules/Dashboard/Dashboard'));
 
 const queryClient = new QueryClient();
 
@@ -79,6 +82,7 @@ const App: React.FC = () => {
 		{
 			path: RoutesConfig.home,
 			element: <Root />,
+			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>,
 			children: [
 				{
 					element: <LandingPage />,
@@ -102,6 +106,11 @@ const App: React.FC = () => {
 					element: <Navigate to={RoutesConfig.home} />
 				}
 			]
+		},
+		{
+			path: RoutesConfig.dashboard,
+			element: <Dashboard />,
+			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>
 		}
 	]);
 
@@ -110,6 +119,7 @@ const App: React.FC = () => {
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<RouterProvider router={router} />
+				<ToastContainer />
 			</ThemeProvider>
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>

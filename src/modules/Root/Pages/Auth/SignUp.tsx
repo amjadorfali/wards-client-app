@@ -3,26 +3,20 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
 import React, { useState } from 'react';
 import useSignUp from './mutations/useSignUp';
-import useGetCurrentUserInfo from './queries/useGetCurrentUserInfo';
 import { CognitoUser } from '@aws-amplify/auth';
 import useConfirmSignUp from './mutations/useConfirmSignUp';
-import UserDetails from './components/UserDetails';
-import useSignOut from './mutations/useSignOut';
 import VerifyEmailForm from './components/VerifyEmailForm';
 import SignUpForm from './components/SignUpForm';
 import { toast } from 'react-toastify';
 import useResendSignUp from './mutations/useResendSignUp';
-import useGetCurrentSession from './queries/useGetCurrentSession';
+import { RoutesConfig } from 'config/Routes/routeConfig';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
+	const navigate = useNavigate();
 	const { signUp } = useSignUp();
 	const confirmSignUp = useConfirmSignUp();
-	const signOut = useSignOut();
 	const resendSignUp = useResendSignUp();
-
-	//TODO: move to route guard
-	const { data: currentUser, refetch: refetchUser } = useGetCurrentUserInfo();
-	const currentSession = useGetCurrentSession();
 
 	const [userMessage, setUserMessage] = useState<string | undefined>();
 
@@ -57,7 +51,7 @@ const SignUp: React.FC = () => {
 			{ code, username: userDetails.getUsername() },
 			{
 				onSuccess: () => {
-					refetchUser();
+					navigate(RoutesConfig.dashboard);
 				},
 				onError: (error) => {
 					setUserMessage(error.message);
@@ -80,14 +74,6 @@ const SignUp: React.FC = () => {
 		});
 	};
 
-	const handleSignOut = () => {
-		signOut.mutate(undefined, {
-			onSuccess: () => {
-				currentSession.refetch();
-				refetchUser();
-			}
-		});
-	};
 	return (
 		<Grid
 			container
@@ -113,19 +99,13 @@ const SignUp: React.FC = () => {
 						<ArticleOutlinedIcon />
 					</Avatar>
 
-					{currentUser?.attributes.email ? (
-						<UserDetails email={currentUser.attributes.email} onSignOut={handleSignOut} />
+					<Typography variant="h6" textAlign={'center'} color={'error'}>
+						{userMessage}
+					</Typography>
+					{verifyUserAttrOpen ? (
+						<VerifyEmailForm onResendCode={handlResendCode} onVerifyUser={handleVerifyEmail} />
 					) : (
-						<>
-							<Typography variant="h6" textAlign={'center'} color={'error'}>
-								{userMessage}
-							</Typography>
-							{verifyUserAttrOpen ? (
-								<VerifyEmailForm onResendCode={handlResendCode} onVerifyUser={handleVerifyEmail} />
-							) : (
-								<SignUpForm onSignUp={handleSignUp} />
-							)}
-						</>
+						<SignUpForm onSignUp={handleSignUp} />
 					)}
 				</Box>
 			</Grid>
