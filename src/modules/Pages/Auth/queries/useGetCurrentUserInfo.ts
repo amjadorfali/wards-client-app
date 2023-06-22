@@ -1,16 +1,15 @@
 import { Auth } from '@aws-amplify/auth';
 import { useQuery } from '@tanstack/react-query';
 import { User } from 'utils/interfaces';
+import useGetCurrentSession from './useGetCurrentSession';
 
-/**
- *
- * @link [See this section for more info on how to use this fn](https://docs.amplify.aws/lib/auth/manageusers/q/platform/js#retrieve-current-authenticated-user)
- */
 const useGetCurrentUserInfo = () => {
+	const currentSession = useGetCurrentSession();
+
 	return useQuery<User, Error, User, string[]>({
-		queryKey: ['current-user'],
+		queryKey: ['currentUserInfo'],
 		queryFn: () => Auth.currentUserInfo(),
-		enabled: true
+		enabled: currentSession.isSuccess
 	});
 };
 

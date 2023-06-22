@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
  */
 const useGetCurrentSession = () => {
 	return useQuery({
-		queryKey: ['current-auth-session'],
+		queryKey: ['currentSession'],
 		queryFn: () => Auth.currentSession()
 	});
 };
