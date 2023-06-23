@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import { LandingPage } from 'modules/Root/Pages/LandingPage';
@@ -8,17 +8,25 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
+/** Root Pages */
 const Root = React.lazy(() => import('modules/Root/Root'));
 const DummyPage = React.lazy(() => import('modules/Root/Pages/DummyPage/DummyPage'));
+const AuthRouteGuard = React.lazy(() => import('modules/Root/Pages/Auth/AuthRouteGuard'));
 const SignIn = React.lazy(() => import('modules/Root/Pages/Auth/SignIn'));
 const SignUp = React.lazy(() => import('modules/Root/Pages/Auth/SignUp'));
-const Dashboard = React.lazy(() => import('modules/Dashboard/Dashboard'));
+/** Root Pages End */
+
+/** Dashboard Pages */
+const DashboardHome = React.lazy(() => import('modules/Dashboard/Dashboard'));
+const Monitors = React.lazy(() => import('modules/Dashboard/Pages/Monitors'));
+
+/** Dashboard Pages End*/
 
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
 	//TODO : Choose appropriate colors https://m2.material.io/inline-tools/color/
-	const theme = responsiveFontSizes(
+	const rootTheme = responsiveFontSizes(
 		createTheme({
 			palette: {
 				mode: 'dark',
@@ -76,12 +84,22 @@ const App: React.FC = () => {
 		})
 	);
 
+	const dashboardTheme = useMemo(
+		() => ({ ...rootTheme, palette: { ...rootTheme.palette, background: { default: '#222939', paper: '#343c4bd7' } } }),
+		[rootTheme]
+	);
+
 	//TODO: Add to notion https://betterstack.com/uptime?_ga=2.146380724.1853390323.1686930936-684077241.1686930936&_gl=1*1xj9iun*_gcl_au*MTgwNDcyNzA3OC4xNjg2OTMwOTM2
 	//Read more https://m2.material.io/design/color/the-color-system.html
 	const router = createBrowserRouter([
 		{
 			path: RoutesConfig.home,
-			element: <Root />,
+			element: (
+				<ThemeProvider theme={rootTheme}>
+					<CssBaseline />
+					<Root />
+				</ThemeProvider>
+			),
 			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>,
 			children: [
 				{
@@ -93,34 +111,66 @@ const App: React.FC = () => {
 					path: RoutesConfig.dummy
 				},
 				{
-					element: <SignIn />,
+					element: (
+						<AuthRouteGuard>
+							<SignIn />
+						</AuthRouteGuard>
+					),
 					path: RoutesConfig.signIn
 				},
 				{
-					element: <SignUp />,
+					element: (
+						<AuthRouteGuard>
+							<SignUp />
+						</AuthRouteGuard>
+					),
 					path: RoutesConfig.signUp
 				},
 				{
 					// Route guard
 					path: '*',
-					element: <Navigate to={RoutesConfig.home} />
+					element: <Navigate to={RoutesConfig.home} replace />
 				}
 			]
 		},
 		{
 			path: RoutesConfig.dashboard,
-			element: <Dashboard />,
-			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>
+			element: (
+				<ThemeProvider theme={dashboardTheme}>
+					<CssBaseline />
+					<DashboardHome />
+				</ThemeProvider>
+			),
+			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>,
+
+			children: [
+				{
+					path: RoutesConfig.monitors,
+					element: <Monitors />
+				},
+				{
+					element: <DummyPage />,
+					path: RoutesConfig.dummy
+				},
+				{
+					/** Route Guards */
+					index: true,
+					element: <Navigate to={RoutesConfig.monitors} replace />
+				},
+				{
+					path: '*',
+					element: <Navigate to={RoutesConfig.monitors} replace />
+					/** Route Guards end */
+				}
+			]
 		}
 	]);
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<RouterProvider router={router} />
-				<ToastContainer />
-			</ThemeProvider>
+			<RouterProvider router={router} />
+
+			<ToastContainer />
 			<ReactQueryDevtools initialIsOpen={false} />
 		</QueryClientProvider>
 	);

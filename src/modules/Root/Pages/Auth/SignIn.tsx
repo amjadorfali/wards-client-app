@@ -2,32 +2,24 @@ import React, { useState } from 'react';
 import { Grid, Link, Button, Avatar, Box, Paper, Typography } from '@mui/material';
 
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import useSignIn from './mutations/useSignIn';
 import { RoutesConfig } from 'config/Routes/routeConfig';
-import useGetCurrentUserInfo from './queries/useGetCurrentUserInfo';
 import useForgotPassword from './mutations/useForgotPassword';
-import useSignOut from './mutations/useSignOut';
-import UserDetails from './components/UserDetails';
 import SignInForm from './components/SignInForm';
 import ForgetPasswordForm from './components/ForgetPasswordForm';
 import VerifyEmailForm from './components/VerifyEmailForm';
 import useConfirmSignUp from './mutations/useConfirmSignUp';
 import useResendSignUp from './mutations/useResendSignUp';
 import { toast } from 'react-toastify';
-import useGetCurrentSession from './queries/useGetCurrentSession';
 
 const SignIn: React.FC = () => {
 	const signIn = useSignIn();
 	const forgetPassword = useForgotPassword();
-	const signOut = useSignOut();
 	const confirmSignUp = useConfirmSignUp();
 	const resendSignUp = useResendSignUp();
 
-	//TODO: move to route guard
-	const { data: currentUser, refetch: refetchUser } = useGetCurrentUserInfo();
-	const currentSession = useGetCurrentSession();
-
+	const navigate = useNavigate();
 	const [forgotPassword, setForgotPassword] = useState(false);
 	const [userToConfirm, setUserToConfirm] = useState<string | undefined>();
 	const [userMessage, setUserMessage] = useState<string | undefined>();
@@ -37,7 +29,9 @@ const SignIn: React.FC = () => {
 		signIn.mutate(
 			{ password, username: email },
 			{
-				onSuccess: () => refetchUser(),
+				onSuccess: () => {
+					navigate(RoutesConfig.dashboard, { replace: true });
+				},
 				onError: (error) => {
 					setUserMessage(error.message);
 
@@ -86,8 +80,7 @@ const SignIn: React.FC = () => {
 			{ code, username: userToConfirm },
 			{
 				onSuccess: () => {
-					refetchUser();
-					setUserToConfirm(undefined);
+					navigate(RoutesConfig.dashboard, { replace: true });
 				},
 				onError: (error) => {
 					setUserMessage(error.message);
@@ -109,19 +102,12 @@ const SignIn: React.FC = () => {
 			}
 		});
 	};
-	const handleSignOut = () => {
-		signOut.mutate(undefined, {
-			onSuccess: () => {
-				currentSession.refetch();
-				refetchUser();
-			}
-		});
-	};
+
 	return (
 		<Grid
 			container
 			sx={{
-				minHeight: '90vh',
+				minHeight: '90%',
 				position: 'relative',
 				alignContent: 'center',
 				justifyContent: 'center',
@@ -142,30 +128,24 @@ const SignIn: React.FC = () => {
 						<LockOpenOutlinedIcon />
 					</Avatar>
 
-					{currentUser?.attributes.email ? (
-						<UserDetails email={currentUser.attributes.email} onSignOut={handleSignOut} />
+					<Typography variant="h6" textAlign={'center'} color={'error'}>
+						{userMessage}
+					</Typography>
+					{forgotPassword ? (
+						<ForgetPasswordForm
+							onResendCode={handleForgetPassword}
+							onForgetPassword={handleForgetPassword}
+							onForgetPasswordSubmit={handleForgetPasswordSubmit}
+						/>
+					) : userToConfirm ? (
+						<VerifyEmailForm onResendCode={handlResendCode} onVerifyUser={handleVerifyEmail} />
 					) : (
 						<>
-							<Typography variant="h6" textAlign={'center'} color={'error'}>
-								{userMessage}
-							</Typography>
-							{forgotPassword ? (
-								<ForgetPasswordForm
-									onResendCode={handleForgetPassword}
-									onForgetPassword={handleForgetPassword}
-									onForgetPasswordSubmit={handleForgetPasswordSubmit}
-								/>
-							) : userToConfirm ? (
-								<VerifyEmailForm onResendCode={handlResendCode} onVerifyUser={handleVerifyEmail} />
-							) : (
-								<>
-									<SignInForm onSignIn={handleSignIn} />
-									<Button onClick={() => setForgotPassword(true)}>Forget password</Button>
-									<Grid item>
-										<Link component={RouterLink} to={RoutesConfig.signUp} children="Need an account? Sign Up" />
-									</Grid>
-								</>
-							)}
+							<SignInForm onSignIn={handleSignIn} />
+							<Button onClick={() => setForgotPassword(true)}>Forget password</Button>
+							<Grid item>
+								<Link component={RouterLink} to={`/${RoutesConfig.signUp}`} children="Need an account? Sign Up" />
+							</Grid>
 						</>
 					)}
 				</Box>

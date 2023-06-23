@@ -146,9 +146,7 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 			</Button>
 			<Grid container>
 				<Grid item>
-					<Link component={RouterLink} to={RoutesConfig.signIn}>
-						Already have an account? Sign In
-					</Link>
+					<Link component={RouterLink} to={`/${RoutesConfig.signIn}`} children="Already have an account? Sign In" />
 				</Grid>
 			</Grid>
 		</Box>

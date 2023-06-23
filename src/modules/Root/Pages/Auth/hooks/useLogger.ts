@@ -29,7 +29,7 @@ const listener = (data: HubCapsule) => {
 		case 'autoSignIn':
 			logger.info('auto sign in successful');
 			// const user = data.payload.data;
-			// Redirect user to dashboard
+			// Redirect user to
 			// assign user
 			break;
 		case 'autoSignIn_failure':

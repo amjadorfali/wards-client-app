@@ -51,7 +51,7 @@ const SignUp: React.FC = () => {
 			{ code, username: userDetails.getUsername() },
 			{
 				onSuccess: () => {
-					navigate(RoutesConfig.dashboard);
+					navigate(RoutesConfig.dashboard, { replace: true });
 				},
 				onError: (error) => {
 					setUserMessage(error.message);
@@ -78,7 +78,7 @@ const SignUp: React.FC = () => {
 		<Grid
 			container
 			sx={{
-				minHeight: '90vh',
+				minHeight: '90%',
 				position: 'relative',
 				alignContent: 'center',
 				justifyContent: 'center',

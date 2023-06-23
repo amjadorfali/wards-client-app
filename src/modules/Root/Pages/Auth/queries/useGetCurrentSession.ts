@@ -7,7 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 const useGetCurrentSession = () => {
 	return useQuery({
 		queryKey: ['currentSession'],
-		queryFn: () => Auth.currentSession()
+		queryFn: () => Auth.currentSession(),
+		retry: 1
 	});
 };
 

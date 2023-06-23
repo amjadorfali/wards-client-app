@@ -42,7 +42,7 @@ const HeroSection: React.FC = () => {
 		<Grid
 			container
 			sx={{
-				minHeight: '90vh',
+				minHeight: '90%',
 				position: 'relative',
 				//Responsive layout
 				pt: { xs: 15, md: 10 },

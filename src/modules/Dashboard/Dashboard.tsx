@@ -1,22 +1,16 @@
-import React from 'react';
-import useSignOut from '../Root/Pages/Auth/mutations/useSignOut';
-import useGetCurrentSession from '../Root/Pages/Auth/queries/useGetCurrentSession';
-import useGetCurrentUserInfo from '../Root/Pages/Auth/queries/useGetCurrentUserInfo';
-const Dashboard: React.FC = () => {
-	const signOut = useSignOut();
-	const currentSession = useGetCurrentSession();
-	const currentUser = useGetCurrentUserInfo();
+import React, { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import DashboardRouteGuard from './DashboardRouteGuard';
+import DummyPage from 'modules/Root/Pages/DummyPage/DummyPage';
 
-	const handleSignOut = () => {
-		signOut.mutate(undefined, {
-			onSuccess: () => {
-				currentSession.refetch();
-				currentUser.refetch();
-			}
-		});
-	};
-
-	handleSignOut();
-	return <h1>Here's the Dashboard nigga</h1>;
+const Home: React.FC = () => {
+	return (
+		<Suspense fallback={<DummyPage loadOnly />}>
+			<DashboardRouteGuard>
+				<Outlet />
+			</DashboardRouteGuard>
+		</Suspense>
+	);
 };
-export default Dashboard;
+
+export default Home;

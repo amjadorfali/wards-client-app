@@ -8,7 +8,7 @@ const HeroSection: React.FC<{ loadOnly?: boolean }> = ({ loadOnly = false }) => 
 		<Grid
 			container
 			sx={{
-				minHeight: '100vh',
+				minHeight: '100%',
 				position: 'relative',
 				//Responsive layout
 				alignContent: 'center'

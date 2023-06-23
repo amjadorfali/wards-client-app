@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
 import type { CallbackDataParams } from 'echarts/types/dist/shared';
 import useEchartsTheme from 'config/echarts/useEchartsTheme';
@@ -64,26 +64,26 @@ interface Props {
 	ReactChartsComponentProps?: Omit<ReactEChartsProps, 'option'>;
 }
 const InfiniteTime: React.FC<Props> = ({ ReactChartsComponentProps }) => {
-	const [option, setOptions] = useState<EChartsOption>(initialOption);
+	const [option] = useState<EChartsOption>(initialOption);
 	useEchartsTheme();
-	useEffect(() => {
-		const interval = setInterval(function () {
-			for (let i = 0; i < 10; i++) {
-				data.shift();
-				data.push(randomData());
-			}
-			setOptions((prev) => ({
-				...prev,
-				series: [
-					{
-						data: data
-					}
-				]
-			}));
-		}, 1000);
+	// useEffect(() => {
+	// 	const interval = setInterval(function () {
+	// 		for (let i = 0; i < 10; i++) {
+	// 			data.shift();
+	// 			data.push(randomData());
+	// 		}
+	// 		setOptions((prev) => ({
+	// 			...prev,
+	// 			series: [
+	// 				{
+	// 					data: data
+	// 				}
+	// 			]
+	// 		}));
+	// 	}, 1000);
 
-		return () => clearInterval(interval);
-	}, []);
+	// 	return () => clearInterval(interval);
+	// }, []);
 
 	return <ReactECharts {...ReactChartsComponentProps} option={option} />;
 };

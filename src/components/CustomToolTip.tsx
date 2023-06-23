@@ -1,4 +1,4 @@
-import { ClickAwayListener, Tooltip, IconButton, tooltipClasses, styled } from '@mui/material';
+import { ClickAwayListener, Tooltip, IconButton } from '@mui/material';
 import React from 'react';
 import InfoIcon from '@mui/icons-material/Info';
 const CustomToolTip: React.FC<{ title: React.ReactNode }> = ({ title }) => {
@@ -14,7 +14,7 @@ const CustomToolTip: React.FC<{ title: React.ReactNode }> = ({ title }) => {
 
 	return (
 		<ClickAwayListener onClickAway={handleTooltipClose}>
-			<StyledToolTip>
+			<div>
 				<Tooltip
 					PopperProps={{
 						disablePortal: true
@@ -30,25 +30,9 @@ const CustomToolTip: React.FC<{ title: React.ReactNode }> = ({ title }) => {
 				>
 					<IconButton onClick={handleTooltipOpen} children={<InfoIcon width="1.5rem" height="1.5rem" color="primary" />} />
 				</Tooltip>
-			</StyledToolTip>
+			</div>
 		</ClickAwayListener>
 	);
 };
 
 export default CustomToolTip;
-
-const StyledToolTip = styled('div')`
-	/* .${tooltipClasses.popper} {
-		padding-bottom: 0.3rem;
-		max-width: 8rem;
-		min-width: 1rem;
-	}
-	.${tooltipClasses.arrow} {
-		color: var(--body-color);
-	}
-	.${tooltipClasses.tooltip} {
-		background-color: var(--body-color);
-		color: var(--header-color);
-		font-size: 1rem;
-	} */
-`;
