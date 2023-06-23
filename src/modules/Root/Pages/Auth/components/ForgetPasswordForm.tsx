@@ -27,7 +27,7 @@ const ForgetPasswordForm: React.FC<Props> = ({ onForgetPassword, onForgetPasswor
 	return !email ? (
 		<EnterEmail onVerifyUser={handleVerifyUser} />
 	) : (
-		<EnterNewPassword onResendCode={() => onResendCode(email)} onEnterNewPassword={handleNewPassword} />
+		<EnterNewPassword email={email} onResendCode={() => onResendCode(email)} onEnterNewPassword={handleNewPassword} />
 	);
 };
 
@@ -68,7 +68,7 @@ const EnterEmail: React.FC<EnterEmailProps> = ({ onVerifyUser }) => {
 						required: true
 					},
 					sx: { minHeight: '5rem' },
-					autoComplete: 'email',
+					autoComplete: 'username',
 					type: 'email'
 				}}
 			/>
@@ -92,8 +92,9 @@ interface EnterNewPasswordFormValues {
 interface EnterNewPasswordProps {
 	onEnterNewPassword: (password: string, code: string) => void;
 	onResendCode: () => void;
+	email: string;
 }
-const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword, onResendCode }) => {
+const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword, onResendCode, email }) => {
 	const enterNewPasswordForm = useForm<EnterNewPasswordFormValues>({ shouldUnregister: true });
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -106,14 +107,41 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 
 	return (
 		<Box component="form" my={2} onSubmit={enterNewPasswordForm.handleSubmit(onEnterNewPasswordSubmit)}>
+			{/* <!-- user invisible --> */}
+			<input style={{ display: 'none' }} id="username" type="email" value={email} />
+
+			<ControlledTextField
+				controller={{
+					rules: {
+						required: { value: true, message: 'Please the verification code' }
+					},
+					defaultValue: '',
+
+					name: 'code'
+				}}
+				control={enterNewPasswordForm.control}
+				textFieldProps={{
+					margin: 'normal',
+					placeholder: 'Enter the verification code',
+					label: 'Code',
+					name: 'code',
+					fullWidth: true,
+					InputLabelProps: {
+						required: true
+					},
+					sx: { minHeight: '5rem' },
+					type: 'text'
+				}}
+			/>
+
 			<ControlledTextField
 				textFieldProps={{
 					margin: 'normal',
 					fullWidth: true,
-					label: 'Password',
+					label: 'New Password',
 					name: 'password',
 					InputLabelProps: { required: true },
-					autoComplete: 'current-password',
+					autoComplete: 'new-password',
 					type: showPassword ? 'text' : 'password',
 					sx: { minHeight: '5rem' },
 					InputProps: {
@@ -171,37 +199,13 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 				}}
 				controller={{
 					rules: {
-						required: { value: true, message: 'Please enter your Password' },
+						required: { value: true, message: 'Please enter your new Password' },
 						pattern: { value: PASSWORD, message: 'Invalid Password, please check the password requirements' }
 					},
 					defaultValue: '',
 					name: 'password'
 				}}
 				control={enterNewPasswordForm.control}
-			/>
-
-			<ControlledTextField
-				controller={{
-					rules: {
-						required: { value: true, message: 'Please the verification code' }
-					},
-					defaultValue: '',
-
-					name: 'code'
-				}}
-				control={enterNewPasswordForm.control}
-				textFieldProps={{
-					margin: 'normal',
-					placeholder: 'Enter the verification code',
-					label: 'Code',
-					name: 'code',
-					fullWidth: true,
-					InputLabelProps: {
-						required: true
-					},
-					sx: { minHeight: '5rem' },
-					type: 'text'
-				}}
 			/>
 
 			<Button

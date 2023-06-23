@@ -40,7 +40,7 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 					label: 'Email',
 					name: 'email',
 					InputLabelProps: { required: true },
-					autoComplete: 'email',
+					autoComplete: 'username',
 					sx: { minHeight: '5rem' },
 					type: 'email'
 				}}
@@ -68,7 +68,7 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 					label: 'Password',
 					name: 'password',
 					InputLabelProps: { required: true },
-					autoComplete: 'current-password',
+					autoComplete: 'new-password',
 					type: showPassword ? 'text' : 'password',
 					sx: { minHeight: '5rem' },
 					InputProps: {

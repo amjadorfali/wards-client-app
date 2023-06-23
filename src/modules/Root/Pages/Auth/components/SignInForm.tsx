@@ -42,7 +42,7 @@ const SignInForm: React.FC<Props> = ({ onSignIn }) => {
 						required: true
 					},
 					sx: { minHeight: '5rem' },
-					autoComplete: 'email',
+					autoComplete: 'username',
 					type: 'email'
 				}}
 			/>

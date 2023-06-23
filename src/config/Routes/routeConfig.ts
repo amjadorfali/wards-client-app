@@ -9,6 +9,11 @@ export enum RoutesConfig {
 	/** Dashboard */
 	dashboard = '/dashboard',
 	monitors = 'monitors',
-	heartbeats = 'heartbeats'
+	heartbeats = 'heartbeats',
+	billing = 'billing',
+	help = 'help',
+	teams = 'teams',
+	settings = 'settings'
+
 	/** Dashboard end */
 }
