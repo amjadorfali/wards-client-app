@@ -98,7 +98,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 						'&.MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
 					}}
 				>
-					{drawer}
+					{drawer(handleDrawerToggle)}
 				</Drawer>
 				<Drawer
 					variant="permanent"
@@ -108,7 +108,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					}}
 					open
 				>
-					{drawer}
+					{drawer()}
 				</Drawer>
 			</Box>
 			<Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
@@ -119,14 +119,14 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 	);
 };
 export default NavMenu;
-const drawer = (
+const drawer = (handleDrawerToggle?: () => void) => (
 	<>
 		<Toolbar />
 		<Divider />
 		<List sx={{ height: '100%' }}>
 			{featurePages.map(({ title, url }) => (
 				<ListItem key={url} disablePadding>
-					<ListItemButton component={RouterLink} to={url}>
+					<ListItemButton onClick={handleDrawerToggle} component={RouterLink} to={url}>
 						<ListItemIcon>
 							<InboxIcon />
 						</ListItemIcon>
@@ -139,7 +139,7 @@ const drawer = (
 		<List>
 			{managementPages.map(({ title, url }) => (
 				<ListItem key={url} disablePadding>
-					<ListItemButton component={RouterLink} to={url}>
+					<ListItemButton onClick={handleDrawerToggle} component={RouterLink} to={url}>
 						<ListItemIcon>
 							<InboxIcon />
 						</ListItemIcon>
