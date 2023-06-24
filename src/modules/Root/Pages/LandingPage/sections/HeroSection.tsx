@@ -30,7 +30,7 @@ const HeroSection: React.FC = () => {
 			[
 				...Object.keys(ids).map((id) => [
 					`#${id}`,
-					{ y: [40, 0], opacity: 1, ease: 'easeOut' },
+					{ y: [40, 0], opacity: 1, ease: 'easeInOut' },
 					{ duration: 0.8, delay: ids.subtitle === id ? 0.7 : staggerAnimation, at: '-0.4' }
 				])
 			],
