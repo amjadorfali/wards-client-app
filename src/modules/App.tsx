@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
 import { LandingPage } from 'modules/Root/Pages/LandingPage';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import ErrorMessage from './ErrorMessage';
 
 /** Root Pages */
 const Root = React.lazy(() => import('modules/Root/Root'));
@@ -18,19 +19,23 @@ const SignUp = React.lazy(() => import('modules/Root/Pages/Auth/SignUp'));
 
 /** Dashboard Pages */
 const DashboardHome = React.lazy(() => import('modules/Dashboard/Dashboard'));
-const Monitors = React.lazy(() => import('modules/Dashboard/Pages/Monitors'));
+
+const Monitors = React.lazy(() => import('modules/Dashboard/Pages/Monitors/Monitors'));
+const AddMonitor = React.lazy(() => import('modules/Dashboard/Pages/Monitors/AddMonitor'));
+const MonitorDetails = React.lazy(() => import('modules/Dashboard/Pages/Monitors/MonitorDetails'));
+
 const Heartbeats = React.lazy(() => import('modules/Dashboard/Pages/Heartbeats'));
 const Billing = React.lazy(() => import('modules/Dashboard/Pages/Billing'));
 const Help = React.lazy(() => import('modules/Dashboard/Pages/Help'));
 const Teams = React.lazy(() => import('modules/Dashboard/Pages/Teams'));
 const Settings = React.lazy(() => import('modules/Dashboard/Pages/Settings'));
-
 /** Dashboard Pages End*/
 
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-	//TODO : Choose appropriate colors https://m2.material.io/inline-tools/color/
+	// Choose appropriate colors from https://m2.material.io/inline-tools/color/
+	// Read more https://m2.material.io/design/color/the-color-system.html
 	const rootTheme = responsiveFontSizes(
 		createTheme({
 			palette: {
@@ -94,8 +99,6 @@ const App: React.FC = () => {
 		[rootTheme]
 	);
 
-	//TODO: Add to notion https://betterstack.com/uptime?_ga=2.146380724.1853390323.1686930936-684077241.1686930936&_gl=1*1xj9iun*_gcl_au*MTgwNDcyNzA3OC4xNjg2OTMwOTM2
-	//Read more https://m2.material.io/design/color/the-color-system.html
 	const router = createBrowserRouter([
 		{
 			path: RoutesConfig.home,
@@ -105,7 +108,7 @@ const App: React.FC = () => {
 					<Root />
 				</ThemeProvider>
 			),
-			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>,
+			errorElement: <ErrorMessage />,
 			children: [
 				{
 					element: <LandingPage />,
@@ -146,12 +149,30 @@ const App: React.FC = () => {
 					<DashboardHome />
 				</ThemeProvider>
 			),
-			errorElement: <h1>Oops, something went wrong, please try again shortly</h1>,
+			errorElement: <ErrorMessage />,
 
 			children: [
 				{
 					path: RoutesConfig.monitors,
-					element: <Monitors />
+					element: (
+						<>
+							<Outlet />
+						</>
+					),
+					children: [
+						{
+							index: true,
+							element: <Monitors />
+						},
+						{
+							path: RoutesConfig.new,
+							element: <AddMonitor />
+						},
+						{
+							path: ':monitorId',
+							element: <MonitorDetails />
+						}
+					]
 				},
 				{
 					path: RoutesConfig.heartbeats,

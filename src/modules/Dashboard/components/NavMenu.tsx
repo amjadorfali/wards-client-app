@@ -1,53 +1,80 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import List from '@mui/material/List';
-import Menu from '@mui/material/Menu';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { RoutesConfig } from 'config/Routes/routeConfig';
-import { Avatar, Button, MenuItem } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {
+	AppBar,
+	Box,
+	Divider,
+	Drawer,
+	IconButton,
+	ListItem,
+	List,
+	Toolbar,
+	Typography,
+	Menu,
+	Tooltip,
+	Button,
+	Avatar,
+	MenuItem,
+	ListItemIcon,
+	ListItemButton,
+	ListItemText,
+	SvgIconTypeMap
+} from '@mui/material';
 
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Tooltip from '@mui/material/Tooltip';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import {
+	Settings as SettingsIcon,
+	Language as WorldIcon,
+	Menu as MenuIcon,
+	KeyboardArrowDown as KeyboardArrowDownIcon,
+	Logout as LogoutIcon,
+	CreditCard as CreditCardIcon,
+	HelpOutline as HelpOutlineIcon,
+	Troubleshoot as TroubleshootIcon,
+	People as PeopleIcon
+} from '@mui/icons-material';
+
 import useSignOut from 'modules/Root/Pages/Auth/mutations/useSignOut';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 import useGetCurrentUserInfo from 'modules/Root/Pages/Auth/queries/useGetCurrentUserInfo';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 const drawerWidth = 240;
-const featurePages: { title: string; url: RoutesConfig }[] = [
+
+interface PageLinkConfig {
+	title: string;
+	url: RoutesConfig;
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+		muiName: string;
+	};
+}
+const featurePages: PageLinkConfig[] = [
 	{
 		title: 'Monitors',
-		url: RoutesConfig.monitors
+		url: RoutesConfig.monitors,
+		Icon: WorldIcon
 	},
 	{
 		title: 'Heartbeats',
-		url: RoutesConfig.heartbeats
+		url: RoutesConfig.heartbeats,
+		Icon: TroubleshootIcon
 	}
 ];
-const managementPages: { title: string; url: RoutesConfig }[] = [
+const managementPages: PageLinkConfig[] = [
 	{
 		title: 'Billing',
-		url: RoutesConfig.billing
+		url: RoutesConfig.billing,
+		Icon: CreditCardIcon
 	},
 	{
 		title: 'Help',
-		url: RoutesConfig.help
+		url: RoutesConfig.help,
+		Icon: HelpOutlineIcon
 	},
 	{
 		title: 'Manage Teams',
-		url: RoutesConfig.teams
+		url: RoutesConfig.teams,
+		Icon: PeopleIcon
 	}
 ];
 const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -58,7 +85,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 	};
 
 	return (
-		<Box sx={{ display: 'flex' }}>
+		<Box sx={{ display: 'flex', height: '100%' }}>
 			<AppBar
 				position="fixed"
 				sx={{
@@ -124,11 +151,11 @@ const drawer = (handleDrawerToggle?: () => void) => (
 		<Toolbar />
 		<Divider />
 		<List sx={{ height: '100%' }}>
-			{featurePages.map(({ title, url }) => (
+			{featurePages.map(({ title, url, Icon }) => (
 				<ListItem key={url} disablePadding>
 					<ListItemButton onClick={handleDrawerToggle} component={RouterLink} to={url}>
 						<ListItemIcon>
-							<InboxIcon />
+							<Icon />
 						</ListItemIcon>
 						<ListItemText primary={title} />
 					</ListItemButton>
@@ -137,11 +164,11 @@ const drawer = (handleDrawerToggle?: () => void) => (
 		</List>
 		<Divider />
 		<List>
-			{managementPages.map(({ title, url }) => (
+			{managementPages.map(({ title, url, Icon }) => (
 				<ListItem key={url} disablePadding>
 					<ListItemButton onClick={handleDrawerToggle} component={RouterLink} to={url}>
 						<ListItemIcon>
-							<InboxIcon />
+							<Icon />
 						</ListItemIcon>
 						<ListItemText primary={title} />
 					</ListItemButton>
@@ -227,13 +254,13 @@ const AccountMenu: React.FC = () => {
 			>
 				<MenuItem onClick={handleClose} component={RouterLink} to={RoutesConfig.settings}>
 					<ListItemIcon>
-						<Settings fontSize="small" />
+						<SettingsIcon fontSize="small" />
 					</ListItemIcon>
 					Settings
 				</MenuItem>
 				<MenuItem onClick={handleSignOut}>
 					<ListItemIcon>
-						<Logout fontSize="small" />
+						<LogoutIcon fontSize="small" />
 					</ListItemIcon>
 					Logout
 				</MenuItem>
