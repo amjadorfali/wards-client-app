@@ -13,8 +13,6 @@ const SummarySection: React.FC = () => {
 	const [scope, animate] = useAnimate<HTMLDivElement>();
 	const isInView = useInView(scope, { once: true, margin: '0px 0px -22% 0px' });
 
-	//This is maintaining the scroll for all the landing page, not just this section
-	//It needs to be called here for now due to Lazy Loading sections
 	useEffect(() => {
 		if (isInView) {
 			animate(scope.current, { y: [40, 0], opacity: 1 }, { duration: 0.5, delay: 0.3 });

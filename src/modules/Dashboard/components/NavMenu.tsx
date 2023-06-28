@@ -89,8 +89,8 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 			<AppBar
 				position="fixed"
 				sx={{
-					width: { sm: `calc(100% - ${drawerWidth}px)` },
-					ml: { sm: `${drawerWidth}px` },
+					width: { md: `calc(100% - ${drawerWidth}px)` },
+					ml: { md: `${drawerWidth}px` },
 					boxShadow: 'unset'
 				}}
 			>
@@ -100,7 +100,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 						aria-label="open drawer"
 						edge="start"
 						onClick={handleDrawerToggle}
-						sx={{ mr: 2, display: { sm: 'none' } }}
+						sx={{ mr: 2, display: { md: 'none' } }}
 					>
 						<MenuIcon />
 					</IconButton>
@@ -111,7 +111,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					<AccountMenu />
 				</Toolbar>
 			</AppBar>
-			<Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
+			<Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }} aria-label="mailbox folders">
 				{/* The implementation can be swapped with js to avoid SEO duplication of links. */}
 				<Drawer
 					variant="temporary"
@@ -121,7 +121,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 						keepMounted: true // Better open performance on mobile.
 					}}
 					sx={{
-						display: { xs: 'block', sm: 'none' },
+						display: { xs: 'block', md: 'none' },
 						'&.MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
 					}}
 				>
@@ -130,7 +130,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 				<Drawer
 					variant="permanent"
 					sx={{
-						display: { xs: 'none', sm: 'block' },
+						display: { xs: 'none', md: 'block' },
 						'&.MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
 					}}
 					open
@@ -138,7 +138,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					{drawer()}
 				</Drawer>
 			</Box>
-			<Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+			<Box component="main" sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${drawerWidth}px)` }, height: '100%' }}>
 				<Toolbar />
 				{children}
 			</Box>

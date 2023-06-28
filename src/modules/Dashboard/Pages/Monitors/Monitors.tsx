@@ -19,16 +19,16 @@ const Dashboard: React.FC = () => {
 			{monitors.length ? (
 				monitors.map((monitor) => <>{monitor.id}</>)
 			) : (
-				<Grid container height={'90%'} alignContent={'center'} justifyContent={'center'}>
-					<Grid item md={4}>
-						<Typography variant={'h2'}>Create your first monitor</Typography>
+				<Grid minHeight={'60dvh'} container alignContent={'center'} justifyContent={'center'}>
+					<Grid item xs={12} md={6} lg={5} xl={4}>
+						<Typography variant={'h1'}>Create your first monitor</Typography>
 						<Typography paragraph>We will keep an eye on your server and call or message you when it goes down.</Typography>
 
 						<Button component={RouterLink} to={RoutesConfig.new} variant="contained" sx={{ textTransform: 'capitalize' }}>
 							Create monitor
 						</Button>
 					</Grid>
-					<Grid item md={7}>
+					<Grid item xs={12} md={6} lg={5} xl={4}>
 						<UserInterface width={'100%'} height={'100%'} />
 					</Grid>
 				</Grid>
