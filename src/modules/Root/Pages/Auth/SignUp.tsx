@@ -78,7 +78,7 @@ const SignUp: React.FC = () => {
 		<Grid
 			container
 			sx={{
-				minHeight: '90%',
+				minHeight: { xs: '90%', sm: '100%' },
 				position: 'relative',
 				alignContent: 'center',
 				justifyContent: 'center',
