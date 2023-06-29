@@ -1,10 +1,10 @@
 import { Auth } from '@aws-amplify/auth';
 import { useMutation } from '@tanstack/react-query';
-import { User } from 'utils/interfaces';
+import { CustomCognitoUser } from 'utils/interfaces';
 import type { ISignUpResult } from 'amazon-cognito-identity-js';
 import { AuthError } from '@aws-amplify/auth/lib-esm/Errors';
 
-type UserAttr = { [key in keyof User['attributes']]: User['attributes'][key] };
+type UserAttr = { [key in keyof CustomCognitoUser['attributes']]: CustomCognitoUser['attributes'][key] };
 interface SignUpParams extends UserAttr {
 	password: string;
 }

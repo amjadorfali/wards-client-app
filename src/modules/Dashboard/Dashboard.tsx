@@ -5,8 +5,10 @@ import DummyPage from 'modules/Root/Pages/DummyPage/DummyPage';
 import NavMenu from './components/NavMenu';
 import { Grid, Link, Paper, Typography } from '@mui/material';
 import { Help as HelpIcon } from '@mui/icons-material';
+import useChooseTeam from './hooks/useChooseTeam';
 
 const Home: React.FC = () => {
+	useChooseTeam();
 	return (
 		<>
 			<NavMenu>

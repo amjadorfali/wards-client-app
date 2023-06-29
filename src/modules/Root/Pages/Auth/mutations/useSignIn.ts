@@ -21,7 +21,7 @@ export default useSignIn;
 //     if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
 //       const { requiredAttributes } = user.challengeParam; // the array of required attributes, e.g ['email', 'phone_number']
 //       Auth.completeNewPassword(
-//         user, // the Cognito User Object
+//         user, // the Cognito CognitoUser Object
 //         newPassword, // the new password
 //         // OPTIONAL, the required attributes
 //         {

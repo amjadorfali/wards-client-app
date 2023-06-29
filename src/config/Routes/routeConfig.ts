@@ -8,6 +8,7 @@ export enum RoutesConfig {
 
 	/** Dashboard */
 	dashboard = '/dashboard',
+	dashboardTeam = 'team',
 	monitors = 'monitors',
 	heartbeats = 'heartbeats',
 	new = 'new',

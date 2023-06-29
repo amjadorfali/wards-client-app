@@ -12,13 +12,15 @@ import VerifyEmailForm from './components/VerifyEmailForm';
 import useConfirmSignUp from './mutations/useConfirmSignUp';
 import useResendSignUp from './mutations/useResendSignUp';
 import { toast } from 'react-toastify';
+import { getTeamId } from 'stores/auth.store';
+import useGetCurrentUser from './queries/useGetCurrentUser';
 
 const SignIn: React.FC = () => {
 	const signIn = useSignIn();
 	const forgetPassword = useForgotPassword();
 	const confirmSignUp = useConfirmSignUp();
 	const resendSignUp = useResendSignUp();
-
+	const { refetchAll, currentUser } = useGetCurrentUser();
 	const navigate = useNavigate();
 	const [forgotPassword, setForgotPassword] = useState(false);
 	const [userToConfirm, setUserToConfirm] = useState<string | undefined>();
@@ -29,8 +31,9 @@ const SignIn: React.FC = () => {
 		signIn.mutate(
 			{ password, username: email },
 			{
-				onSuccess: () => {
-					navigate(RoutesConfig.dashboard, { replace: true });
+				onSuccess: async () => {
+					await refetchAll();
+					navigate(`${RoutesConfig.dashboard}/${RoutesConfig.dashboardTeam}/${getTeamId(currentUser)}`, { replace: true });
 				},
 				onError: (error) => {
 					setUserMessage(error.message);
@@ -79,8 +82,9 @@ const SignIn: React.FC = () => {
 		confirmSignUp.mutate(
 			{ code, username: userToConfirm },
 			{
-				onSuccess: () => {
-					navigate(RoutesConfig.dashboard, { replace: true });
+				onSuccess: async () => {
+					await refetchAll();
+					navigate(`${RoutesConfig.dashboard}/${RoutesConfig.dashboardTeam}/${getTeamId(currentUser)}`, { replace: true });
 				},
 				onError: (error) => {
 					setUserMessage(error.message);

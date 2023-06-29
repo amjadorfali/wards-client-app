@@ -11,13 +11,18 @@ import { toast } from 'react-toastify';
 import useResendSignUp from './mutations/useResendSignUp';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { useNavigate } from 'react-router-dom';
+import useCreateInternalUser from './mutations/useCreateInternalUser';
+import { USERNAME_FROM_EMAIL } from 'utils/regex';
+import { getTeamId } from 'stores/auth.store';
+import useGetCurrentUser from './queries/useGetCurrentUser';
 
 const SignUp: React.FC = () => {
 	const navigate = useNavigate();
 	const { signUp } = useSignUp();
 	const confirmSignUp = useConfirmSignUp();
 	const resendSignUp = useResendSignUp();
-
+	const createInternalUser = useCreateInternalUser();
+	const { refetchAll, currentUser } = useGetCurrentUser();
 	const [userMessage, setUserMessage] = useState<string | undefined>();
 
 	const [userDetails, setUserDetails] = useState<CognitoUser | undefined>();
@@ -31,15 +36,19 @@ const SignUp: React.FC = () => {
 			{
 				onSuccess: (data) => {
 					if (!data.userConfirmed) {
+						const { userSub } = data;
 						setUserDetails(data.user);
 						setValidateUserAttrOpen(true);
+
+						//FIXME: What if this fails? Need to figure out a solution at a later stage
+						createInternalUser.mutate({
+							email: email,
+							subId: userSub,
+							teamName: `${USERNAME_FROM_EMAIL(email)}'s Team`
+						});
 					}
 				},
-				onError: (error) => {
-					setUserMessage(error.message);
-					// if (error.name === 'UsernameExistsException') {
-					// }
-				}
+				onError: (error) => setUserMessage(error.message)
 			}
 		);
 	};
@@ -50,8 +59,9 @@ const SignUp: React.FC = () => {
 		confirmSignUp.mutate(
 			{ code, username: userDetails.getUsername() },
 			{
-				onSuccess: () => {
-					navigate(RoutesConfig.dashboard, { replace: true });
+				onSuccess: async () => {
+					await refetchAll();
+					navigate(`${RoutesConfig.dashboard}/${RoutesConfig.dashboardTeam}/${getTeamId(currentUser)}`, { replace: true });
 				},
 				onError: (error) => {
 					setUserMessage(error.message);

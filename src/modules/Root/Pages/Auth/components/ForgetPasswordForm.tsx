@@ -141,6 +141,7 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 					label: 'New Password',
 					name: 'password',
 					InputLabelProps: { required: true },
+					// FIXME: Fix issue with Safari Overriding passwords, as well as colors for input boxes on UserName and Password for all browsers
 					autoComplete: 'new-password',
 					type: showPassword ? 'text' : 'password',
 					sx: { minHeight: '5rem' },

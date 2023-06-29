@@ -63,3 +63,8 @@ backend-config.json
 parameters.json
 #amplify ignore for now end
 
+
+
+# Ignoring env for now
+
+.env
