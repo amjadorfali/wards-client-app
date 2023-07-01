@@ -18,6 +18,8 @@ const Home: React.FC = () => {
 					</DashboardRouteGuard>
 				</Suspense>
 
+				{/* //FIXME: This is not responsive on very small screens */}
+
 				<Grid container alignContent={'center'} justifyContent={'center'} my={5}>
 					<Grid gap={2} item component={Paper} display={'flex'} justifyContent={'center'} alignItems={'center'} p={3}>
 						<HelpIcon />

@@ -76,7 +76,6 @@ const listener = (data: HubCapsule) => {
 			logger.info('user deletion successful');
 			break;
 		case 'updateUserAttributes':
-			// console.log(data.payload.data);
 			logger.info('user attributes update successful');
 			// Handle verify new user attr
 

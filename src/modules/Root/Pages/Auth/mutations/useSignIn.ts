@@ -31,15 +31,12 @@ export default useSignIn;
 //       )
 //         .then((user) => {
 //           // at this time the user is logged in if no MFA required
-//           console.log(user);
 //         })
 //         .catch((e) => {
-//           console.log(e);
 //         });
 //     } else {
 //       // other situations
 //     }
 //   })
 //   .catch((e) => {
-//     console.log(e);
 //   });

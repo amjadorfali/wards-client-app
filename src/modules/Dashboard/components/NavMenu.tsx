@@ -20,7 +20,7 @@ import {
 	SvgIconTypeMap
 } from '@mui/material';
 
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
 	Settings as SettingsIcon,
 	Language as WorldIcon,
@@ -39,7 +39,6 @@ import { RoutesConfig } from 'config/Routes/routeConfig';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { USERNAME_FROM_EMAIL } from 'utils/regex';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
-import { useAuthStore } from 'stores/auth.store';
 
 const drawerWidth = 240;
 
@@ -54,24 +53,24 @@ interface PageLinkConfig {
 const featurePages: PageLinkConfig[] = [
 	{
 		title: 'Monitors',
-		url: `../${RoutesConfig.monitors}`,
+		url: RoutesConfig.monitors,
 		Icon: WorldIcon
 	},
 	{
 		title: 'Heartbeats',
-		url: `../${RoutesConfig.heartbeats}`,
+		url: RoutesConfig.heartbeats,
 		Icon: TroubleshootIcon
 	}
 ];
 const managementPages: PageLinkConfig[] = [
 	{
 		title: 'Billing',
-		url: `../${RoutesConfig.billing}`,
+		url: RoutesConfig.billing,
 		Icon: CreditCardIcon
 	},
 	{
 		title: 'Help',
-		url: `../${RoutesConfig.help}`,
+		url: RoutesConfig.help,
 		Icon: HelpOutlineIcon
 	}
 ];
@@ -83,7 +82,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 	};
 
 	return (
-		<Box sx={{ display: 'flex', height: '100%' }}>
+		<Box sx={{ height: '100%', display: 'flex' }}>
 			<AppBar
 				position="fixed"
 				sx={{
@@ -136,7 +135,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					<CustomDrawer />
 				</Drawer>
 			</Box>
-			<Box component="main" sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${drawerWidth}px)` }, height: '100%' }}>
+			<Box component="main" sx={{ flexGrow: 1, p: { xs: 1, sm: 3 }, width: { md: `calc(100% - ${drawerWidth}px)` }, height: '100%' }}>
 				<Toolbar />
 				{children}
 			</Box>
@@ -144,14 +143,18 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 	);
 };
 export default NavMenu;
+
+type RouteParams = {
+	teamId: string;
+};
 const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDrawerToggle }) => {
-	const authStore = useAuthStore();
+	const params = useParams<RouteParams>();
+	const { pathname } = useLocation();
 	const { currentUser, currentTeam } = useGetCurrentUser();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const openTeamMenu = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
-
 	return (
 		<>
 			<Toolbar />
@@ -159,7 +162,13 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 			<List sx={{ height: '100%' }}>
 				{featurePages.map(({ title, url, Icon }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton onClick={handleDrawerToggle} component={RouterLink} to={url}>
+						<ListItemButton
+							selected={pathname.includes(url)}
+							onClick={handleDrawerToggle}
+							component={RouterLink}
+							to={`../${url}`}
+							relative="path"
+						>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -172,7 +181,13 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 			<List>
 				{managementPages.map(({ title, url, Icon }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton onClick={handleDrawerToggle} component={RouterLink} to={url}>
+						<ListItemButton
+							selected={pathname.includes(url)}
+							onClick={handleDrawerToggle}
+							component={RouterLink}
+							relative="path"
+							to={`../${url}`}
+						>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -182,7 +197,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 				))}
 
 				<ListItem disablePadding>
-					<ListItemButton onClick={openTeamMenu}>
+					<ListItemButton onClick={openTeamMenu} selected={pathname.includes(RoutesConfig.teams)}>
 						<ListItemIcon>
 							<Settings />
 						</ListItemIcon>
@@ -216,14 +231,8 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 				transformOrigin={{ horizontal: 'center', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
 			>
-				<MenuItem
-					sx={{ justifyContent: 'space-between' }}
-					component={RouterLink}
-					to={`../${RoutesConfig.teams}/teamId`}
-					relative={'route'}
-					onClick={handleDrawerToggle}
-				>
-					{currentTeam?.name}
+				<MenuItem sx={{ justifyContent: 'space-between', gap: 1 }} onClick={handleDrawerToggle}>
+					<ListItemText inset>{currentTeam?.name}</ListItemText>
 					<ListItemIcon>
 						<CheckCircleOutline />
 					</ListItemIcon>
@@ -234,18 +243,17 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 					.map((team) => (
 						<MenuItem
 							key={team.id}
+							component={RouterLink}
+							to={`${RoutesConfig.teams}/${params.teamId}`}
 							sx={{ justifyContent: 'space-between' }}
-							onClick={() => {
-								handleDrawerToggle?.();
-								authStore.setActiveTeam(team.id);
-							}}
+							onClick={handleDrawerToggle}
 						>
 							{team?.name}
 						</MenuItem>
 					))}
 
 				<Divider />
-				<MenuItem component={RouterLink} to={`../${RoutesConfig.teams}`} onClick={handleDrawerToggle}>
+				<MenuItem component={RouterLink} to={`../${RoutesConfig.teams}`} relative="path" onClick={handleDrawerToggle}>
 					<ListItemIcon>
 						<SettingsIcon fontSize="small" />
 					</ListItemIcon>
@@ -328,7 +336,7 @@ const AccountMenu: React.FC = () => {
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
-				<MenuItem onClick={handleClose} component={RouterLink} to={`../${RoutesConfig.settings}`}>
+				<MenuItem onClick={handleClose} component={RouterLink} to={`../${RoutesConfig.settings}`} relative="path">
 					<ListItemIcon>
 						<SettingsIcon fontSize="small" />
 					</ListItemIcon>

@@ -15,6 +15,8 @@ export enum RoutesConfig {
 	billing = 'billing',
 	help = 'help',
 	teams = 'teams',
+	createTeam = 'create',
+	editTeam = 'edit',
 	settings = 'settings'
 
 	/** Dashboard end */
