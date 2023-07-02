@@ -11,7 +11,7 @@ const Team: React.FC = () => {
 
 	useEffect(() => {
 		//FIXME: What if the teamId from params doesn't exist - needs fixing
-		authStore.setActiveTeam(Number(params.teamId));
+		authStore.setActiveTeam(params.teamId || '');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [params.teamId]);
 

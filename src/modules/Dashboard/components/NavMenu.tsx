@@ -20,7 +20,7 @@ import {
 	SvgIconTypeMap
 } from '@mui/material';
 
-import { Link as RouterLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import {
 	Settings as SettingsIcon,
 	Language as WorldIcon,
@@ -156,11 +156,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 };
 export default NavMenu;
 
-type RouteParams = {
-	teamId: string;
-};
 const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDrawerToggle }) => {
-	const params = useParams<RouteParams>();
 	const { pathname } = useLocation();
 	const { currentUser, currentTeam } = useGetCurrentUser();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

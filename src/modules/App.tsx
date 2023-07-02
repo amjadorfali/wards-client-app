@@ -22,7 +22,6 @@ const SignUp = React.lazy(() => import('modules/Root/Pages/Auth/SignUp'));
 /** Dashboard Pages */
 const DashboardHome = React.lazy(() => import('modules/Dashboard/Dashboard'));
 const TeamRouteGuard = React.lazy(() => import('./Dashboard/TeamRouteGuard'));
-const Team = React.lazy(() => import('./Dashboard/Team'));
 
 const Monitors = React.lazy(() => import('modules/Dashboard/Pages/Monitors/Monitors'));
 const AddMonitor = React.lazy(() => import('modules/Dashboard/Pages/Monitors/AddMonitor'));
@@ -103,7 +102,6 @@ const App: React.FC = () => {
 
 	const dashboardTheme = responsiveFontSizes(
 		createTheme({
-			// Paper was : '#343c4bd7'
 			palette: { ...rootTheme.palette, background: { default: '#222939', paper: '#293141' } },
 			typography: {
 				h1: {
