@@ -181,7 +181,7 @@ const App: React.FC = () => {
 			element: (
 				<ThemeProvider theme={dashboardTheme}>
 					<CssBaseline />
-					<DashboardHome />
+					<Outlet />
 				</ThemeProvider>
 			),
 			errorElement: <ErrorMessage />,
@@ -193,7 +193,7 @@ const App: React.FC = () => {
 					children: [
 						{
 							path: ':teamId',
-							element: <Team />,
+							element: <DashboardHome />,
 							children: [
 								{
 									path: RoutesConfig.monitors,

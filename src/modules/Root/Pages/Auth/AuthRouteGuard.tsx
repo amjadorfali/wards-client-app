@@ -16,7 +16,7 @@ const AuthRouteGuard: React.FC<PropsWithChildren> = ({ children }) => {
 		const awaitUserData = async () => {
 			await currentSession.refetch();
 			const userData = await cognitoUserQuery.refetch();
-			await internalUserQuery.refetch();
+			userData.data?.username && (await internalUserQuery.refetch());
 			if (userData.data?.username) {
 				navigate(`${RoutesConfig.dashboard}/${RoutesConfig.dashboardTeam}/${getTeamId(currentUser)}`, { replace: true });
 			}

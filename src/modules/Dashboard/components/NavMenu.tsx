@@ -135,7 +135,19 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					<CustomDrawer />
 				</Drawer>
 			</Box>
-			<Box component="main" sx={{ flexGrow: 1, p: { xs: 1, sm: 3 }, width: { md: `calc(100% - ${drawerWidth}px)` }, height: '100%' }}>
+			<Box
+				component="main"
+				sx={{
+					flexGrow: 1,
+					p: { xs: 1, sm: 3 },
+					maxWidth: { xs: '100%', lg: '50%' },
+					mx: 'auto',
+					width: { md: `calc(100% - ${drawerWidth}px)` },
+					height: '100%',
+					display: 'flex',
+					flexDirection: 'column'
+				}}
+			>
 				<Toolbar />
 				{children}
 			</Box>
@@ -162,13 +174,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 			<List sx={{ height: '100%' }}>
 				{featurePages.map(({ title, url, Icon }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton
-							selected={pathname.includes(url)}
-							onClick={handleDrawerToggle}
-							component={RouterLink}
-							to={`../${url}`}
-							relative="path"
-						>
+						<ListItemButton selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -181,13 +187,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 			<List>
 				{managementPages.map(({ title, url, Icon }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton
-							selected={pathname.includes(url)}
-							onClick={handleDrawerToggle}
-							component={RouterLink}
-							relative="path"
-							to={`../${url}`}
-						>
+						<ListItemButton selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -231,29 +231,29 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 				transformOrigin={{ horizontal: 'center', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
 			>
-				<MenuItem sx={{ justifyContent: 'space-between', gap: 1 }} onClick={handleDrawerToggle}>
+				<MenuItem selected sx={{ justifyContent: 'space-between', gap: 1 }} onClick={handleDrawerToggle}>
 					<ListItemText inset>{currentTeam?.name}</ListItemText>
 					<ListItemIcon>
-						<CheckCircleOutline />
+						<CheckCircleOutline color="secondary" />
 					</ListItemIcon>
 				</MenuItem>
 
 				{currentUser.teams
-					?.filter((team) => team.id !== currentTeam?.id)
+					?.filter((team) => team.uuid !== currentTeam?.uuid)
 					.map((team) => (
 						<MenuItem
-							key={team.id}
+							key={team.uuid}
 							component={RouterLink}
-							to={`${RoutesConfig.teams}/${params.teamId}`}
+							to={`${RoutesConfig.dashboard}/${RoutesConfig.dashboardTeam}/${team.uuid}`}
 							sx={{ justifyContent: 'space-between' }}
 							onClick={handleDrawerToggle}
 						>
-							{team?.name}
+							<ListItemText inset>{team.name}</ListItemText>
 						</MenuItem>
 					))}
 
 				<Divider />
-				<MenuItem component={RouterLink} to={`../${RoutesConfig.teams}`} relative="path" onClick={handleDrawerToggle}>
+				<MenuItem component={RouterLink} to={RoutesConfig.teams} onClick={handleDrawerToggle}>
 					<ListItemIcon>
 						<SettingsIcon fontSize="small" />
 					</ListItemIcon>
@@ -336,7 +336,7 @@ const AccountMenu: React.FC = () => {
 				transformOrigin={{ horizontal: 'right', vertical: 'top' }}
 				anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 			>
-				<MenuItem onClick={handleClose} component={RouterLink} to={`../${RoutesConfig.settings}`} relative="path">
+				<MenuItem onClick={handleClose} component={RouterLink} to={RoutesConfig.settings}>
 					<ListItemIcon>
 						<SettingsIcon fontSize="small" />
 					</ListItemIcon>

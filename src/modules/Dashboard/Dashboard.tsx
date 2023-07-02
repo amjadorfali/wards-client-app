@@ -1,14 +1,27 @@
-import React, { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { Outlet, useParams } from 'react-router-dom';
 import DashboardRouteGuard from './DashboardRouteGuard';
 import DummyPage from 'modules/Root/Pages/DummyPage/DummyPage';
 import NavMenu from './components/NavMenu';
 import { Grid, Link, Paper, Typography } from '@mui/material';
 import { Help as HelpIcon } from '@mui/icons-material';
 import useChooseTeam from './hooks/useChooseTeam';
+import { useAuthStore } from 'stores/auth.store';
 
+export type TeamParams = {
+	teamId: string;
+};
 const Home: React.FC = () => {
 	useChooseTeam();
+
+	const params = useParams<TeamParams>();
+	const authStore = useAuthStore();
+
+	useEffect(() => {
+		authStore.setActiveTeam(params.teamId || '');
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [params.teamId]);
+
 	return (
 		<>
 			<NavMenu>
@@ -20,7 +33,15 @@ const Home: React.FC = () => {
 
 				{/* //FIXME: This is not responsive on very small screens */}
 
-				<Grid container alignContent={'center'} justifyContent={'center'} my={5}>
+				<Grid
+					container
+					alignContent={'flex-end'}
+					justifyContent={'center'}
+					my={5}
+					sx={{
+						height: '-webkit-fill-available'
+					}}
+				>
 					<Grid gap={2} item component={Paper} display={'flex'} justifyContent={'center'} alignItems={'center'} p={3}>
 						<HelpIcon />
 						<Typography paragraph m={0}>

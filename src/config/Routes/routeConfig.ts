@@ -4,6 +4,7 @@ export enum RoutesConfig {
 	dummy = 'coming-soon',
 	signIn = 'sign-in',
 	signUp = 'sign-up',
+	FAQ = 'FAQ',
 	/** Root end */
 
 	/** Dashboard */
