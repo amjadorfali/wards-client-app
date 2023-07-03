@@ -140,7 +140,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 				sx={{
 					flexGrow: 1,
 					p: { xs: 1, sm: 3 },
-					maxWidth: { xs: '100%', lg: '50%' },
+					maxWidth: { xs: '100%', lg: '1050px' },
 					mx: 'auto',
 					width: { md: `calc(100% - ${drawerWidth}px)` },
 					height: '100%',

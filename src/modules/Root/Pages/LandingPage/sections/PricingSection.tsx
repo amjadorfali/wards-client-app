@@ -13,21 +13,12 @@ import {
 	useTheme
 } from '@mui/material';
 
-import HobbyTierImg from 'assets/hobby.jpg?w=1000&h=1050&format=webp&imagetools';
-import SupporterTierImg from 'assets/supporter.png?w=1000&h=1050&format=webp&imagetools';
-import BusinessTierImg from 'assets/business.jpeg?w=1000&h=1050&format=webp&imagetools';
-
 import { Check } from '@mui/icons-material';
 import { useAnimate, useInView } from 'framer-motion';
+import { PRICING_CONTENT, PricingContent, PricingTypes } from 'config/pricing';
 
-interface CardProps {
+interface CardProps extends PricingContent {
 	color: string;
-	image: string;
-	title: string;
-	subtitle: string;
-	price: string;
-	priceDescription: string;
-	features: string[];
 }
 
 const CustomCard: React.FC<CardProps> = ({ color, image, title, subtitle, features, price, priceDescription }) => {
@@ -70,46 +61,7 @@ const CustomCard: React.FC<CardProps> = ({ color, image, title, subtitle, featur
 	);
 };
 
-const elements = {
-	hobby: 'hobby',
-	supporter: 'supporter',
-	business: 'business'
-};
-
-type ContentValue = Omit<CardProps, 'color'>;
-const content: { [key in keyof typeof elements]: ContentValue } = {
-	hobby: {
-		title: 'Hobby',
-		subtitle: 'Try out everything RemoteOps can do, absolutely free',
-		price: '$ 0',
-		priceDescription: 'Free, forever',
-		features: ['Real-time monitoring and log tracking', '5 health-checks and alarms', 'Basic Support'],
-		image: HobbyTierImg
-	},
-	supporter: {
-		title: 'Supporter',
-		subtitle: 'A complete monitoring platform',
-		price: '$ 4',
-		priceDescription: 'per month',
-		features: ['All features from the Hobby plan', '20 health-checks and alarms', 'Advanced data visualization', 'Priority Support'],
-		image: SupporterTierImg
-	},
-	business: {
-		title: 'Business',
-		subtitle: 'Flexible power and security',
-		price: '$ 30',
-		priceDescription: 'per month',
-		features: [
-			'All features from the Supporter plan',
-			'Unlimited health-checks and alarms',
-			'Dedicated account manager',
-			'Live support'
-		],
-		image: BusinessTierImg
-	}
-};
-
-const animationSequence = Object.keys(elements).map((id) => [
+const animationSequence = Object.keys(PricingTypes).map((id) => [
 	`#${id}`,
 	{ opacity: 1, scale: [0, 1.1, 1] },
 	{ duration: 0.7, at: '-0.3' }
@@ -130,14 +82,14 @@ export const PricingSection: React.FC = () => {
 	return (
 		<Grid py={30} container bgcolor={'background.paper'}>
 			<Grid container item ref={scope} sx={{ justifyContent: { xs: 'center', md: 'space-around' }, gap: { xs: 10, md: 0 } }}>
-				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.hobby} md={3}>
-					<CustomCard color={theme.palette.primary.light} {...content.hobby} />
+				<Grid item xs={7} sx={{ opacity: 0 }} id={PricingTypes.hobby} md={3}>
+					<CustomCard color={theme.palette.primary.light} {...PRICING_CONTENT.hobby} />
 				</Grid>
-				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.supporter} md={3}>
-					<CustomCard color={theme.palette.primary.main} {...content.supporter} />
+				<Grid item xs={7} sx={{ opacity: 0 }} id={PricingTypes.supporter} md={3}>
+					<CustomCard color={theme.palette.primary.main} {...PRICING_CONTENT.supporter} />
 				</Grid>
-				<Grid item xs={7} sx={{ opacity: 0 }} id={elements.business} md={3}>
-					<CustomCard color={theme.palette.primary.dark} {...content.business} />
+				<Grid item xs={7} sx={{ opacity: 0 }} id={PricingTypes.business} md={3}>
+					<CustomCard color={theme.palette.primary.dark} {...PRICING_CONTENT.business} />
 				</Grid>
 			</Grid>
 		</Grid>
