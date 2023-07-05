@@ -55,7 +55,7 @@
 		"lint-staged": "^13.2.3",
 		"prettier": "3.0.0",
 		"tslib": "^2.6.0",
-		"typescript": "5.0.2",
+		"typescript": "5.1.6",
 		"vite": "^4.3.9",
 		"vite-imagetools": "^5.0.4",
 		"vite-plugin-svgr": "^3.2.0",
@@ -63,9 +63,9 @@
 	},
 	"volta": {
 		"node": "18.16.0",
-		"yarn": "3.5.1"
+		"yarn": "4.0.0-rc.48"
 	},
-	"packageManager": "yarn@3.5.1",
+	"packageManager": "yarn@4.0.0-rc.48",
 	"lint-staged": {
 		"**/*": "prettier --write --ignore-unknown",
 		"*.{ts,tsx}": "eslint --cache --fix",
