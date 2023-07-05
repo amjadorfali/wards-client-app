@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import ErrorMessage from './ErrorMessage';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import Loader from 'components/loaders/Loader';
 
 /** Root Pages */
 const Root = React.lazy(() => import('modules/Root/Root'));
@@ -148,6 +149,7 @@ const App: React.FC = () => {
 			element: (
 				<ThemeProvider theme={rootTheme}>
 					<CssBaseline />
+					<Loader />
 					<Root />
 				</ThemeProvider>
 			),
@@ -189,6 +191,7 @@ const App: React.FC = () => {
 			element: (
 				<ThemeProvider theme={dashboardTheme}>
 					<CssBaseline />
+					<Loader />
 					<Outlet />
 				</ThemeProvider>
 			),

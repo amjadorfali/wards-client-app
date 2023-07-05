@@ -3,14 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import axiosInstance from 'services/api';
 
+export const QUERY_KEY = 'currentSession';
 /**
  * @link [See this section for more info on how to use this fn](https://docs.amplify.aws/lib/auth/manageusers/q/platform/js#retrieve-current-session)
  */
 const useGetCurrentSession = () => {
 	const currentSession = useQuery({
-		queryKey: ['currentSession'],
+		queryKey: [QUERY_KEY],
 		queryFn: () => Auth.currentSession(),
-		retry: 1
+		retry: 1,
+		refetchOnMount: false
 	});
 
 	useEffect(() => {

@@ -17,7 +17,8 @@ import {
 	ListItemIcon,
 	ListItemButton,
 	ListItemText,
-	SvgIconTypeMap
+	SvgIconTypeMap,
+	Grid
 } from '@mui/material';
 
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
@@ -39,6 +40,7 @@ import { RoutesConfig } from 'config/Routes/routeConfig';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 import { USERNAME_FROM_EMAIL } from 'utils/regex';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
+import BackgroundLoader from 'components/loaders/BackgroundLoader';
 
 const drawerWidth = 240;
 
@@ -91,7 +93,7 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					boxShadow: 'unset'
 				}}
 			>
-				<Toolbar sx={{ backgroundColor: 'background.default' }}>
+				<Toolbar sx={{ backgroundColor: 'background.default', justifyContent: 'space-between' }}>
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
@@ -101,9 +103,8 @@ const NavMenu: React.FC<React.PropsWithChildren> = ({ children }) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography width={'100%'} variant="h6" noWrap component="div">
-						Remote Ops
-					</Typography>
+					<BackgroundLoader />
+					<Grid item width={'100%'}></Grid>
 
 					<AccountMenu />
 				</Toolbar>
@@ -165,7 +166,20 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 	const handleClose = () => setAnchorEl(null);
 	return (
 		<>
-			<Toolbar />
+			<Grid item py={3} alignSelf={'center'} xs={12}>
+				<Typography
+					component={RouterLink}
+					to="/"
+					target="_blank"
+					variant="h6"
+					noWrap
+					color={'primary'}
+					sx={{ textDecoration: 'none' }}
+				>
+					Remote Ops
+				</Typography>
+			</Grid>
+
 			<Divider />
 			<List sx={{ height: '100%' }}>
 				{featurePages.map(({ title, url, Icon }) => (

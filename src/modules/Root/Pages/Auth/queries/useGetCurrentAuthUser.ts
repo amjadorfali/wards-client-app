@@ -9,8 +9,7 @@ import { CustomCognitoUser } from 'utils/interfaces';
 const useGetCurrentAuthUser = () => {
 	return useQuery<CustomCognitoUser, Error, CustomCognitoUser, string[]>({
 		queryKey: ['currentAuthenticatedUser'],
-		queryFn: () => Auth.currentAuthenticatedUser(),
-		enabled: true
+		queryFn: () => Auth.currentAuthenticatedUser({ bypassCache: false })
 	});
 };
 

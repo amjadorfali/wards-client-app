@@ -16,10 +16,11 @@ const useGetCurrentUser = () => {
 	const navigate = useNavigate();
 	const params = useParams<TeamParams>();
 	const currentSession = useGetCurrentSession();
-	const cognitoUserQuery = useGetCognitoCurrentUserInfo();
+	const cognitoUserQuery = useGetCognitoCurrentUserInfo(currentSession.isSuccess);
 	const internalUserQuery = useQuery({
 		queryKey: ['internal-user-info', cognitoUserQuery.data?.username],
 		enabled: cognitoUserQuery.isSuccess && !!cognitoUserQuery.data?.username,
+		refetchOnMount: false,
 		queryFn: () => axiosInstance.get<InternalUserQuery>('api/me/check').then((res) => res.data)
 	});
 
