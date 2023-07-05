@@ -9,7 +9,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 import { Button } from '@mui/material';
-
+import { Link as RouterLink } from 'react-router-dom';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
 		backgroundColor: theme.palette.action.hover
@@ -25,9 +26,11 @@ const TeamsTable: React.FC = () => {
 	return (
 		<TableContainer component={Paper} sx={{ maxWidth: '80dvw' }}>
 			<Table sx={{ minWidth: 700 }} aria-label="customized table">
-				<TableHead>
+				<TableHead sx={{ bgcolor: 'background.paper' }}>
 					<TableRow>
 						<TableCell>Team</TableCell>
+						<TableCell></TableCell>
+						<TableCell></TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -38,7 +41,9 @@ const TeamsTable: React.FC = () => {
 							</TableCell>
 							<TableCell align="right">{row.uuid}</TableCell>
 							<TableCell align="right">
-								<Button>Edit</Button>
+								<Button component={RouterLink} to={`${RoutesConfig.editTeam}/${row.uuid}`} variant="outlined" color="secondary">
+									Configure
+								</Button>
 							</TableCell>
 						</StyledTableRow>
 					))}

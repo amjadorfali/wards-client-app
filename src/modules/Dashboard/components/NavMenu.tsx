@@ -336,7 +336,7 @@ const AccountMenu: React.FC = () => {
 					<ListItemIcon>
 						<SettingsIcon fontSize="small" />
 					</ListItemIcon>
-					Settings
+					Your account
 				</MenuItem>
 				<MenuItem onClick={handleSignOut}>
 					<ListItemIcon>

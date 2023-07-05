@@ -1,12 +1,11 @@
 import React, { BaseSyntheticEvent, useState } from 'react';
-import { Box, Button, IconButton, InputAdornment, ListItem, ListItemText, List, ListItemIcon } from '@mui/material';
+import { Box, Button, IconButton, InputAdornment } from '@mui/material';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import { useForm } from 'react-hook-form';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { PASSWORD } from 'utils/regex';
-import CustomToolTip from 'components/CustomToolTip';
-import { Circle } from '@mui/icons-material';
+import PasswordToolTip from './PasswordToolTip';
 
 interface Props {
 	onForgetPassword: (email: string) => void;
@@ -108,7 +107,7 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 	return (
 		<Box component="form" my={2} onSubmit={enterNewPasswordForm.handleSubmit(onEnterNewPasswordSubmit)}>
 			{/* <!-- user invisible --> */}
-			<input style={{ display: 'none' }} id="username" type="email" value={email} />
+			<input readOnly style={{ display: 'none' }} id="username" type="email" value={email} />
 
 			<ControlledTextField
 				controller={{
@@ -158,44 +157,7 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 								</IconButton>
 							</InputAdornment>
 						),
-						startAdornment: (
-							<CustomToolTip
-								title={
-									<List
-										sx={{
-											'.MuiListItemText-primary': { fontSize: '1rem' },
-											'.MuiSvgIcon-root': { fontSize: '0.5rem' },
-											'.MuiListItemIcon-root': { minWidth: '1rem' }
-										}}
-									>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 number</ListItemText>
-										</ListItem>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 special character</ListItemText>
-										</ListItem>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 uppercase letter</ListItemText>
-										</ListItem>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 lowercase letter</ListItemText>
-										</ListItem>
-									</List>
-								}
-							/>
-						)
+						startAdornment: <PasswordToolTip />
 					}
 				}}
 				controller={{

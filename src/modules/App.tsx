@@ -33,6 +33,7 @@ const Help = React.lazy(() => import('modules/Dashboard/Pages/Help'));
 
 const Teams = React.lazy(() => import('modules/Dashboard/Pages/Teams/Teams'));
 const CreateTeam = React.lazy(() => import('modules/Dashboard/Pages/Teams/CreateTeam'));
+const EditTeam = React.lazy(() => import('modules/Dashboard/Pages/Teams/EditTeam'));
 
 const Settings = React.lazy(() => import('modules/Dashboard/Pages/Settings'));
 /** Dashboard Pages End*/
@@ -127,6 +128,15 @@ const App: React.FC = () => {
 				fontWeightRegular: 400,
 				body1: {
 					fontSize: 18
+				}
+			},
+			components: {
+				MuiButton: {
+					styleOverrides: {
+						root: {
+							textTransform: 'capitalize'
+						}
+					}
 				}
 			}
 		})
@@ -232,6 +242,10 @@ const App: React.FC = () => {
 											element: <CreateTeam />
 										},
 										{
+											path: `${RoutesConfig.editTeam}/:editTeamId`,
+											element: <EditTeam />
+										},
+										{
 											index: true,
 											element: <Teams />
 										}
@@ -275,7 +289,7 @@ const App: React.FC = () => {
 		<QueryClientProvider client={queryClient}>
 			<LocalizationProvider dateAdapter={AdapterDayjs}>
 				<RouterProvider router={router} />
-				<ToastContainer />
+				<ToastContainer hideProgressBar />
 			</LocalizationProvider>
 			<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
 		</QueryClientProvider>

@@ -1,16 +1,15 @@
-import { Box, Button, Grid, IconButton, InputAdornment, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputAdornment } from '@mui/material';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import React, { BaseSyntheticEvent, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import Circle from '@mui/icons-material/Circle';
 import { Link as RouterLink } from 'react-router-dom';
 // import useSignUp from './mutations/useSignUp';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { PASSWORD } from 'utils/regex';
-import CustomToolTip from 'components/CustomToolTip';
+import PasswordToolTip from './PasswordToolTip';
 type SignUpFormValues = {
 	password: string;
 	email: string;
@@ -85,44 +84,7 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 								</IconButton>
 							</InputAdornment>
 						),
-						startAdornment: (
-							<CustomToolTip
-								title={
-									<List
-										sx={{
-											'.MuiListItemText-primary': { fontSize: '1rem' },
-											'.MuiSvgIcon-root': { fontSize: '0.5rem' },
-											'.MuiListItemIcon-root': { minWidth: '1rem' }
-										}}
-									>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 number</ListItemText>
-										</ListItem>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 special character</ListItemText>
-										</ListItem>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 uppercase letter</ListItemText>
-										</ListItem>
-										<ListItem>
-											<ListItemIcon>
-												<Circle />
-											</ListItemIcon>
-											<ListItemText>Contains at least 1 lowercase letter</ListItemText>
-										</ListItem>
-									</List>
-								}
-							/>
-						)
+						startAdornment: <PasswordToolTip />
 					}
 				}}
 				controller={{
