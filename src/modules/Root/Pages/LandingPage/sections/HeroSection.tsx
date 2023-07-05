@@ -8,8 +8,6 @@ import { RoutesConfig } from 'config/Routes/routeConfig';
 const staggerAnimation = stagger(0.25);
 
 const ids = {
-	//FIXME: not animating header for now, as it's affecting lighthouse LCP score
-	// header: 'header',
 	subtitle: 'subtitle',
 	actionButtons: 'actionButtons',
 	graph: 'graph'

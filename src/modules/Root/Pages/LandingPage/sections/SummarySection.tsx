@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react';
-//TODO: Work on a cool animations for this section
-// import { ReactComponent as StreamingIcon } from 'assets/streaming.svg';
 import { Grid, Typography } from '@mui/material';
 
 import { useAnimate, useInView } from 'framer-motion';
@@ -41,9 +39,7 @@ const SummarySection: React.FC = () => {
 						))}
 					</Typography>
 				</Grid>
-				<Grid container item xs={10} md={8} justifyContent={'center'}>
-					{/* <StreamingIcon height={'100%'} width={'100%'} /> */}
-				</Grid>
+				<Grid container item xs={10} md={8} justifyContent={'center'}></Grid>
 			</Grid>
 		</>
 	);

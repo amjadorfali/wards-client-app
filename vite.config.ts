@@ -18,7 +18,8 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					echarts: ['echarts']
+					echarts: ['echarts'],
+					'@mui/x-date-pickers': ['@mui/x-date-pickers']
 				}
 			}
 		}

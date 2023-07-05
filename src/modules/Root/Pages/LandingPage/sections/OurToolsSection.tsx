@@ -173,8 +173,6 @@ const OurToolsSection: React.FC = () => {
 
 export default OurToolsSection;
 
-//TODO: Cleanup styles and use theme
-
 const LotusIconWrapper = styled('div')`
 	font-size: 12px;
 	pointer-events: unset;

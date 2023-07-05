@@ -37,7 +37,6 @@ const useGetCurrentUser = () => {
 		}
 	}, [currentTeam?.uuid, navigate, params.teamId, internalUserQuery.isSuccess]);
 
-	//FIXME: Better do these in mutations, you can have more control over the refetching in edge cases
 	const refetchAll = async () => {
 		await currentSession.refetch();
 		await cognitoUserQuery.refetch();
