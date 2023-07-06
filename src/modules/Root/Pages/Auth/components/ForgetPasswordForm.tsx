@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Button, IconButton, InputAdornment } from '@mui/material';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import { useForm } from 'react-hook-form';
@@ -41,8 +41,7 @@ interface EnterEmailProps {
 const EnterEmail: React.FC<EnterEmailProps> = ({ onVerifyUser }) => {
 	const enterEmailForm = useForm<EnterEmailFormValues>({ shouldUnregister: true });
 
-	const onVerifyUserSubmit = (data: EnterEmailFormValues, event?: BaseSyntheticEvent<object, unknown, unknown>) => {
-		event && event.preventDefault();
+	const onVerifyUserSubmit = (data: EnterEmailFormValues) => {
 		onVerifyUser(data.email);
 	};
 	return (
@@ -61,7 +60,7 @@ const EnterEmail: React.FC<EnterEmailProps> = ({ onVerifyUser }) => {
 					margin: 'normal',
 					placeholder: 'Enter your email',
 					label: 'Email',
-					name: 'email',
+					name: 'username',
 					fullWidth: true,
 					InputLabelProps: {
 						required: true
@@ -99,16 +98,11 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 
 	const toggleShowPassword = () => setShowPassword(!showPassword);
 
-	const onEnterNewPasswordSubmit = (data: EnterNewPasswordFormValues, event?: BaseSyntheticEvent<object, unknown, unknown>) => {
-		event && event.preventDefault();
+	const onEnterNewPasswordSubmit = (data: EnterNewPasswordFormValues) => {
 		onEnterNewPassword(data.password, data.code);
 	};
-
 	return (
 		<Box component="form" my={2} onSubmit={enterNewPasswordForm.handleSubmit(onEnterNewPasswordSubmit)}>
-			{/* <!-- user invisible --> */}
-			<input readOnly style={{ display: 'none' }} id="username" type="email" value={email} />
-
 			<ControlledTextField
 				controller={{
 					rules: {
@@ -128,10 +122,14 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 					InputLabelProps: {
 						required: true
 					},
+					autoComplete: 'off',
 					sx: { minHeight: '5rem' },
 					type: 'text'
 				}}
 			/>
+
+			{/* <!-- user invisible --> */}
+			{email && <input readOnly style={{ display: 'none' }} id="username" type="email" value={email} />}
 
 			<ControlledTextField
 				textFieldProps={{

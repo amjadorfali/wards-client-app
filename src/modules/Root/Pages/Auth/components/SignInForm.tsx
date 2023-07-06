@@ -36,7 +36,7 @@ const SignInForm: React.FC<Props> = ({ onSignIn }) => {
 					margin: 'normal',
 					placeholder: 'Enter your email',
 					label: 'Email',
-					name: 'email',
+					name: 'username',
 					fullWidth: true,
 					InputLabelProps: {
 						required: true

@@ -66,7 +66,10 @@ const Settings: React.FC = () => {
 		changePassword.mutate(
 			{ newPassword, oldPassword },
 			{
-				onSuccess: () => toast('Password changed successfully', { type: 'success' }),
+				onSuccess: () => {
+					updatePasswordForm.reset();
+					toast('Password changed successfully', { type: 'success' });
+				},
 				onError: (error) => toast(error.message, { type: 'error' })
 			}
 		);
@@ -127,7 +130,7 @@ const Settings: React.FC = () => {
 									control={updateEmailForm.control}
 									textFieldProps={{
 										margin: 'normal',
-										name: 'email',
+										name: 'username',
 										label: 'Email',
 										fullWidth: true,
 										InputLabelProps: { required: true },

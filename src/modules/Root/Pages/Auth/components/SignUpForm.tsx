@@ -1,6 +1,6 @@
 import { Box, Button, Grid, IconButton, InputAdornment } from '@mui/material';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
-import React, { BaseSyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -24,8 +24,7 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 
 	const toggleShowPassword = () => setShowPassword(!showPassword);
 
-	const handleSignUpSubmit = (data: SignUpFormValues, event?: BaseSyntheticEvent<object, unknown, unknown>) => {
-		event && event.preventDefault();
+	const handleSignUpSubmit = (data: SignUpFormValues) => {
 		onSignUp(data.email, data.password);
 	};
 
@@ -37,7 +36,7 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 					placeholder: 'me@gmail.com',
 					fullWidth: true,
 					label: 'Email',
-					name: 'email',
+					name: 'username',
 					InputLabelProps: { required: true },
 					autoComplete: 'username',
 					sx: { minHeight: '5rem' },
