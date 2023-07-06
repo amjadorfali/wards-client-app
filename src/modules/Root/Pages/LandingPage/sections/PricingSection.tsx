@@ -13,10 +13,13 @@ import {
 	useTheme
 } from '@mui/material';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 import { Check } from '@mui/icons-material';
 import { useAnimate, useInView } from 'framer-motion';
 import { PRICING_CONTENT, PricingContent, PricingTypes } from 'config/pricing';
 import { ScrollTo } from 'modules/Root/components/Navbar';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 
 interface CardProps extends PricingContent {
 	color: string;
@@ -31,6 +34,8 @@ const CustomCard: React.FC<CardProps> = ({ color, image, title, subtitle, featur
 				transition: '0.2s',
 				':hover': { transform: 'scale(1.1)', boxShadow: 'none', ':hover': { boxShadow: `0 6px 12px 0 ${color}` } }
 			}}
+			component={RouterLink}
+			to={`${RoutesConfig.signUp}`}
 		>
 			<Card elevation={10} sx={{ borderRadius: 16 }}>
 				<CardMedia sx={{ width: '100%', height: '0', pb: '75%', bgcolor: 'rgba(0, 0, 0, 0.08)' }} image={image} />
