@@ -25,7 +25,7 @@ function randomData(): DataItem {
 for (let i = 0; i < 400; i++) {
 	data.push(randomData());
 }
-//TODO: Look into https://echarts.apache.org/en/option.html#series-line.data
+// Look into https://echarts.apache.org/en/option.html#series-line.data, possibly use this for future charts
 
 const initialOption: EChartsOption = {
 	tooltip: {

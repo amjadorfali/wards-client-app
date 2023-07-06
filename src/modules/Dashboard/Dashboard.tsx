@@ -31,17 +31,7 @@ const Home: React.FC = () => {
 					</DashboardRouteGuard>
 				</Suspense>
 
-				{/* //FIXME: This is not responsive on very small screens */}
-
-				<Grid
-					container
-					alignContent={'flex-end'}
-					justifyContent={'center'}
-					my={5}
-					sx={{
-						height: '-webkit-fill-available'
-					}}
-				>
+				<Grid container alignContent={'flex-end'} justifyContent={'center'} item xs={12} my={5}>
 					<Grid gap={2} item component={Paper} display={'flex'} justifyContent={'center'} alignItems={'center'} p={3}>
 						<HelpIcon />
 						<Typography paragraph m={0}>
