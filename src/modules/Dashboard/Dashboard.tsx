@@ -7,6 +7,7 @@ import { Grid, Link, Paper, Typography } from '@mui/material';
 import { Help as HelpIcon } from '@mui/icons-material';
 import useChooseTeam from './hooks/useChooseTeam';
 import { useAuthStore } from 'stores/auth.store';
+import { COMPANY_EMAIL } from 'config/literals';
 
 export type TeamParams = {
 	teamId: string;
@@ -36,8 +37,8 @@ const Home: React.FC = () => {
 						<HelpIcon />
 						<Typography paragraph m={0}>
 							Need help? Let us know at{' '}
-							<Link sx={{ fontSize: 'inherit' }} href="mailto:remote.ops.general@gmail.com">
-								remote.ops.general@gmail.com
+							<Link sx={{ fontSize: 'inherit' }} href={`mailto:${COMPANY_EMAIL}`}>
+								{COMPANY_EMAIL}
 							</Link>
 						</Typography>
 					</Grid>

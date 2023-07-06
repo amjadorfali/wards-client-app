@@ -2,11 +2,12 @@ import React from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
+import { COMPANY_EMAIL } from 'config/literals';
 const content = {
 	title: "Take Control of Your Application's Performance Today",
 	subtitle: 'Sign up now and experience the power of our comprehensive service.',
 	callToAction1: { text: 'Get started', link: RoutesConfig.signUp },
-	callToAction2: 'Book a demo'
+	callToAction2: { text: 'Get in touch', link: `mailto:${COMPANY_EMAIL}` }
 };
 export const CallToActionSection: React.FC = () => {
 	return (
@@ -22,8 +23,8 @@ export const CallToActionSection: React.FC = () => {
 				<Button variant="contained" size="large" component={RouterLink} to={content.callToAction1.link}>
 					{content.callToAction1.text}
 				</Button>
-				<Button variant="outlined" size="large">
-					{content.callToAction2}
+				<Button variant="outlined" size="large" component={RouterLink} to={content.callToAction2.link}>
+					{content.callToAction2.text}
 				</Button>
 			</Grid>
 		</Grid>

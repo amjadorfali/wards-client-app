@@ -9,6 +9,7 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
+import { ScrollTo } from 'modules/Root/components/Navbar';
 
 const content = {
 	title: (theme: Theme) => (
@@ -74,7 +75,7 @@ const FeaturesSection: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [inView]);
 	return (
-		<Grid container pt={25} pb={10}>
+		<Grid id={ScrollTo.FEATURES} container pt={25} pb={10}>
 			<Grid ref={scope} item container justifyContent={'center'} gap={3} alignContent={'center'}>
 				<Grid item xs={12} sm={4} md={3}>
 					<TroubleshootOutlinedIcon

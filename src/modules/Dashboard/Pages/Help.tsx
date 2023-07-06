@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import { RoutesConfig } from 'config/Routes/routeConfig';
+import { COMPANY_EMAIL } from 'config/literals';
 const Help: React.FC = () => {
 	// TODO: Add logic for help page
 	return (
@@ -15,8 +16,8 @@ const Help: React.FC = () => {
 
 			<Typography paragraph textAlign={'center'}>
 				You can reach us at{' '}
-				<Link sx={{ fontSize: 'inherit' }} href="mailto:remote.ops.general@gmail.com">
-					remote.ops.general@gmail.com
+				<Link sx={{ fontSize: 'inherit' }} href={`mailto:${COMPANY_EMAIL}`}>
+					{COMPANY_EMAIL}
 				</Link>
 				. We'll get back to you as soon as we can, typically within a few hours.
 			</Typography>

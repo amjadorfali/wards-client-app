@@ -16,6 +16,7 @@ import {
 import { Check } from '@mui/icons-material';
 import { useAnimate, useInView } from 'framer-motion';
 import { PRICING_CONTENT, PricingContent, PricingTypes } from 'config/pricing';
+import { ScrollTo } from 'modules/Root/components/Navbar';
 
 interface CardProps extends PricingContent {
 	color: string;
@@ -80,7 +81,7 @@ export const PricingSection: React.FC = () => {
 	}, [inView]);
 
 	return (
-		<Grid py={30} container bgcolor={'background.paper'}>
+		<Grid id={ScrollTo.PLANS} py={30} container bgcolor={'background.paper'}>
 			<Grid container item ref={scope} sx={{ justifyContent: { xs: 'center', md: 'space-around' }, gap: { xs: 10, md: 0 } }}>
 				<Grid item xs={7} sx={{ opacity: 0 }} id={PricingTypes.hobby} md={3}>
 					<CustomCard color={theme.palette.primary.light} {...PRICING_CONTENT.hobby} />

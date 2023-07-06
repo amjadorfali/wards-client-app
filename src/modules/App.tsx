@@ -14,6 +14,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 /** Root Pages */
 const Root = React.lazy(() => import('modules/Root/Root'));
+const PrivacyPolicy = React.lazy(() => import('modules/Root/Pages/PrivacyPolicy'));
+const Terms = React.lazy(() => import('modules/Root/Pages/Terms'));
 
 const DummyPage = React.lazy(() => import('modules/Root/Pages/DummyPage/DummyPage'));
 const AuthRouteGuard = React.lazy(() => import('modules/Root/Pages/Auth/AuthRouteGuard'));
@@ -157,6 +159,14 @@ const router = createBrowserRouter([
 			{
 				element: <LandingPage />,
 				index: true
+			},
+			{
+				element: <PrivacyPolicy />,
+				path: RoutesConfig.privacy
+			},
+			{
+				element: <Terms />,
+				path: RoutesConfig.terms
 			},
 			{
 				element: <DummyPage />,

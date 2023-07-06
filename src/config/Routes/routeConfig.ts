@@ -5,6 +5,8 @@ export enum RoutesConfig {
 	signIn = 'sign-in',
 	signUp = 'sign-up',
 	FAQ = 'FAQ',
+	terms = 'terms',
+	privacy = 'privacy',
 	/** Root end */
 
 	/** Dashboard */

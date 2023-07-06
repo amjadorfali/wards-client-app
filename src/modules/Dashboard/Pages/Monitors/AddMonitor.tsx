@@ -23,6 +23,7 @@ import ControlledTextField from 'components/inputs/ControlledTextfield';
 import { Controller, useForm } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { COMPANY_EMAIL } from 'config/literals';
 
 type Header = {
 	[key: `header-name-${number}`]: string;
@@ -228,8 +229,8 @@ const AddMonitor: React.FC = () => {
 							<Typography variant="h4">Advanced settings</Typography>
 							<Typography paragraph>
 								If you need something extra you can't configure here, please let us know at{' '}
-								<Link href="mailto:remote.ops.general@gmail.com" sx={{ fontSize: 'inherit' }}>
-									remote.ops.general@gmail.com
+								<Link href={`mailto:${COMPANY_EMAIL}`} sx={{ fontSize: 'inherit' }}>
+									{COMPANY_EMAIL}
 								</Link>{' '}
 								and we'll make it happen!
 							</Typography>

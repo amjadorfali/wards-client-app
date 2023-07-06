@@ -16,16 +16,35 @@ import {
 	Grid,
 	Link
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { AttachMoney, EmailOutlined, Menu as MenuIcon } from '@mui/icons-material';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
-import SavingsIcon from '@mui/icons-material/Savings';
-import InfoIcon from '@mui/icons-material/Info';
-import BookIcon from '@mui/icons-material/Book';
 import { RoutesConfig } from 'config/Routes/routeConfig';
+import { COMPANY_EMAIL } from 'config/literals';
 
-const pages = ['Products', 'Pricing', 'Docs', 'About'];
-const icons = [MonitorHeartIcon, SavingsIcon, BookIcon, InfoIcon];
+/** Used to set ids to scroll to */
+export enum ScrollTo {
+	FEATURES = 'features',
+	PLANS = 'plans'
+}
+const pages = [
+	{
+		Icon: MonitorHeartIcon,
+		title: 'Features',
+		key: ScrollTo.FEATURES
+	},
+	{
+		Icon: AttachMoney,
+		title: 'Plans',
+		key: ScrollTo.PLANS
+	},
+	{
+		Icon: MonitorHeartIcon,
+		title: 'Try now',
+		key: ScrollTo.PLANS
+	}
+];
+
 const actions = [
 	{ text: 'Sign In', link: RoutesConfig.signIn },
 	{ text: 'Sign Up', link: RoutesConfig.signUp }
@@ -34,6 +53,8 @@ const actions = [
 const Navbar: React.FC = () => {
 	const theme = useTheme();
 	const [drawerOpen, setDrawerOpen] = React.useState<boolean>(false);
+	const { pathname, state } = useLocation() as { pathname: string; state: { scrollTo?: ScrollTo } };
+	const navigate = useNavigate();
 
 	const handleOpenNavMenu = () => {
 		setDrawerOpen(true);
@@ -42,6 +63,24 @@ const Navbar: React.FC = () => {
 	const handleCloseNavMenu = () => {
 		setDrawerOpen(false);
 	};
+
+	React.useEffect(() => {
+		let timeout: NodeJS.Timeout;
+		if (state?.scrollTo) {
+			const element = document?.getElementById(state?.scrollTo);
+			timeout = setTimeout(() => element?.scrollIntoView({ behavior: 'smooth' }), 500);
+		}
+
+		return () => clearTimeout(timeout);
+	}, [state?.scrollTo]);
+
+	const handleScrollToPage = (key: ScrollTo, isMobile?: boolean) => {
+		const element = document?.getElementById(key);
+		if (pathname !== RoutesConfig.home) return navigate(RoutesConfig.home, { state: { scrollTo: key } });
+
+		element?.scrollIntoView({ behavior: isMobile ? 'instant' : 'smooth' });
+	};
+
 	/* From https://css.glass */
 	return (
 		<AppBar
@@ -87,7 +126,7 @@ const Navbar: React.FC = () => {
 						<Drawer
 							sx={{
 								'.MuiDrawer-paper': {
-									width: '100%',
+									width: '80%',
 									backdropFilter: 'blur(5.2px)'
 								}
 							}}
@@ -96,17 +135,26 @@ const Navbar: React.FC = () => {
 							onClose={handleCloseNavMenu}
 						>
 							<List>
-								{pages.map((text, index) => {
-									const Icon = icons[index];
-									return (
-										<ListItem key={text}>
-											<ListItemButton component={RouterLink} to={RoutesConfig.dummy} onClick={handleCloseNavMenu}>
-												<ListItemIcon children={<Icon />} sx={{ color: theme.palette.primary.main }} />
-												<ListItemText primary={text} />
-											</ListItemButton>
-										</ListItem>
-									);
-								})}
+								{pages.map(({ Icon, title, key }) => (
+									<ListItem key={title}>
+										<ListItemButton
+											onClick={() => {
+												handleCloseNavMenu();
+												handleScrollToPage(key, true);
+											}}
+										>
+											<ListItemIcon children={<Icon />} sx={{ color: theme.palette.primary.main }} />
+											<ListItemText primary={title} />
+										</ListItemButton>
+									</ListItem>
+								))}
+
+								<ListItem>
+									<ListItemButton component={RouterLink} to={`mailto:${COMPANY_EMAIL}`} onClick={handleCloseNavMenu}>
+										<ListItemIcon children={<EmailOutlined />} sx={{ color: theme.palette.primary.main }} />
+										<ListItemText primary={'Contact'} />
+									</ListItemButton>
+								</ListItem>
 							</List>
 
 							<Grid container wrap="wrap" direction={'column'} p={2} gap={2}>
@@ -154,11 +202,15 @@ const Navbar: React.FC = () => {
 						Ops
 					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} justifyContent={'center'}>
-						{pages.map((page) => (
-							<Button component={RouterLink} to={RoutesConfig.dummy} key={page} sx={{ my: 2, color: 'white', display: 'block' }}>
-								{page}
+						{pages.map(({ title, key }) => (
+							<Button key={title} onClick={() => handleScrollToPage(key)} sx={{ my: 2, color: 'white', display: 'block' }}>
+								{title}
 							</Button>
 						))}
+
+						<Button component={RouterLink} to={`mailto:${COMPANY_EMAIL}`} sx={{ my: 2, color: 'white', display: 'block' }}>
+							Contact
+						</Button>
 					</Box>
 
 					<Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }} gap={2} justifyContent={'flex-end'}>

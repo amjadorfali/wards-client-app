@@ -5,28 +5,12 @@ import CopyrightIcon from '@mui/icons-material/Copyright';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 const Config: { text: string; url: RoutesConfig }[] = [
 	{
-		text: 'Terms',
-		url: RoutesConfig.dummy
+		text: 'Terms of Use',
+		url: RoutesConfig.terms
 	},
 	{
-		text: 'Privacy',
-		url: RoutesConfig.dummy
-	},
-	{
-		text: 'Pricing',
-		url: RoutesConfig.dummy
-	},
-	{
-		text: 'FAQ',
-		url: RoutesConfig.dummy
-	},
-	{
-		text: 'API',
-		url: RoutesConfig.dummy
-	},
-	{
-		text: 'Status',
-		url: RoutesConfig.dummy
+		text: 'Privacy Policy',
+		url: RoutesConfig.privacy
 	}
 ];
 
@@ -38,11 +22,6 @@ const Footer: React.FC = () => {
 			</Grid>
 
 			<Grid container item xs={12} justifyContent={'center'} p={2} gap={2}>
-				<Grid container item sm={5} lg={3}>
-					<Typography display={'flex'} alignItems={'center'} gap={1}>
-						<CopyrightIcon /> 2023 RemoteOps, Inc
-					</Typography>
-				</Grid>
 				<Grid item container gap={2} sm={5} lg={4}>
 					{Config.map(({ text, url }) => (
 						<Grid key={text} item>
@@ -53,6 +32,11 @@ const Footer: React.FC = () => {
 							</ListItemText>
 						</Grid>
 					))}
+				</Grid>
+				<Grid container item sm={5} lg={3}>
+					<Typography display={'flex'} alignItems={'center'} gap={1}>
+						<CopyrightIcon /> All rights reserved - RemoteOps, 2023
+					</Typography>
 				</Grid>
 			</Grid>
 		</Grid>
