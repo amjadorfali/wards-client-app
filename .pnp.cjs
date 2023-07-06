@@ -58,7 +58,7 @@ const RAW_RUNTIME_STATE =
           ["framer-motion", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.12.18"],\
           ["husky", "npm:8.0.3"],\
           ["lint-staged", "npm:13.2.3"],\
-          ["prettier", "npm:3.0.0"],\
+          ["prettier", "npm:2.8.8"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:18.2.0"],\
           ["react-hook-form", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:7.45.1"],\
@@ -6381,10 +6381,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["prettier", [\
-      ["npm:3.0.0", {\
-        "packageLocation": "../../../../.yarn/berry/cache/prettier-npm-3.0.0-7ffbcce680-10c0.zip/node_modules/prettier/",\
+      ["npm:2.8.8", {\
+        "packageLocation": "../../../../.yarn/berry/cache/prettier-npm-2.8.8-430828a36c-10c0.zip/node_modules/prettier/",\
         "packageDependencies": [\
-          ["prettier", "npm:3.0.0"]\
+          ["prettier", "npm:2.8.8"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -8038,7 +8038,7 @@ const RAW_RUNTIME_STATE =
           ["framer-motion", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.12.18"],\
           ["husky", "npm:8.0.3"],\
           ["lint-staged", "npm:13.2.3"],\
-          ["prettier", "npm:3.0.0"],\
+          ["prettier", "npm:2.8.8"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:18.2.0"],\
           ["react-hook-form", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:7.45.1"],\
