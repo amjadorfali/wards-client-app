@@ -41,7 +41,7 @@ const HeroSection: React.FC = () => {
 			sx={{
 				position: 'relative',
 				minHeight: '100svh',
-				pt: { xs: 10, sm: 0 },
+				pt: 10,
 				//Responsive layout
 				gap: { xs: 5, md: 10, lg: 15 }
 			}}
