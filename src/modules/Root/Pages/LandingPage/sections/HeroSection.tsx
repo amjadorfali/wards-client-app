@@ -1,10 +1,9 @@
-import React, { Suspense, useEffect } from 'react';
-import { Button, Grid, Paper, Typography, useTheme } from '@mui/material';
-const InfiniteTime = React.lazy(() => import('components/charts/InfiniteTime'));
+import React, { useEffect } from 'react';
+import { Button, Grid, Typography, useTheme } from '@mui/material';
 import { useAnimate, stagger } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
-
+import { ReactComponent as GraphMonitorIcon } from 'assets/graph-monitor.svg';
 const staggerAnimation = stagger(0.25);
 
 const ids = {
@@ -42,11 +41,11 @@ const HeroSection: React.FC = () => {
 			sx={{
 				position: 'relative',
 				//Responsive layout
-				pt: { xs: 15, md: 10 },
-				alignContent: { md: 'center' }
+				pt: 10,
+				gap: { xs: 2, sm: 5, md: 10, lg: 15 }
 			}}
-			gap={15}
 			ref={scope}
+			alignContent={'center'}
 		>
 			<Grid container item xs={12} justifyContent={'center'} height={'fit-content'} gap={3}>
 				<Grid item xs={12}>
@@ -85,19 +84,9 @@ const HeroSection: React.FC = () => {
 				</Grid>
 			</Grid>
 
-			<Grid sx={{ pt: 25 }} container item xs={12} justifyContent={'center'}>
-				<Grid
-					component={Paper}
-					elevation={10}
-					item
-					xs={12}
-					md={7}
-					sx={{ px: 2, opacity: 0, minHeight: '35rem', mb: -5 }}
-					id={ids.graph}
-				>
-					<Suspense>
-						<InfiniteTime ReactChartsComponentProps={{ style: { height: '35rem' } }} />
-					</Suspense>
+			<Grid sx={{ px: 2, opacity: 0 }} container item xs={12} justifyContent={'center'} id={ids.graph}>
+				<Grid item xs={12} sm={9} md={7} lg={5} xl={3}>
+					<GraphMonitorIcon width={'100%'} height={'100%'} />
 				</Grid>
 			</Grid>
 		</Grid>
