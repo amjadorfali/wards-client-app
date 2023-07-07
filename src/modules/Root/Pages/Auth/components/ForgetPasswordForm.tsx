@@ -103,6 +103,7 @@ const EnterNewPassword: React.FC<EnterNewPasswordProps> = ({ onEnterNewPassword,
 	};
 	return (
 		<Box component="form" my={2} onSubmit={enterNewPasswordForm.handleSubmit(onEnterNewPasswordSubmit)}>
+			{/* //FIXME: This is the only form that doesn't save nor suggest new password, figure it out! */}
 			<ControlledTextField
 				controller={{
 					rules: {

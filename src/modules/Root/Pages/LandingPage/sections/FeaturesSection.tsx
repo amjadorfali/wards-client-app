@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, Theme, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, Grid, Paper, Theme, Typography, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
 
 import TroubleshootOutlinedIcon from '@mui/icons-material/TroubleshootOutlined';
@@ -10,6 +10,8 @@ import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { ScrollTo } from 'modules/Root/components/Navbar';
+import MonitorDetails from 'assets/monitor-details.png?w=1200&h=600&format=webp&imagetools';
+import Dashboard from 'assets/Dashboard.png?w=1200&h=600&format=webp&imagetools';
 
 const content = {
 	title: (theme: Theme) => (
@@ -28,7 +30,8 @@ const content = {
 			title: 'Health-checks',
 			subtitle:
 				'Schedule automated cron-based health-checks to ensure timely pings, promptly detecting and alerting you to any disruptions.',
-			Icon: HealthAndSafetyIcon
+			Icon: HealthAndSafetyIcon,
+			imgDemo: Dashboard
 		},
 		{
 			title: 'Log Tracking',
@@ -40,7 +43,8 @@ const content = {
 		{
 			title: 'API monitoring',
 			subtitle: 'Monitor the response and request times of your APIs, enabling you to identify and address performance bottlenecks.',
-			Icon: QueryStatsIcon
+			Icon: QueryStatsIcon,
+			imgDemo: MonitorDetails
 		},
 		{
 			title: 'Real-time Alarms',
@@ -76,56 +80,69 @@ const FeaturesSection: React.FC = () => {
 	}, [inView]);
 	return (
 		<Grid id={ScrollTo.FEATURES} container pt={25} pb={10}>
-			<Grid ref={scope} item container justifyContent={'center'} gap={3} alignContent={'center'}>
-				<Grid item xs={12} sm={4} md={3}>
+			<Grid ref={scope} item container justifyContent={'center'} sx={{ gap: { xs: 10, sm: 4 } }} alignContent={'center'}>
+				<Grid item xs={12} sm={5} md={4} lg={3}>
 					<TroubleshootOutlinedIcon
 						id={elements.avatar}
 						sx={{
 							width: '100%',
-							height: { xs: '40%', md: '30%' },
-							position: 'sticky',
+							height: '80%',
 							top: '10%',
 							fill: theme.palette.primary.main,
 							opacity: 0
 						}}
 					/>
 				</Grid>
-				<Grid container item xs={10} sm={4} lg={3} xl={2} justifyContent={'center'} gap={30} alignContent={'center'}>
-					<Grid item container gap={2}>
-						<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2">
-							{content.title(theme)}
-						</Typography>
-						<Typography sx={{ opacity: 0 }} id={elements.subtitle}>
-							{content.subtitle.map((text) => (
-								<React.Fragment key={text}>
-									{text}
-									<br />
-								</React.Fragment>
-							))}
-						</Typography>
-						<Button
-							component={RouterLink}
-							to={content.button.link}
-							variant="contained"
-							size="large"
-							color="primary"
-							sx={{ textTransform: 'capitalize' }}
+				<Grid container item xs={10} sm={5} md={4} lg={3} gap={2} alignContent={'center'}>
+					<Typography sx={{ opacity: 0 }} id={elements.title} variant="h2">
+						{content.title(theme)}
+					</Typography>
+					<Typography sx={{ opacity: 0 }} id={elements.subtitle}>
+						{content.subtitle.map((text) => (
+							<React.Fragment key={text}>
+								{text}
+								<br />
+							</React.Fragment>
+						))}
+					</Typography>
+					<Button
+						component={RouterLink}
+						to={content.button.link}
+						variant="contained"
+						size="large"
+						color="primary"
+						sx={{ textTransform: 'capitalize' }}
+					>
+						{content.button.text}
+					</Button>
+				</Grid>
+
+				<Grid item container xs={10} gap={10} justifyContent={'center'} alignContent={'center'}>
+					{content.list.map(({ title, subtitle, Icon, imgDemo }, index) => (
+						<Grid
+							key={title}
+							item
+							container
+							justifyContent="space-between"
+							alignItems={'center'}
+							sx={{ opacity: 0 }}
+							id={elements.listItem}
+							gap={2}
 						>
-							{content.button.text}
-						</Button>
-					</Grid>
-
-					{content.list.map(({ title, subtitle, Icon }) => (
-						<Grid key={title} item container sx={{ opacity: 0 }} id={elements.listItem} gap={2} wrap={'wrap'}>
-							<Grid item xs={12}>
-								<Avatar sx={{ bgcolor: theme.palette.primary.main, width: '3rem', height: '3rem' }}>
-									<Icon sx={{ width: '2rem', height: '2rem' }} />
-								</Avatar>
+							<Grid item container xs={12} md={5} order={index % 2 ? 0 : 1}>
+								{imgDemo ? <img width={'100%'} height={'100%'} src={imgDemo} /> : <Grid item sx={{ width: '100%', height: '100%' }} />}
 							</Grid>
+							<Grid component={Paper} p={3} elevation={10} item container xs={12} md={5} gap={4} wrap={'wrap'}>
+								<Grid item xs={12}>
+									<Avatar sx={{ bgcolor: theme.palette.primary.main, width: '3rem', height: '3rem' }}>
+										<Icon sx={{ width: '2rem', height: '2rem' }} />
+									</Avatar>
+								</Grid>
 
-							<Typography variant="h4">{title}</Typography>
+								<Typography variant="h4">{title}</Typography>
 
-							<Typography>{subtitle}</Typography>
+								<Typography>{subtitle}</Typography>
+							</Grid>
 						</Grid>
 					))}
 				</Grid>
