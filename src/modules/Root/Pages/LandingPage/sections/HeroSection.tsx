@@ -40,9 +40,10 @@ const HeroSection: React.FC = () => {
 			container
 			sx={{
 				position: 'relative',
+				minHeight: '100svh',
+				pt: { xs: 10, sm: 0 },
 				//Responsive layout
-				pt: 10,
-				gap: { xs: 2, sm: 5, md: 10, lg: 15 }
+				gap: { xs: 5, md: 10, lg: 15 }
 			}}
 			ref={scope}
 			alignContent={'center'}

@@ -2,6 +2,8 @@ import { Backdrop, CircularProgress, useTheme } from '@mui/material';
 import { useIsFetching, useIsMutating } from '@tanstack/react-query';
 import { QUERY_KEY as CurrentSessionQueryKey } from 'modules/Root/Pages/Auth/queries/useGetCurrentSession';
 import React from 'react';
+
+//FIXME: It's causing performance issues on lighthouse for LandingPage
 const Loader: React.FC = () => {
 	const theme = useTheme();
 	const isLoading = !!useIsFetching({

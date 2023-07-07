@@ -10,8 +10,11 @@ import HealthAndSafetyIcon from '@mui/icons-material/HealthAndSafety';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { ScrollTo } from 'modules/Root/components/Navbar';
+
 import MonitorDetails from 'assets/monitor-details.png?w=1200&h=600&format=webp&imagetools';
 import Dashboard from 'assets/Dashboard.png?w=1200&h=600&format=webp&imagetools';
+import Logs from 'assets/logs.svg';
+import EmailAlert from 'assets/email-alert.svg';
 
 const content = {
 	title: (theme: Theme) => (
@@ -37,7 +40,8 @@ const content = {
 			title: 'Log Tracking',
 			subtitle:
 				'Capture detailed logs of all API calls, providing valuable insights into the health and performance of your applications.',
-			Icon: FindInPageIcon
+			Icon: FindInPageIcon,
+			imgDemo: Logs
 		},
 
 		{
@@ -50,7 +54,8 @@ const content = {
 			title: 'Real-time Alarms',
 			subtitle:
 				'Receive instant notifications and alarms when health-checks fail, empowering you to take immediate action and prevent potential downtime.',
-			Icon: AccessAlarmIcon
+			Icon: AccessAlarmIcon,
+			imgDemo: EmailAlert
 		}
 	]
 };
