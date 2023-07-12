@@ -4,12 +4,13 @@ import { Button, Grid, Paper, Typography } from '@mui/material';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Ping from 'modules/Dashboard/components/Ping';
 import { FlakyOutlined } from '@mui/icons-material';
+import ResponseTimeChart from 'modules/Dashboard/components/ResponseTimeChart';
 const MonitorDetails: React.FC = () => {
 	const { monitorId } = useParams<{ monitorId: string }>();
 
 	// TODO: Continue on logic for monitors details
 	return (
-		<Grid container minHeight={'40dvh'} gap={3}>
+		<Grid container minHeight={'40svh'} gap={3}>
 			<Grid item xs={12}>
 				<Button component={RouterLink} to={`../`} startIcon={<ArrowBackIcon />}>
 					Monitors
@@ -62,6 +63,10 @@ const MonitorDetails: React.FC = () => {
 				<Typography component={Grid} item xs={12} variant="h2">
 					2 minutes ago
 				</Typography>
+			</Grid>
+
+			<Grid container item xs={12}>
+				<ResponseTimeChart ReactChartsComponentProps={{ style: { minHeight: '35rem' }, theme: 'dark' }} />
 			</Grid>
 		</Grid>
 	);

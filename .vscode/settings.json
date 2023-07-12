@@ -24,5 +24,8 @@
 	},
 	"prettier.enable": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"prettier.prettierPath": ".yarn/sdks/prettier/index.js"
+	"prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+	"[svg]": {
+		"editor.defaultFormatter": "jock.svg"
+	}
 }

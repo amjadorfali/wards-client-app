@@ -1,19 +1,40 @@
 import { useRef, useEffect, CSSProperties } from 'react';
 import { init, getInstanceByDom, use, ComposeOption, SetOptionOpts, ECharts } from 'echarts/core';
-import { TitleComponent, TooltipComponent, TooltipComponentOption, GridComponent, GridComponentOption } from 'echarts/components';
+import {
+	TitleComponent,
+	TooltipComponent,
+	TooltipComponentOption,
+	GridComponent,
+	GridComponentOption,
+	LegendComponent,
+	LegendComponentOption,
+	DataZoomComponent,
+	DataZoomComponentOption,
+	TitleComponentOption
+} from 'echarts/components';
 import { LineChart, LineSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 
-use([TitleComponent, TooltipComponent, GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
+use([
+	TitleComponent,
+	TooltipComponent,
+	GridComponent,
+	LineChart,
+	CanvasRenderer,
+	UniversalTransition,
+	LegendComponent,
+	DataZoomComponent
+]);
 
 // Combine an Option type with only required components and charts via ComposeOption
 export type EChartsOption = ComposeOption<
-	// | TitleComponentOption
+	| TitleComponentOption
 	| GridComponentOption
-	// LegendComponentOption |
+	| LegendComponentOption
 	| LineSeriesOption
 	| TooltipComponentOption
+	| DataZoomComponentOption
 >;
 
 export interface ReactEChartsProps {

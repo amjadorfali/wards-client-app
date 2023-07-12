@@ -78,7 +78,7 @@ const Monitors: React.FC = () => {
 			{
 				// FIXME: This is temp code as a demo
 				!monitors.length ? (
-					<Grid container minHeight={'40dvh'} alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
+					<Grid container minHeight={'40svh'} alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
 						<Grid
 							item
 							container
@@ -192,7 +192,7 @@ const Monitors: React.FC = () => {
 						</Grid>
 					</Grid>
 				) : (
-					<Grid minHeight={'60dvh'} p={1} container alignContent={'center'} justifyContent={'center'}>
+					<Grid minHeight={'60svh'} p={1} container alignContent={'center'} justifyContent={'center'}>
 						<Grid item xs={12} md={6} lg={5} xl={4} container gap={5} direction={'column'}>
 							<Typography variant={'h1'}>Create your first monitor</Typography>
 							<Typography variant="h3">

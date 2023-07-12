@@ -1335,7 +1335,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/base@npm:5.0.0-beta.6, @mui/base@npm:^5.0.0-beta.6":
+"@mui/base@npm:5.0.0-beta.6":
   version: 5.0.0-beta.6
   resolution: "@mui/base@npm:5.0.0-beta.6"
   dependencies:
@@ -1492,21 +1492,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/utils@npm:^5.13.6":
-  version: 5.13.6
-  resolution: "@mui/utils@npm:5.13.6"
-  dependencies:
-    "@babel/runtime": "npm:^7.22.5"
-    "@types/prop-types": "npm:^15.7.5"
-    "@types/react-is": "npm:^18.2.0"
-    prop-types: "npm:^15.8.1"
-    react-is: "npm:^18.2.0"
-  peerDependencies:
-    react: ^17.0.0 || ^18.0.0
-  checksum: 9e82c91ed3ae47705f44ba5b31d50b7c8a9591c855d05764389d0c3cbb10687628e1ffd6af1e04e490d979c4d32c669ddd24bc72643f040550674919ab94a3ec
-  languageName: node
-  linkType: hard
-
 "@mui/utils@npm:^5.13.7":
   version: 5.13.7
   resolution: "@mui/utils@npm:5.13.7"
@@ -1519,54 +1504,6 @@ __metadata:
   peerDependencies:
     react: ^17.0.0 || ^18.0.0
   checksum: bb64e27e34166fe3e71cb390bce205f65ac03f0cd955fe0e75fe904976ad93bf33812ff284af45c76d888d97345359d7e325122c1e55559734cd0e521035029c
-  languageName: node
-  linkType: hard
-
-"@mui/x-date-pickers@npm:^6.9.1":
-  version: 6.9.1
-  resolution: "@mui/x-date-pickers@npm:6.9.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.22.5"
-    "@mui/utils": "npm:^5.13.6"
-    "@types/react-transition-group": "npm:^4.4.6"
-    clsx: "npm:^1.2.1"
-    prop-types: "npm:^15.8.1"
-    react-transition-group: "npm:^4.4.5"
-  peerDependencies:
-    "@emotion/react": ^11.9.0
-    "@emotion/styled": ^11.8.1
-    "@mui/base": ^5.0.0-alpha.87
-    "@mui/material": ^5.8.6
-    "@mui/system": ^5.8.0
-    date-fns: ^2.25.0
-    date-fns-jalali: ^2.13.0-0
-    dayjs: ^1.10.7
-    luxon: ^3.0.2
-    moment: ^2.29.4
-    moment-hijri: ^2.1.2
-    moment-jalaali: ^0.7.4 || ^0.8.0 || ^0.9.0 || ^0.10.0
-    react: ^17.0.0 || ^18.0.0
-    react-dom: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@emotion/react":
-      optional: true
-    "@emotion/styled":
-      optional: true
-    date-fns:
-      optional: true
-    date-fns-jalali:
-      optional: true
-    dayjs:
-      optional: true
-    luxon:
-      optional: true
-    moment:
-      optional: true
-    moment-hijri:
-      optional: true
-    moment-jalaali:
-      optional: true
-  checksum: e38e545884103baaa723811a12586092f74fc997c2241e598d0caef02e62aff44a8b6fdea75148f431b4821cf6a2ddb7e5174880d94d67f431363657ed36a1e3
   languageName: node
   linkType: hard
 
@@ -2031,15 +1968,6 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: bd734ca04c52b3c96891a7f9c1139486807dac7a2449fb72e8f8e23018bc6eeeb87a490a105cb39d05ccb7ddf80ed7a441e5bd3e5866c6f6ae8870cd723599e8
-  languageName: node
-  linkType: hard
-
-"@types/react-is@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "@types/react-is@npm:18.2.0"
-  dependencies:
-    "@types/react": "npm:*"
-  checksum: 7bbc931874da3f41917416b9e44f2e0749c99d7c94a3803b96342890579aad2abca473bf7505fd2202cd61c84d6ed9da41f951eb19ccee860554682327087c96
   languageName: node
   linkType: hard
 
@@ -2897,13 +2825,6 @@ __metadata:
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: 32c038af259897c807ac738d9eab16b3d86747c72b09d5c740978e06f067f9b7b1737e1b75e407c7ab1fe1543dc95f20e202b4786aeb1b8d3bdf5d5ce655e6c6
-  languageName: node
-  linkType: hard
-
-"dayjs@npm:^1.11.9":
-  version: 1.11.9
-  resolution: "dayjs@npm:1.11.9"
-  checksum: 1697892de0f4107083ec72451ba86c947df61d9a67f8c52da991c5f8e347781baccec5c4c42e81a99e63cf603389ed324723cd77ad1b6fbd04f0f34433334979
   languageName: node
   linkType: hard
 
@@ -6521,11 +6442,8 @@ __metadata:
     "@aws-sdk/util-utf8-browser": "npm:^3.259.0"
     "@emotion/react": "npm:^11.11.1"
     "@emotion/styled": "npm:^11.11.0"
-    "@mui/base": "npm:^5.0.0-beta.6"
     "@mui/icons-material": "npm:^5.13.7"
     "@mui/material": "npm:^5.13.7"
-    "@mui/system": "npm:^5.13.7"
-    "@mui/x-date-pickers": "npm:^6.9.1"
     "@tanstack/eslint-plugin-query": "npm:^4.29.9"
     "@tanstack/react-query": "npm:^4.29.19"
     "@tanstack/react-query-devtools": "npm:^4.29.19"
@@ -6538,7 +6456,6 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.3.2"
     axios: "npm:^1.4.0"
     buffer: "npm:^6.0.3"
-    dayjs: "npm:^1.11.9"
     echarts: "npm:^5.4.2"
     eslint: "npm:^8.44.0"
     eslint-config-prettier: "npm:^8.8.0"

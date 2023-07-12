@@ -6,7 +6,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 const Teams: React.FC = () => {
 	return (
-		<Grid container minHeight={'40dvh'} alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
+		<Grid container minHeight={'40svh'} alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
 			<Grid
 				item
 				container

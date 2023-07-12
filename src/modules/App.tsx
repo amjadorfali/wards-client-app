@@ -10,8 +10,6 @@ import Loader from 'components/loaders/Loader';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 /** Root Pages */
 const Root = React.lazy(() => import('modules/Root/Root'));
 const PrivacyPolicy = React.lazy(() => import('modules/Root/Pages/PrivacyPolicy'));
@@ -198,13 +196,11 @@ const router = createBrowserRouter([
 	{
 		path: RoutesConfig.dashboard,
 		element: (
-			<LocalizationProvider dateAdapter={AdapterDayjs}>
-				<ThemeProvider theme={dashboardTheme}>
-					<CssBaseline />
-					<Loader />
-					<Outlet />
-				</ThemeProvider>
-			</LocalizationProvider>
+			<ThemeProvider theme={dashboardTheme}>
+				<CssBaseline />
+				<Loader />
+				<Outlet />
+			</ThemeProvider>
 		),
 		errorElement: <ErrorMessage />,
 
