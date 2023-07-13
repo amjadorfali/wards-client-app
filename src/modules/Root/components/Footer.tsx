@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
 				</Grid>
 				<Grid container item sm={5} lg={3}>
 					<Typography display={'flex'} alignItems={'center'} gap={1}>
-						<CopyrightIcon /> All rights reserved - RemoteOps, 2023
+						<CopyrightIcon /> All rights reserved - Wards, 2023
 					</Typography>
 				</Grid>
 			</Grid>

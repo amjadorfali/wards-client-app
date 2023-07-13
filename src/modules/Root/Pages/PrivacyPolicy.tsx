@@ -6,12 +6,12 @@ const PrivacyPolicy: React.FC = () => {
 			<Typography variant="h3">Privacy Policy</Typography>
 			<Grid item xs={12}>
 				<Typography paragraph>
-					At RemoteOps, inclusive of our affiliates (collectively referred to as "RemoteOps", "we", "us", or "our"), we place great
-					emphasis on maintaining the security of the information we acquire from you or about you. This Privacy Policy elaborates on
-					our approach towards handling the Personal Information that we gather from or about you when you make use of our website,
-					applications, and services (jointly referred to as "Services"). However, this Privacy Policy does not cover the content that
-					we process on behalf of our business offerings' customers, such as our API. The use of such data is regulated by the customer
-					agreements that pertain to the access and usage of those offerings.
+					At Wards, inclusive of our affiliates (collectively referred to as "Wards", "we", "us", or "our"), we place great emphasis on
+					maintaining the security of the information we acquire from you or about you. This Privacy Policy elaborates on our approach
+					towards handling the Personal Information that we gather from or about you when you make use of our website, applications,
+					and services (jointly referred to as "Services"). However, this Privacy Policy does not cover the content that we process on
+					behalf of our business offerings' customers, such as our API. The use of such data is regulated by the customer agreements
+					that pertain to the access and usage of those offerings.
 				</Typography>
 			</Grid>
 			<Grid item xs={12}>
@@ -168,8 +168,8 @@ const PrivacyPolicy: React.FC = () => {
 					<ListItem>
 						<ListItemText>
 							Affiliates: We may disclose your Personal Information to our affiliated entities. An affiliate is an entity that is
-							controlled by, controls, or is under common control with RemoteOps. Our affiliates may utilize the Personal Information
-							we share in accordance with this Privacy Policy.
+							controlled by, controls, or is under common control with Wards. Our affiliates may utilize the Personal Information we
+							share in accordance with this Privacy Policy.
 						</ListItemText>
 					</ListItem>
 				</List>

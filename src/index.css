@@ -17,6 +17,6 @@ body {
 }
 
 body #root {
-	min-height: 90dvh;
+	min-height: 90svh;
 	width: 100%;
 }

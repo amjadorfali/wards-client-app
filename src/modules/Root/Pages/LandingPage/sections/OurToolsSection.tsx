@@ -25,7 +25,7 @@ const content: {
 	title: ['Powered by', { special: 'Cutting-Edge' }, 'Technologies'],
 	subtitle: ['Leveraging industry-leading tools', 'for superior monitoring capabilities.'],
 	features: {
-		text1: 'RemoteOps',
+		text1: 'Wards',
 		text2: 'Regional Monitoring',
 		text3: 'Robust & Seamless Operations',
 		text4: 'Real-Time Monitoring with Speed and Precision',

@@ -1,1 +1,1 @@
-export const COMPANY_EMAIL = 'hello@remoteops.xyz';
+export const COMPANY_EMAIL = 'hello@wards.app';

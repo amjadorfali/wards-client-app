@@ -176,7 +176,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 					color={'primary'}
 					sx={{ textDecoration: 'none' }}
 				>
-					Remote Ops
+					Wards
 				</Typography>
 			</Grid>
 

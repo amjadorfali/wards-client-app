@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
 							color: theme.palette.primary.light
 						}}
 					>
-						Ops
+						Wards
 					</Link>
 
 					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -199,7 +199,7 @@ const Navbar: React.FC = () => {
 							color: theme.palette.secondary.light
 						}}
 					>
-						Ops
+						Wards
 					</Link>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} justifyContent={'center'}>
 						{pages.map(({ title, key }) => (

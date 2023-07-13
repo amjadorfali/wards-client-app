@@ -1,6 +1,6 @@
 ```js
 const monitor =
- new remoteOps.Monitor();
+ new wards.Monitor();
 
 /** send a heartbeat event
  * with a message

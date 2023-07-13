@@ -89,7 +89,7 @@ const Billing: React.FC = () => {
 
 export default Billing;
 
-const CustomCard: React.FC<Omit<PricingContent, 'image'>> = ({ title, subtitle, features, price, isPopular }) => {
+const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price, isPopular }) => {
 	const theme = useTheme();
 	return (
 		<Card

@@ -73,7 +73,7 @@ export const PricingSection: React.FC = () => {
 
 export default PricingSection;
 
-const CustomBillingCard: React.FC<Omit<PricingContent, 'image'>> = ({ title, subtitle, features, price, isPopular }) => {
+const CustomBillingCard: React.FC<PricingContent> = ({ title, subtitle, features, price, isPopular }) => {
 	const theme = useTheme();
 	return (
 		<Card

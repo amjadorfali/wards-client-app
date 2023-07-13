@@ -1,8 +1,8 @@
-# RemoteOps
+# Wards
 
 ## Description
 
-RemoteOps is an RMM software built with React & TS.
+Wards is an RMM software built with React & TS.
 
 # Installtion guide
 

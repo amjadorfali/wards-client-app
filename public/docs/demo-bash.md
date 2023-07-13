@@ -1,3 +1,3 @@
 ```bash
-npm install remoteOps
+npm install wards
 ```
