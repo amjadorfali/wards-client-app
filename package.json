@@ -61,9 +61,9 @@
 	},
 	"volta": {
 		"node": "18.16.0",
-		"yarn": "4.0.0-rc.48"
+		"yarn": "3.6.1"
 	},
-	"packageManager": "yarn@4.0.0-rc.48",
+	"packageManager": "yarn@3.6.1",
 	"lint-staged": {
 		"**/*": "prettier --write --ignore-unknown",
 		"*.{ts,tsx}": "eslint --cache --fix",
