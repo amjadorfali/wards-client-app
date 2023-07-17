@@ -66,7 +66,7 @@ const MonitorDetails: React.FC = () => {
 				<MonitorSettings />
 			</Accordion>
 
-			<Accordion sx={{ flexBasis: '100%' }} defaultExpanded>
+			<Accordion sx={{ flexBasis: '100%', width: '100%' }} defaultExpanded>
 				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-3-content" id={'panel-1-header'} sx={{ p: 2 }}>
 					<Typography variant="h2">Metrics & Logs</Typography>
 				</AccordionSummary>

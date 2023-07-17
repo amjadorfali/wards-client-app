@@ -1,4 +1,4 @@
-import { useRef, useEffect, CSSProperties } from 'react';
+import { useRef, useEffect } from 'react';
 import { init, getInstanceByDom, use, ComposeOption, SetOptionOpts, ECharts } from 'echarts/core';
 import {
 	TitleComponent,
@@ -15,7 +15,7 @@ import {
 import { LineChart, LineSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-
+import { Box, SxProps, Theme } from '@mui/material';
 use([
 	TitleComponent,
 	TooltipComponent,
@@ -39,7 +39,7 @@ export type EChartsOption = ComposeOption<
 
 export interface ReactEChartsProps {
 	option: EChartsOption;
-	style?: CSSProperties;
+	style?: SxProps<Theme>;
 	settings?: SetOptionOpts;
 	loading?: boolean;
 	theme?: 'light' | 'dark' | 'custom-theme';
@@ -89,5 +89,5 @@ export function ReactECharts({ option, style, settings, loading, theme = 'custom
 		}
 	}, [loading, theme]);
 
-	return <div ref={chartRef} style={{ width: '100%', height: '100px', ...style }} />;
+	return <Box ref={chartRef} sx={{ width: '100%', height: '100px', ...style }} />;
 }
