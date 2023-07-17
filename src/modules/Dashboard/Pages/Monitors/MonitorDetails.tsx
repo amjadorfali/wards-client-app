@@ -1,14 +1,21 @@
 import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Button, Grid, Paper, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Button, Grid, Typography } from '@mui/material';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Ping from 'modules/Dashboard/components/Ping';
-import { FlakyOutlined } from '@mui/icons-material';
-import ResponseTimeChart from 'modules/Dashboard/components/ResponseTimeChart';
+import { ExpandMore } from '@mui/icons-material';
+import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import SendIcon from '@mui/icons-material/Send';
+import SettingsIcon from '@mui/icons-material/Settings';
+import OverviewAccordion from 'modules/Dashboard/components/Monitors/OverviewAcordion';
+import MonitorSettings from 'modules/Dashboard/components/Monitors/MonitorSettings';
+import MonitorMetrics from 'modules/Dashboard/components/Monitors/MonitorMetrics';
+
 const MonitorDetails: React.FC = () => {
 	const { monitorId } = useParams<{ monitorId: string }>();
-
 	// TODO: Continue on logic for monitors details
+
+	// TransitionProps={{ unmountOnExit: true }}  might be useful on accordions if we face perf issues
 	return (
 		<Grid container minHeight={'40svh'} gap={3}>
 			<Grid item xs={12}>
@@ -32,42 +39,39 @@ const MonitorDetails: React.FC = () => {
 				</Grid>
 			</Grid>
 
-			<Grid container item xs={12} height={'fit-content'}>
-				<Button variant="text" component={RouterLink} to="" startIcon={<FlakyOutlined />}>
-					Send test alert
+			<Grid container item xs={12} gap={2} height={'fit-content'}>
+				<Button variant="outlined" component={RouterLink} to="" startIcon={<SendIcon />}>
+					Send Test alert
 				</Button>
 
-				<Button variant="text" component={RouterLink} to="" startIcon={<FlakyOutlined />}>
-					Pause this monitor
+				<Button variant="outlined" component={RouterLink} to="" startIcon={<PauseCircleIcon />}>
+					Pause Monitor
 				</Button>
-				<Button variant="text" component={RouterLink} to="" startIcon={<FlakyOutlined />}>
+				<Button variant="outlined" component={RouterLink} to="" startIcon={<SettingsIcon />}>
 					Configure
 				</Button>
 			</Grid>
 
-			<Grid container item xs={12} component={Paper} p={3} gap={1}>
-				<Typography component={Grid} item xs={12} variant="caption">
-					Currently {Number(monitorId) % 2 ? 'up' : 'down'} for
-				</Typography>
+			<Accordion sx={{ flexBasis: '100%' }} defaultExpanded>
+				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-1-content" id={'panel-1-header'} sx={{ p: 2 }}>
+					<Typography variant="h2">Overview</Typography>
+				</AccordionSummary>
+				<OverviewAccordion />
+			</Accordion>
 
-				<Typography component={Grid} item xs={12} variant="h2">
-					1 day 18 hrs 12 mins
-				</Typography>
-			</Grid>
+			<Accordion sx={{ flexBasis: '100%' }}>
+				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-2-content" id={'panel-1-header'} sx={{ p: 2 }}>
+					<Typography variant="h2">Monitor Details</Typography>
+				</AccordionSummary>
+				<MonitorSettings />
+			</Accordion>
 
-			<Grid container item xs={12} component={Paper} p={3} gap={1}>
-				<Typography component={Grid} item xs={12} variant="caption">
-					Last checked at
-				</Typography>
-
-				<Typography component={Grid} item xs={12} variant="h2">
-					2 minutes ago
-				</Typography>
-			</Grid>
-
-			<Grid container item xs={12}>
-				<ResponseTimeChart ReactChartsComponentProps={{ style: { minHeight: '35rem' }, theme: 'dark' }} />
-			</Grid>
+			<Accordion sx={{ flexBasis: '100%' }} defaultExpanded>
+				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-3-content" id={'panel-1-header'} sx={{ p: 2 }}>
+					<Typography variant="h2">Metrics & Logs</Typography>
+				</AccordionSummary>
+				<MonitorMetrics />
+			</Accordion>
 		</Grid>
 	);
 };
