@@ -8,7 +8,7 @@ enum Options {
 	LOGS = 'Logs'
 }
 const MonitorMetrics: React.FC = () => {
-	const [alignment, setAlignment] = React.useState<Options>(Options.LOGS);
+	const [alignment, setAlignment] = React.useState<Options>(Options.METRICS);
 
 	const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: Options) => {
 		setAlignment(newAlignment);

@@ -9,6 +9,9 @@ import useChooseTeam from './hooks/useChooseTeam';
 import { useAuthStore } from 'stores/auth.store';
 import { COMPANY_EMAIL } from 'config/literals';
 
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+
 export type TeamParams = {
 	teamId: string;
 };
