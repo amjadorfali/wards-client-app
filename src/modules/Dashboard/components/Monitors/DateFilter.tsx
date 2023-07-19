@@ -1,9 +1,14 @@
 import React, { useMemo } from 'react';
 import { DateRangePicker, RangeKeyDict } from 'react-date-range';
 
-import DateWrapper, { formatDateToDisplay, IDateComponentProps } from './DateSelectorWrapper';
-import { startOfDay } from 'date-fns';
+import DateWrapper, { IDateComponentProps } from './DateSelectorWrapper';
+import { format, startOfDay } from 'date-fns';
 
+const formatDateToDisplay = (start: Date = new Date(), end: Date = new Date()) => {
+	const formattedStartDate = format(start, 'dd/MM/yyyy');
+	const formattedEndDate = format(end, 'dd/MM/yyyy');
+	return formattedStartDate.concat(` - ${formattedEndDate}`);
+};
 const DateFilter: React.FC<IDateComponentProps> = ({
 	selectedDates,
 	title,

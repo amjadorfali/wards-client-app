@@ -1,7 +1,6 @@
 import React from 'react';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { format } from 'date-fns';
 import { DateRange } from '@mui/icons-material';
 import { Button, Menu, styled } from '@mui/material';
 
@@ -11,11 +10,7 @@ export interface IDateComponentProps {
 	onFocus?: () => void;
 	onDateSelect?: (date: { start: Date; end: Date }) => void;
 }
-export const formatDateToDisplay = (start: Date = new Date(), end: Date = new Date()) => {
-	const formattedStartDate = format(start, 'dd/MM/yyyy');
-	const formattedEndDate = format(end, 'dd/MM/yyyy');
-	return formattedStartDate.concat(` - ${formattedEndDate}`);
-};
+
 export interface IDateWrapper {
 	title: string;
 	onFocus: () => void;
