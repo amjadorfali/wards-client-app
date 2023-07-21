@@ -11,8 +11,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { ScrollTo } from 'modules/Root/components/Navbar';
 
-import MonitorDetails from 'assets/monitor-details.png?w=1029&h=1085&format=webp&imagetools';
-import AddMonitor from 'assets/add-monitor.png?w=1035&h=613&format=webp&imagetools';
+import MonitorDetails from 'assets/monitor-details.png?format=webp&imagetools';
+import AddMonitor from 'assets/add-monitor.png?format=webp&imagetools';
 import Logs from 'assets/logs.svg';
 import EmailAlert from 'assets/email-alert.svg';
 
@@ -85,7 +85,7 @@ const FeaturesSection: React.FC = () => {
 	}, [inView]);
 	return (
 		<Grid id={ScrollTo.FEATURES} container pt={25} pb={10}>
-			<Grid ref={scope} item container justifyContent={'center'} sx={{ gap: { xs: 10, sm: 4 } }} alignContent={'center'}>
+			<Grid ref={scope} item container justifyContent={'center'} gap={10} alignContent={'center'}>
 				<Grid item xs={12} sm={5} md={4} lg={3}>
 					<TroubleshootOutlinedIcon
 						id={elements.avatar}
