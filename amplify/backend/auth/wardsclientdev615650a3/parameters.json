@@ -1,0 +1,13 @@
+{
+	"authSelections": "userPoolOnly",
+	"resourceName": "wardsclientdev615650a3",
+	"serviceType": "imported",
+	"region": "eu-central-1",
+	"usernameAttributes": ["email", "phone_number"],
+	"requiredAttributes": ["email"],
+	"passwordPolicyMinLength": 8,
+	"passwordPolicyCharacters": ["Requires Lowercase", "Requires Uppercase", "Requires Numbers", "Requires Symbols"],
+	"mfaConfiguration": "OFF",
+	"autoVerifiedAttributes": ["email", "phone_number"],
+	"mfaTypes": []
+}

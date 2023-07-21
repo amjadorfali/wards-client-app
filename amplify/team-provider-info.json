@@ -1,0 +1,25 @@
+{
+	"dev": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-wardsclientdev-dev-155601-authRole",
+			"UnauthRoleArn": "arn:aws:iam::387070877324:role/amplify-wardsclientdev-dev-155601-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::387070877324:role/amplify-wardsclientdev-dev-155601-authRole",
+			"Region": "eu-central-1",
+			"DeploymentBucketName": "amplify-wardsclientdev-dev-155601-deployment",
+			"UnauthRoleName": "amplify-wardsclientdev-dev-155601-unauthRole",
+			"StackName": "amplify-wardsclientdev-dev-155601",
+			"StackId": "arn:aws:cloudformation:eu-central-1:387070877324:stack/amplify-wardsclientdev-dev-155601/f309a440-27c5-11ee-ab5b-0213227874ba",
+			"AmplifyAppId": "d2k8g2sej01cyt"
+		},
+		"categories": {
+			"auth": {
+				"wardsclientdev615650a3": {
+					"userPoolId": "eu-central-1_09y1eiMXJ",
+					"userPoolName": "wards-dev",
+					"webClientId": "3dsefah6ne0bf93fb7tq574dhk",
+					"nativeClientId": "7bn5sbp3rc3ouutfrd8q5fhqeq"
+				}
+			}
+		}
+	}
+}
