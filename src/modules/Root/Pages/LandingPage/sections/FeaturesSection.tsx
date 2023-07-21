@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, Paper, Theme, Typography, useTheme } from '@mui/material';
+import { Avatar, Button, Divider, Grid, Paper, Theme, Typography, useTheme } from '@mui/material';
 import React, { useEffect } from 'react';
 
 import TroubleshootOutlinedIcon from '@mui/icons-material/TroubleshootOutlined';
@@ -11,8 +11,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { ScrollTo } from 'modules/Root/components/Navbar';
 
-import MonitorDetails from 'assets/monitor-details.png?w=1200&h=600&format=webp&imagetools';
-import Dashboard from 'assets/Dashboard.png?w=1200&h=600&format=webp&imagetools';
+import MonitorDetails from 'assets/monitor-details.png?w=1029&h=1085&format=webp&imagetools';
+import AddMonitor from 'assets/add-monitor.png?w=1035&h=613&format=webp&imagetools';
 import Logs from 'assets/logs.svg';
 import EmailAlert from 'assets/email-alert.svg';
 
@@ -34,7 +34,7 @@ const content = {
 			subtitle:
 				'Schedule automated cron-based health-checks to ensure timely pings, promptly detecting and alerting you to any disruptions.',
 			Icon: HealthAndSafetyIcon,
-			imgDemo: Dashboard
+			imgDemo: AddMonitor as string
 		},
 		{
 			title: 'Log Tracking',
@@ -48,7 +48,7 @@ const content = {
 			title: 'API monitoring',
 			subtitle: 'Monitor the response and request times of your APIs, enabling you to identify and address performance bottlenecks.',
 			Icon: QueryStatsIcon,
-			imgDemo: MonitorDetails
+			imgDemo: MonitorDetails as string
 		},
 		{
 			title: 'Real-time Alarms',
@@ -124,31 +124,33 @@ const FeaturesSection: React.FC = () => {
 
 				<Grid item container xs={10} gap={10} justifyContent={'center'} alignContent={'center'}>
 					{content.list.map(({ title, subtitle, Icon, imgDemo }, index) => (
-						<Grid
-							key={title}
-							item
-							container
-							justifyContent="space-between"
-							alignItems={'center'}
-							sx={{ opacity: 0 }}
-							id={elements.listItem}
-							gap={2}
-						>
-							<Grid item container xs={12} md={5} order={index % 2 ? 0 : 1}>
-								{imgDemo ? <img width={'100%'} height={'100%'} src={imgDemo} /> : <Grid item sx={{ width: '100%', height: '100%' }} />}
-							</Grid>
-							<Grid component={Paper} p={3} elevation={10} item container xs={12} md={5} gap={4} wrap={'wrap'}>
-								<Grid item xs={12}>
-									<Avatar sx={{ bgcolor: theme.palette.primary.main, width: '3rem', height: '3rem' }}>
-										<Icon sx={{ width: '2rem', height: '2rem' }} />
-									</Avatar>
+						<React.Fragment key={title}>
+							<Grid
+								item
+								container
+								justifyContent="space-between"
+								alignItems={'center'}
+								sx={{ opacity: 0 }}
+								id={elements.listItem}
+								gap={2}
+							>
+								<Grid item container justifyContent={'center'} xs={12} md={5} order={index % 2 ? 0 : 1}>
+									<img style={{ width: '100%', height: '100%' }} src={imgDemo} />
 								</Grid>
+								<Grid component={Paper} p={3} elevation={10} item container xs={12} md={5} gap={4} wrap={'wrap'}>
+									<Grid item xs={12}>
+										<Avatar sx={{ bgcolor: theme.palette.primary.main, width: '3rem', height: '3rem' }}>
+											<Icon sx={{ width: '2rem', height: '2rem' }} />
+										</Avatar>
+									</Grid>
 
-								<Typography variant="h4">{title}</Typography>
+									<Typography variant="h4">{title}</Typography>
 
-								<Typography>{subtitle}</Typography>
+									<Typography>{subtitle}</Typography>
+								</Grid>
 							</Grid>
-						</Grid>
+							<Divider sx={{ width: '100%' }} />
+						</React.Fragment>
 					))}
 				</Grid>
 			</Grid>

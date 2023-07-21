@@ -36,6 +36,8 @@ const Billing: React.FC = () => {
 			>
 				<Grid item xs={12}>
 					<Typography variant="h1">Pick a plan</Typography>
+					<br />
+					<Typography variant="h3">During our beta period, you can use the platform at no charge!</Typography>
 				</Grid>
 
 				<Grid container item xs={12} sx={{ gap: { xs: 4, md: 0 }, placeItems: 'flex-end', justifyContent: 'space-between' }}>
