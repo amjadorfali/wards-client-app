@@ -1,4 +1,15 @@
-import { Accordion, AccordionDetails, AccordionSummary, Chip, Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
+import {
+	Accordion,
+	AccordionDetails,
+	AccordionSummary,
+	Chip,
+	Divider,
+	Grid,
+	List,
+	ListItem,
+	ListItemText,
+	Typography
+} from '@mui/material';
 import React from 'react';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 import { ExpandMore } from '@mui/icons-material';
@@ -43,11 +54,11 @@ const MonitorSettings: React.FC = () => {
 
 			<Grid container item xs={12} p={3} gap={1} mb={5}>
 				<Typography variant="subtitle1">Locations</Typography>
-
 				{Locations.map((location) => (
 					<Chip icon={<WifiTetheringIcon />} label={location} key={location} />
 				))}
 			</Grid>
+			<Divider sx={{ width: '100%', my: 3 }} />
 
 			<Accordion elevation={10} disableGutters sx={{ alignSelf: 'flex-start', flexBasis: { xs: '100%', md: '45%', lg: '30%' } }}>
 				<AccordionSummary
@@ -58,13 +69,13 @@ const MonitorSettings: React.FC = () => {
 				>
 					<Typography variant="h3">Assertions</Typography>
 				</AccordionSummary>
-
+				<Divider />
 				<AccordionDetails
 					sx={{
 						maxHeight: '20rem',
 						minHeight: '20rem',
 
-						overflow: 'auto'
+						overflow: 'scroll'
 					}}
 				>
 					{/* <Grid item xs={12} md={6}> */}
@@ -72,12 +83,17 @@ const MonitorSettings: React.FC = () => {
 						<ListItem>
 							<ListItemText primary="ssl_certificate.expires_in" secondary={'> 15 days'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="response.code" secondary={'= 200'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="response.time" secondary={'< 500ms'} />
 						</ListItem>
+						<Divider />
 					</List>
 					{/* </Grid> */}
 				</AccordionDetails>
@@ -87,21 +103,25 @@ const MonitorSettings: React.FC = () => {
 				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-headers-content" id={'panel-headers-header'} sx={{ p: 2 }}>
 					<Typography variant="h3">Headers</Typography>
 				</AccordionSummary>
+				<Divider />
 
 				<AccordionDetails
 					sx={{
 						maxHeight: '20rem',
 						minHeight: '20rem',
-						overflow: 'auto'
+						overflow: 'scroll'
 					}}
 				>
 					<List>
 						<ListItem>
 							<ListItemText primary="Authorization" secondary={'Bearer 4jn243tbui5h98dfijgn49u5-45-tg4-rg56y-ged-f-ry-j5-tgerg45'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="name" secondary={'hi'} />
 						</ListItem>
+						<Divider />
 					</List>
 				</AccordionDetails>
 			</Accordion>
@@ -112,14 +132,15 @@ const MonitorSettings: React.FC = () => {
 					id={'panel-more-info-header'}
 					sx={{ p: 2 }}
 				>
-					<Typography variant="h3">More Info</Typography>
+					<Typography variant="h3">More Settings</Typography>
 				</AccordionSummary>
+				<Divider />
 
 				<AccordionDetails
 					sx={{
 						maxHeight: '20rem',
 						minHeight: '20rem',
-						overflow: 'auto'
+						overflow: 'scroll'
 					}}
 				>
 					{/* <Grid item xs={12} md={6}> */}
@@ -127,21 +148,86 @@ const MonitorSettings: React.FC = () => {
 						<ListItem>
 							<ListItemText primary="Verify SSL" secondary={'Yes'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="Follow redirects" secondary={'No'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="Keep cookies when redirecting" secondary={'Yes'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="Auth username" secondary={'Username'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="Request Body" secondary={'"{ samir : "hello" }"'} />
 						</ListItem>
+						<Divider />
+
 						<ListItem>
 							<ListItemText primary="Created" secondary={'7/8/2023, 3:55:47 PM'} />
 						</ListItem>
+						<Divider />
+					</List>
+					{/* </Grid> */}
+				</AccordionDetails>
+			</Accordion>
+
+			<Accordion elevation={10} disableGutters sx={{ alignSelf: 'flex-start', flexBasis: { xs: '100%', md: '45%', lg: '30%' } }}>
+				<AccordionSummary
+					expandIcon={<ExpandMore />}
+					aria-controls="panel-more-info-content"
+					id={'panel-more-info-header'}
+					sx={{ p: 2 }}
+				>
+					<Typography variant="h3">Site Info</Typography>
+				</AccordionSummary>
+				<Divider />
+
+				<AccordionDetails
+					sx={{
+						maxHeight: '20rem',
+						minHeight: '20rem',
+						overflow: 'scroll'
+					}}
+				>
+					{/* <Grid item xs={12} md={6}> */}
+					<List>
+						<ListItem>
+							<ListItemText
+								primary="SSL Certificate"
+								secondary={
+									<>
+										Issued By: R3
+										<br />
+										Expires On: 9/20/2023, 9:13:19 PM UTC
+									</>
+								}
+							/>
+						</ListItem>
+						<Divider />
+
+						<ListItem>
+							<ListItemText
+								primary="Domain (amjadorfali.com)"
+								secondary={
+									<>
+										Registrar: GoDaddy.com, LLC
+										<br />
+										Expires On: 6/5/2027, 10:56:03 AM UTC
+										<br />
+										Nameservers: DNS1.P01.NSONE.NET DNS2.P01.NSONE.NET DNS3.P01.NSONE.NET DNS4.P01.NSONE.NET
+									</>
+								}
+							/>
+						</ListItem>
+						<Divider />
 					</List>
 					{/* </Grid> */}
 				</AccordionDetails>

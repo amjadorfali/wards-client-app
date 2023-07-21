@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
+import { EChartsOption, ReactEChartsProps, ReactEcharts } from 'config/echarts/ReactECharts';
 import type { CallbackDataParams } from 'echarts/types/dist/shared';
 import useEchartsTheme from 'config/echarts/useEchartsTheme';
 
@@ -85,7 +85,7 @@ const InfiniteTime: React.FC<Props> = ({ ReactChartsComponentProps }) => {
 	// 	return () => clearInterval(interval);
 	// }, []);
 
-	return <ReactECharts {...ReactChartsComponentProps} option={option} />;
+	return <ReactEcharts {...ReactChartsComponentProps} option={option} />;
 };
 
 export default InfiniteTime;

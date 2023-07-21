@@ -7,7 +7,15 @@ import { format, startOfDay } from 'date-fns';
 const formatDateToDisplay = (start: Date = new Date(), end: Date = new Date()) => {
 	const formattedStartDate = format(start, 'dd/MM/yyyy');
 	const formattedEndDate = format(end, 'dd/MM/yyyy');
+	// const endIsToday = isToday(end);
+	// const startIsToday = isToday(start);
+
+	// if (endIsToday) {
+	// 	if (startIsToday) return 'Today';
+	// 	return formatDistanceToNow(start, { addSuffix: true });
+	// }
 	return formattedStartDate.concat(` - ${formattedEndDate}`);
+	// return formatDistanceStrict(start, end, { addSuffix: true });
 };
 const DateFilter: React.FC<IDateComponentProps> = ({
 	selectedDates,
@@ -39,6 +47,7 @@ const DateFilter: React.FC<IDateComponentProps> = ({
 						key: 'selection'
 					}
 				]}
+				maxDate={new Date()}
 				moveRangeOnFirstSelection={false}
 				direction="horizontal"
 			/>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Accordion, AccordionSummary, Button, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Button, Divider, Grid, Typography } from '@mui/material';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Ping from 'modules/Dashboard/components/Ping';
 import { ExpandMore } from '@mui/icons-material';
@@ -11,13 +11,13 @@ import OverviewAccordion from 'modules/Dashboard/components/Monitors/OverviewAco
 import MonitorSettings from 'modules/Dashboard/components/Monitors/MonitorSettings';
 import MonitorMetrics from 'modules/Dashboard/components/Monitors/MonitorMetrics';
 import DateFilter from 'modules/Dashboard/components/Monitors/DateFilter';
-import { addDays, subDays } from 'date-fns';
+import { subDays } from 'date-fns';
 
 const MonitorDetails: React.FC = () => {
 	const { monitorId } = useParams<{ monitorId: string }>();
 	const [selectedDates, setSelectedDates] = React.useState<{ start: Date; end: Date }>({
 		start: subDays(new Date(), 1),
-		end: addDays(new Date(), 1)
+		end: new Date()
 	});
 	// TODO: Continue on logic for monitors details
 
@@ -63,22 +63,20 @@ const MonitorDetails: React.FC = () => {
 				</Grid>
 			</Grid>
 
-			<Accordion sx={{ flexBasis: '100%' }} defaultExpanded>
-				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-1-content" id={'panel-1-header'} sx={{ p: 2 }}>
-					<Typography variant="h2">Overview</Typography>
-				</AccordionSummary>
-				<OverviewAccordion />
-			</Accordion>
-			<Accordion sx={{ flexBasis: '100%', width: '100%' }}>
+			<OverviewAccordion />
+			<MonitorMetrics />
+
+			{/* <Accordion sx={{ flexBasis: '100%', width: '100%' }} defaultExpanded>
 				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-3-content" id={'panel-1-header'} sx={{ p: 2 }}>
 					<Typography variant="h2">Metrics & Logs</Typography>
 				</AccordionSummary>
-				<MonitorMetrics />
-			</Accordion>
-			<Accordion sx={{ flexBasis: '100%' }}>
+			</Accordion> */}
+			<Accordion sx={{ flexBasis: '100%' }} defaultExpanded>
 				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-2-content" id={'panel-1-header'} sx={{ p: 2 }}>
 					<Typography variant="h2">Monitor Details</Typography>
 				</AccordionSummary>
+				<Divider />
+
 				<MonitorSettings />
 			</Accordion>
 		</Grid>

@@ -5,14 +5,13 @@ const OverviewAccordion: React.FC = () => {
 	const { monitorId } = useParams<{ monitorId: string }>();
 	const theme = useTheme();
 	return (
-		<Grid container justifyContent={'space-between'} p={2} gap={1}>
+		<Grid container justifyContent={'space-between'} gap={1}>
 			<Grid
 				container
 				item
 				xs={12}
 				sm={5}
 				lg={3.75}
-				xl={2.75}
 				elevation={12}
 				component={Paper}
 				sx={{ p: { xs: 1, sm: 3 }, minHeight: { xs: '7rem', md: 0 } }}
@@ -34,7 +33,7 @@ const OverviewAccordion: React.FC = () => {
 				</Typography>
 			</Grid>
 
-			<Grid
+			{/* <Grid
 				container
 				item
 				xs={5.5}
@@ -58,7 +57,7 @@ const OverviewAccordion: React.FC = () => {
 						min ago
 					</Typography>
 				</Grid>
-			</Grid>
+			</Grid> */}
 
 			<Grid
 				container
@@ -66,7 +65,6 @@ const OverviewAccordion: React.FC = () => {
 				xs={5.5}
 				sm={5}
 				lg={3.75}
-				xl={2.75}
 				elevation={12}
 				component={Paper}
 				sx={{ p: { xs: 1, sm: 3 }, minHeight: { xs: '7rem', md: 0 } }}
@@ -80,9 +78,6 @@ const OverviewAccordion: React.FC = () => {
 					<Typography sx={{ ...theme.typography.h2 }} component={Grid} item xs={12} sm={'auto'}>
 						100%
 					</Typography>
-					<Typography component={Grid} variant="subtitle2" fontWeight={300} item xs={12} sm={'auto'}>
-						24 Hours
-					</Typography>
 				</Grid>
 			</Grid>
 
@@ -92,7 +87,6 @@ const OverviewAccordion: React.FC = () => {
 				xs={5.5}
 				sm={5}
 				lg={3.75}
-				xl={2.75}
 				elevation={12}
 				component={Paper}
 				sx={{ p: { xs: 1, sm: 3 }, minHeight: { xs: '7rem', md: 0 } }}
@@ -106,12 +100,9 @@ const OverviewAccordion: React.FC = () => {
 					<Typography sx={{ ...theme.typography.h2 }} component={Grid} item xs={12} sm={'auto'}>
 						181 ms
 					</Typography>
-					<Typography component={Grid} variant="subtitle2" fontWeight={300} item xs={12} sm={'auto'}>
-						24 Hours
-					</Typography>
 				</Grid>
 			</Grid>
-			<Grid
+			{/* <Grid
 				container
 				item
 				xs={5.5}
@@ -135,7 +126,7 @@ const OverviewAccordion: React.FC = () => {
 						24 Hours
 					</Typography>
 				</Grid>
-			</Grid>
+			</Grid> */}
 		</Grid>
 	);
 };

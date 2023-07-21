@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { init, getInstanceByDom, use, ComposeOption, SetOptionOpts, ECharts } from 'echarts/core';
 import {
 	TitleComponent,
@@ -45,17 +45,46 @@ export interface ReactEChartsProps {
 	theme?: 'light' | 'dark' | 'custom-theme';
 }
 
+export interface RefProps {
+	clear: () => void;
+	showLoading: () => void;
+	hideLoading: () => void;
+}
 /**
  *
  * @link https://dev.to/maneetgoyal/using-apache-echarts-with-react-and-typescript-optimizing-bundle-size-29l8
  */
-export function ReactECharts({ option, style, settings, loading, theme = 'custom-theme' }: ReactEChartsProps): JSX.Element {
+export const ReactEcharts = forwardRef<RefProps, ReactEChartsProps>(function ReactECharts(
+	{ option, style, settings, loading, theme = 'custom-theme' },
+	ref
+): JSX.Element {
 	const chartRef = useRef<HTMLDivElement>(null);
+
+	useImperativeHandle(ref, () => ({
+		clear: () => {
+			if (chartRef.current !== null) {
+				const chart = getInstanceByDom(chartRef.current);
+				chart?.clear();
+			}
+		},
+		showLoading: () => {
+			if (chartRef.current !== null) {
+				const chart = getInstanceByDom(chartRef.current);
+				chart?.showLoading();
+			}
+		},
+		hideLoading: () => {
+			if (chartRef.current !== null) {
+				const chart = getInstanceByDom(chartRef.current);
+				chart?.hideLoading();
+			}
+		}
+	}));
 
 	useEffect(() => {
 		// Initialize chart
 		let chart: ECharts | undefined;
-		if (chartRef.current !== null) {
+		if (chartRef?.current !== null) {
 			chart = init(chartRef.current, theme, { renderer: 'canvas' });
 		}
 
@@ -90,4 +119,4 @@ export function ReactECharts({ option, style, settings, loading, theme = 'custom
 	}, [loading, theme]);
 
 	return <Box ref={chartRef} sx={{ width: '100%', height: '100px', ...style }} />;
-}
+});

@@ -1,55 +1,50 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
-import { Button } from '@mui/material';
+// import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
+import { Button, Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-	'&:nth-of-type(odd)': {
-		backgroundColor: theme.palette.action.hover
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
+
+const issuesRows: GridRowsProp = [
+	{ id: 1, uuid: '1', name: '200 OK', edit: 'US' },
+	{ id: 2, uuid: '2', name: '200 OK', edit: 'EU' },
+	{ id: 3, uuid: '3', name: '200 OK', edit: 'AU' },
+	{ id: 4, uuid: '4', name: '200 OK', edit: 'ASIA' },
+	{ id: 5, uuid: '5', name: '200 OK', edit: 'US' }
+];
+
+const issuesColumns: GridColDef[] = [
+	{ field: 'name', headerName: 'Name', minWidth: 200 },
+	{ field: 'uuid', headerName: 'ID', minWidth: 250 },
+	{
+		field: 'empty space',
+		headerName: '',
+		flex: 1,
+		disableColumnMenu: true,
+		sortable: false
 	},
-	// hide last border
-	'&:last-child td, &:last-child th': {
-		border: 0
+	{
+		field: 'edit',
+		headerName: '',
+		minWidth: 150,
+		disableColumnMenu: true,
+		sortable: false,
+		renderCell: (params) => {
+			return (
+				<Button component={RouterLink} to={`${RoutesConfig.editTeam}/${params.value}`} variant="outlined" color="secondary">
+					Configure
+				</Button>
+			);
+		}
 	}
-}));
+];
 
 const TeamsTable: React.FC = () => {
-	const { currentUser } = useGetCurrentUser();
+	// const { currentUser } = useGetCurrentUser();
 	return (
-		<TableContainer component={Paper} sx={{ maxWidth: '80dvw' }}>
-			<Table sx={{ minWidth: 700 }} aria-label="customized table">
-				<TableHead sx={{ bgcolor: 'background.paper' }}>
-					<TableRow>
-						<TableCell>Team</TableCell>
-						<TableCell></TableCell>
-						<TableCell></TableCell>
-					</TableRow>
-				</TableHead>
-				<TableBody>
-					{currentUser.teams?.map((row) => (
-						<StyledTableRow key={row.name}>
-							<TableCell component="th" scope="row">
-								{row.name}
-							</TableCell>
-							<TableCell align="right">{row.uuid}</TableCell>
-							<TableCell align="right">
-								<Button component={RouterLink} to={`${RoutesConfig.editTeam}/${row.uuid}`} variant="outlined" color="secondary">
-									Configure
-								</Button>
-							</TableCell>
-						</StyledTableRow>
-					))}
-				</TableBody>
-			</Table>
-		</TableContainer>
+		<Grid item xs={12} sx={{ minHeight: '50vh', maxHeight: '50vh', width: '100%' }}>
+			<DataGrid rows={issuesRows} columns={issuesColumns} />
+		</Grid>
 	);
 };
 export default TeamsTable;

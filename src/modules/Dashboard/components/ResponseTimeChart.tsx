@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { EChartsOption, ReactECharts, ReactEChartsProps } from 'config/echarts/ReactECharts';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { EChartsOption, ReactEChartsProps, ReactEcharts, RefProps } from 'config/echarts/ReactECharts';
 import useEchartsTheme from 'config/echarts/useEchartsTheme';
+import { generateDummyData, generateDummyUptimeData } from 'config/dummyData';
+import { MetricTypes } from './Monitors/MonitorMetrics';
 
-interface DataItem {
-	name: string;
-	value: [string, number];
-}
+// interface DataItem {
+// 	name: string;
+// 	value: [string, number];
+// }
 
 // const data: DataItem[] = [];
 // let now = new Date(2020, 1, 1);
@@ -59,29 +61,24 @@ interface DataItem {
 // 	]
 // }
 
-const generateData = () => {
-	const now = new Date();
-	//subtract half an hour from current date
-	now.setMinutes(now.getMinutes() - 30);
-	const data: DataItem[] = [];
+// const generateData = () => {
+// 	const now = new Date();
+// 	//subtract half an hour from current date
+// 	now.setMinutes(now.getMinutes() - 30);
+// 	const data: DataItem[] = [];
 
-	for (let i = 0; i < 30; i++) {
-		now.setMinutes(now.getMinutes() + 5);
-		const value = Math.random() * 100 - 1;
-		data.push({
-			name: now.toString(),
-			value: [now.toISOString(), Math.round(value)]
-		});
-	}
-	return data;
-};
+// 	for (let i = 0; i < 30; i++) {
+// 		now.setMinutes(now.getMinutes() + 5);
+// 		const value = Math.random() * 100 - 1;
+// 		data.push({
+// 			name: now.toString(),
+// 			value: [now.toISOString(), Math.round(value)]
+// 		});
+// 	}
+// 	return data;
+// };
 
 const initialOption: EChartsOption = {
-	title: {
-		text: 'Stacked Line',
-		padding: 10,
-		width: '100%'
-	},
 	tooltip: {
 		trigger: 'axis'
 	},
@@ -118,43 +115,76 @@ const initialOption: EChartsOption = {
 			name: 'EU',
 			type: 'line',
 			showSymbol: false,
-			smooth: true,
-
-			data: generateData()
+			data: generateDummyData([200, 311])
 		},
 		{
 			name: 'US',
 			type: 'line',
-			smooth: true,
-
 			showSymbol: false,
-			data: generateData()
+			data: generateDummyData([100, 3, 400])
 		},
 		{
 			name: 'AE',
 			type: 'line',
-			smooth: true,
-
 			showSymbol: false,
-			data: generateData()
+			data: generateDummyData([30])
 		},
 		{
 			name: 'AU',
 			type: 'line',
-			smooth: true,
-
 			showSymbol: false,
-			data: generateData()
+			data: generateDummyData([])
+		}
+	]
+};
+
+const upTimeSeries: EChartsOption = {
+	...initialOption,
+	yAxis: {
+		type: 'value',
+		axisLabel: {
+			formatter(value) {
+				return `${value}%`;
+			}
+		},
+		splitLine: {
+			show: false
+		}
+	},
+	series: [
+		{
+			name: 'Percentage',
+			type: 'line',
+			showSymbol: false,
+			data: generateDummyUptimeData()
 		}
 	]
 };
 
 interface Props {
 	ReactChartsComponentProps?: Omit<ReactEChartsProps, 'option'>;
+	metricType: MetricTypes;
 }
-const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps }) => {
-	const [option] = useState<EChartsOption>(initialOption);
+const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps, metricType }) => {
 	useEchartsTheme();
+	const [option, setOption] = useState<EChartsOption>(initialOption);
+	const chartRef = useRef<RefProps>(null);
+
+	useLayoutEffect(() => {
+		chartRef.current?.clear();
+		switch (metricType) {
+			case MetricTypes.UPTIME:
+				setOption(upTimeSeries);
+
+				break;
+
+			case MetricTypes.RESPONSE_TIME:
+			default:
+				setOption(initialOption);
+
+				break;
+		}
+	}, [metricType]);
 	// useEffect(() => {
 	// 	const interval = setInterval(function () {
 	// 		for (let i = 0; i < 10; i++) {
@@ -174,7 +204,7 @@ const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps }) => {
 	// 	return () => clearInterval(interval);
 	// }, []);
 
-	return <ReactECharts {...ReactChartsComponentProps} option={option} />;
+	return option ? <ReactEcharts {...ReactChartsComponentProps} option={option} ref={chartRef} /> : <></>;
 };
 
 export default ResponseTimeChart;
