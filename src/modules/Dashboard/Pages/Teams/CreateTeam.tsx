@@ -15,7 +15,7 @@ interface CreateTeamFormValues {
 const CreateTeam: React.FC = () => {
 	const createTeamForm = useForm<CreateTeamFormValues>();
 	const createTeam = useCreateTeam();
-	const { currentUser } = useGetCurrentUser();
+	const { currentUser, internalUserQuery } = useGetCurrentUser();
 	const navigate = useNavigate();
 	const handleSubmit = (data: CreateTeamFormValues) => {
 		createTeam.mutate(
@@ -27,6 +27,7 @@ const CreateTeam: React.FC = () => {
 			{
 				onSuccess: () => {
 					toast('Team created!', { type: 'success' });
+					internalUserQuery.refetch();
 					navigate('../');
 				},
 				onError: () => toast('Something went wrong, please try again later.', { type: 'error' })

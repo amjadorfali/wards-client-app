@@ -248,6 +248,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 					</ListItemIcon>
 				</MenuItem>
 
+				{/* FIXME: Fix responsiveness for large team names / or limit team name char count */}
 				{currentUser.teams
 					?.filter((team) => team.uuid !== currentTeam?.uuid)
 					.map((team) => (

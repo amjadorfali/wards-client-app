@@ -53,6 +53,7 @@ import { USERNAME_FROM_EMAIL } from 'utils/regex';
 import { Archive, Delete, EditNotifications, FileCopy } from '@mui/icons-material';
 import Ping from 'modules/Dashboard/components/Ping';
 import useGetMonitors from 'modules/Dashboard/queries/useGetMonitors';
+import { secondsToMinutes } from 'date-fns';
 const Monitors: React.FC = () => {
 	const theme = useTheme();
 	const { currentTeam } = useGetCurrentUser();
@@ -75,7 +76,7 @@ const Monitors: React.FC = () => {
 			{
 				// FIXME: This is temp code as a demo
 				monitors?.data.data.length ? (
-					<Grid container minHeight={'40svh'} alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
+					<Grid container alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
 						<Grid
 							item
 							container
@@ -95,28 +96,30 @@ const Monitors: React.FC = () => {
 							</Grid>
 						</Grid>
 
-						<Grid container item xs={12} justifyContent={'center'}>
+						<Grid maxHeight={'50svh'} overflow={'auto'} container item xs={12} justifyContent={'center'}>
 							<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
 								{monitors.data.data.map((item, index) => (
 									<React.Fragment key={item}>
 										<ListItemButton
 											key={item}
 											component={RouterLink}
-											to={`${item}`}
-											onClick={() => {
-												console.log('clicked');
-											}}
+											to={`${item.id}`}
 											sx={{
-												borderRadius: index === 0 ? '1rem 1rem 0 0' : index === 1 ? '0 0 1rem 1rem' : 0
+												borderTopRightRadius: index === 0 ? '1rem' : 0,
+												borderTopLeftRadius: index === 0 ? '1rem' : 0,
+												borderBottomRightRadius: index === monitors.data.data.length - 1 ? '1rem' : 0,
+												borderBottomLeftRadius: index === monitors.data.data.length - 1 ? '1rem' : 0
 											}}
 										>
 											<ListItemIcon>
+												{/* FIXME: Fix status */}
 												<Ping isSuccess={index % 2} />
 											</ListItemIcon>
 											<ListItemText
 												primary={
 													<>
 														{item.name}
+														{/* FIXME: Fix status */}
 														<Typography variant="subtitle2"> {index % 2 ? 'Up' : 'Down'}. 1h</Typography>
 													</>
 												}
@@ -130,11 +133,11 @@ const Monitors: React.FC = () => {
 														e.stopPropagation();
 														e.preventDefault();
 													}}
-													sx={{ gap: 1, textTransform: 'capitalize' }}
+													sx={{ gap: 1, textTransform: 'lowercase' }}
 													//TODO: Route to edit
 												>
 													<NetworkPingIcon />
-													<Typography variant="subtitle2">{item.interval}S</Typography>
+													<Typography variant="subtitle2">{secondsToMinutes(item.interval ?? 0)} m</Typography>
 												</Button>
 											</ListItemIcon>
 											<ListItemIcon>
@@ -182,7 +185,7 @@ const Monitors: React.FC = () => {
 												</MenuItem>
 											</StyledMenu>
 										</ListItemButton>
-										{index !== 1 && <Divider />}
+										{index !== monitors.data.data.length - 1 && <Divider />}
 									</React.Fragment>
 								))}
 							</List>

@@ -28,7 +28,7 @@ import {
 	useMediaQuery,
 	useTheme
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import { Controller, ControllerRenderProps, UseFormReturn, useForm } from 'react-hook-form';
 
@@ -36,6 +36,7 @@ import { COMPANY_EMAIL } from 'config/literals';
 import { Add, Visibility, VisibilityOff } from '@mui/icons-material';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 import useCreateMonitor, { CreateMonitorOptions } from 'modules/Dashboard/mutations/useCreateMonitor';
+import { toast } from 'react-toastify';
 
 // TODO: utilize those values instead
 enum CompareType {
@@ -99,6 +100,7 @@ interface AddMonitorFormValues extends CreatableData {
 const AddMonitor: React.FC = () => {
 	// examples with mui components https://codesandbox.io/s/react-hook-form-v7-controller-forked-nxrd46?file=/src/index.js:697-708
 	const addMonitorForm = useForm<AddMonitorFormValues>();
+	const navigate = useNavigate();
 	const theme = useTheme();
 	const xsOrSmaller = useMediaQuery(theme.breakpoints.only('xs'));
 	const { currentTeam } = useGetCurrentUser();
@@ -165,9 +167,18 @@ const AddMonitor: React.FC = () => {
 			}
 		};
 		if (currentTeam?.id)
-			createMonitor({
-				...dataToSend
-			});
+			createMonitor(
+				{
+					...dataToSend
+				},
+				{
+					onSuccess: () => {
+						toast('Monitor Created!', { type: 'success' });
+						navigate('../');
+					},
+					onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
+				}
+			);
 	};
 
 	const toggleAdvancedSettings = () => {

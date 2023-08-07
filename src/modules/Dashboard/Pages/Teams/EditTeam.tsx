@@ -5,6 +5,8 @@ import React, { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
+import useEditTeam from './mutations/useEditTeam';
+import { toast } from 'react-toastify';
 
 interface EditTeamFormValues {
 	name: string;
@@ -16,6 +18,7 @@ type RouteParams = {
 
 //TODO: Test when API is ready
 const EditTeam: React.FC = () => {
+	const { mutate: editTeam } = useEditTeam();
 	const params = useParams<RouteParams>();
 	const editTeamForm = useForm<EditTeamFormValues>();
 	const { currentUser, internalUserQuery } = useGetCurrentUser();
@@ -33,7 +36,21 @@ const EditTeam: React.FC = () => {
 	}, [selectedTeam, internalUserQuery.isSuccess, navigate]);
 
 	const handleSubmit = (data: EditTeamFormValues) => {
-		console.log(data);
+		if (params.editTeamId)
+			editTeam(
+				{
+					teamId: params.editTeamId,
+					name: data.name
+				},
+				{
+					onSuccess: () => {
+						toast('Changes are saved!', { type: 'success' });
+						internalUserQuery.refetch();
+						navigate('../');
+					},
+					onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
+				}
+			);
 	};
 	return (
 		<Grid container alignContent={'center'} justifyContent={'center'}>
