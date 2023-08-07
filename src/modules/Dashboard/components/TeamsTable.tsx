@@ -4,18 +4,10 @@ import { Button, Grid } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
-
-const issuesRows: GridRowsProp = [
-	{ id: 1, uuid: '1', name: '200 OK', edit: 'US' },
-	{ id: 2, uuid: '2', name: '200 OK', edit: 'EU' },
-	{ id: 3, uuid: '3', name: '200 OK', edit: 'AU' },
-	{ id: 4, uuid: '4', name: '200 OK', edit: 'ASIA' },
-	{ id: 5, uuid: '5', name: '200 OK', edit: 'US' }
-];
+import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 
 const issuesColumns: GridColDef[] = [
-	{ field: 'name', headerName: 'Name', minWidth: 200 },
-	{ field: 'uuid', headerName: 'ID', minWidth: 250 },
+	{ field: 'name', headerName: 'Team', minWidth: 200 },
 	{
 		field: 'empty space',
 		headerName: '',
@@ -23,6 +15,8 @@ const issuesColumns: GridColDef[] = [
 		disableColumnMenu: true,
 		sortable: false
 	},
+	{ field: 'monitors-count', headerName: 'Monitors', minWidth: 150 },
+
 	{
 		field: 'edit',
 		headerName: '',
@@ -41,10 +35,21 @@ const issuesColumns: GridColDef[] = [
 
 //TODO: Integrate with real data
 const TeamsTable: React.FC = () => {
-	// const { currentUser } = useGetCurrentUser();
+	const { currentUser } = useGetCurrentUser();
+
+	const rows = React.useMemo<GridRowsProp>(
+		() =>
+			currentUser?.teams?.map((team) => ({
+				'monitors-count': team.healthCheckUsage,
+				name: team.name,
+				edit: team.uuid,
+				id: team.uuid
+			})) || [],
+		[currentUser?.teams]
+	);
 	return (
 		<Grid item xs={12} sx={{ minHeight: '50vh', maxHeight: '50vh', width: '100%' }}>
-			<DataGrid rows={issuesRows} columns={issuesColumns} />
+			<DataGrid rows={rows} columns={issuesColumns} />
 		</Grid>
 	);
 };

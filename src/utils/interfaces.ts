@@ -15,6 +15,7 @@ export interface InternalUser {
 
 interface Team {
 	id: number;
+	healthCheckUsage: number;
 	uuid: string;
 	name: string;
 	users: InternalUser[];

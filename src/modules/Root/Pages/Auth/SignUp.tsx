@@ -112,3 +112,5 @@ const SignUp: React.FC = () => {
 	);
 };
 export default SignUp;
+
+// FIXME: Make user agree to privacy policy and terms of service

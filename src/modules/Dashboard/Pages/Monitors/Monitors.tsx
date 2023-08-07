@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React from 'react';
 import { Button, Divider, Grid, ListItemButton, Menu, MenuItem, MenuProps, Typography, alpha, styled, useTheme } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
@@ -6,13 +8,6 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import NetworkPingIcon from '@mui/icons-material/NetworkPing';
-interface Monitor {
-	id: string;
-	name: string;
-	url: string;
-	createdAt: string;
-	updatedAt: string;
-}
 
 const StyledMenu = styled((props: MenuProps) => (
 	<Menu
@@ -57,8 +52,11 @@ import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser
 import { USERNAME_FROM_EMAIL } from 'utils/regex';
 import { Archive, Delete, EditNotifications, FileCopy } from '@mui/icons-material';
 import Ping from 'modules/Dashboard/components/Ping';
+import useGetMonitors from 'modules/Dashboard/queries/useGetMonitors';
 const Monitors: React.FC = () => {
 	const theme = useTheme();
+	const { currentTeam } = useGetCurrentUser();
+	const { data: monitors } = useGetMonitors(currentTeam?.uuid || '');
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -69,7 +67,6 @@ const Monitors: React.FC = () => {
 		e?.stopPropagation();
 		setAnchorEl(null);
 	};
-	const [monitors] = React.useState<Monitor[]>([]);
 	const { currentUser } = useGetCurrentUser();
 
 	//FIXME: This is still a demo, needs fixing for the logic/real data
@@ -77,7 +74,7 @@ const Monitors: React.FC = () => {
 		<>
 			{
 				// FIXME: This is temp code as a demo
-				!monitors.length ? (
+				monitors?.data.data.length ? (
 					<Grid container minHeight={'40svh'} alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
 						<Grid
 							item
@@ -100,7 +97,7 @@ const Monitors: React.FC = () => {
 
 						<Grid container item xs={12} justifyContent={'center'}>
 							<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
-								{[1, 2].map((item, index) => (
+								{monitors.data.data.map((item, index) => (
 									<React.Fragment key={item}>
 										<ListItemButton
 											key={item}
@@ -114,13 +111,13 @@ const Monitors: React.FC = () => {
 											}}
 										>
 											<ListItemIcon>
-												<Ping isSuccess={item % 2} />
+												<Ping isSuccess={index % 2} />
 											</ListItemIcon>
 											<ListItemText
 												primary={
 													<>
-														URL here
-														<Typography variant="subtitle2"> {item % 2 ? 'Up' : 'Down'}. 1h</Typography>
+														{item.name}
+														<Typography variant="subtitle2"> {index % 2 ? 'Up' : 'Down'}. 1h</Typography>
 													</>
 												}
 											/>
@@ -137,7 +134,7 @@ const Monitors: React.FC = () => {
 													//TODO: Route to edit
 												>
 													<NetworkPingIcon />
-													<Typography variant="subtitle2">3m</Typography>
+													<Typography variant="subtitle2">{item.interval}S</Typography>
 												</Button>
 											</ListItemIcon>
 											<ListItemIcon>

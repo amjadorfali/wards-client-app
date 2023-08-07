@@ -1,186 +1,577 @@
-import { Grid, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
+import { Grid, Link, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 import React from 'react';
 const PrivacyPolicy: React.FC = () => {
 	return (
 		<Grid container component={Paper} my={15} mx={'auto'} sx={{ maxWidth: { xs: '95%', md: '60%' } }} p={5} gap={5}>
-			<Typography variant="h3">Privacy Policy</Typography>
+			<Typography component={Grid} xs={12} variant="h1">
+				Privacy Policy
+			</Typography>
+			<Typography variant="caption">Effective Date: 07/29/2023</Typography>
 			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					1. Introduction
+				</Typography>
 				<Typography paragraph>
-					At Wards, inclusive of our affiliates (collectively referred to as "Wards", "we", "us", or "our"), we place great emphasis on
-					maintaining the security of the information we acquire from you or about you. This Privacy Policy elaborates on our approach
-					towards handling the Personal Information that we gather from or about you when you make use of our website, applications,
-					and services (jointly referred to as "Services"). However, this Privacy Policy does not cover the content that we process on
-					behalf of our business offerings' customers, such as our API. The use of such data is regulated by the customer agreements
-					that pertain to the access and usage of those offerings.
+					Welcome to <b>Wards</b>.
+				</Typography>
+				<Typography paragraph>
+					Wards (“us”, “we”, or “our”) operates <Link href="https://wards.app">https://wards.app</Link> and Wards mobile application
+					(hereinafter referred to as “<b>Service</b>”).
+				</Typography>
+				<Typography paragraph>
+					Our Privacy Policy governs your visit to <Link href="https://wards.app">https://wards.app</Link> and Wards mobile
+					application, and explains how we collect, safeguard and disclose information that results from your use of our Service.
+				</Typography>
+				<Typography paragraph>
+					We use your data to provide and improve our Service. By using our Service, you agree to the collection and use of information
+					in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have
+					the same meanings as in our Terms and Conditions.
+				</Typography>
+				<Typography paragraph>
+					Our Terms and Conditions (“<b>Terms</b>”) govern all use of our Service and together with the Privacy Policy constitutes your
+					agreement with us (“<b>agreement</b>”).
 				</Typography>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography variant="h4">1. Collection of Personal Information</Typography>
-				<Typography paragraph>
-					Our collection of your personal information ("Personal Information") is carried out in the following manner:
+				<Typography variant="h4" pb={3}>
+					2. Definitions
 				</Typography>
-				<List>
-					<Typography paragraph>
-						Information Given by You: Personal Information is collected when you make an account to access our services or engage with
-						us in any of the following ways:
-					</Typography>
-					<List>
-						<ListItem>
-							<ListItemText>
-								Account Details: When setting up an account, we gather information related to your account such as your name, contact
-								information, login credentials, payment card details, and transaction history, which are collectively referred to as
-								"Account Information".
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								User Content: Personal Information embedded in the inputs, file uploads, or feedback that you provide while using our
-								services is collected (“Content”).
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								Communication Data: If you contact us, we gather your name, contact information, and the content of any messages you
-								send, known as “Communication Information”.
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								Social Media Data: We maintain pages on social media platforms such as Instagram, Facebook, Medium, Twitter, YouTube,
-								and LinkedIn. When you engage with our social media pages, we collect Personal Information that you choose to share
-								with us, including your contact details, collectively termed as “Social Information”. The companies that host our
-								social media pages might also provide us with aggregate data and analytics about our social media engagement.
-							</ListItemText>
-						</ListItem>
-					</List>
-					<Typography paragraph>
-						Personal Information Collected Automatically Through Service Usage: We gather the following data about your visit, usage,
-						or interactions when you visit, use or interact with our Services, known as “Technical Information”:
-					</Typography>
-					<List>
-						<ListItem>
-							<ListItemText>
-								Log Data: This includes information automatically sent by your browser when you use our services. Log data consists of
-								your Internet Protocol address, browser type and settings, the date and time of your request, and your interactions
-								with our website.
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								Usage Data: We may collect data automatically about your usage of the Services, including the types of content you view
-								or engage with, the features you use, and the actions you take, as well as your time zone, country, access dates and
-								times, user agent and version, type of computer or mobile device, and your computer connection.
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								Device Data: This consists of the name of the device, operating system, device identifiers, and the browser you are
-								using. The type and amount of information collected may depend on the type of device you use and its settings.
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								Cookies: To operate and administer our Services and improve your user experience, we use cookies. A “cookie” is a piece
-								of information sent to your browser by a website you visit. You can set your browser to accept all cookies, reject all
-								cookies, or notify you whenever a cookie is offered so you can decide whether to accept it each time. However,
-								rejecting a cookie might in some cases prevent you from using or negatively impact the display or function of a website
-								or certain areas or features of a website. For more details on cookies, please visit All About Cookies.
-							</ListItemText>
-						</ListItem>
-						<ListItem>
-							<ListItemText>
-								Analytics: We may utilize various online analytics products that use cookies to help us understand how users use our
-								Services and enhance your experience when you use the Services.
-							</ListItemText>
-						</ListItem>
-					</List>
+				<Typography paragraph>
+					<b>SERVICE</b> means the <Link href="https://wards.app">https://wards.app</Link> website and Wards mobile application
+					operated by Wards.
+				</Typography>
+				<Typography paragraph>
+					<b>PERSONAL DATA</b> means data about a living individual who can be identified from those data (or from those and other
+					information either in our possession or likely to come into our possession).
+				</Typography>
+				<Typography paragraph>
+					<b>USAGE DATA</b> is data collected automatically either generated by the use of Service or from Service infrastructure
+					itself (for example, the duration of a page visit).
+				</Typography>
+				<Typography paragraph>
+					<b>COOKIES</b> are small files stored on your device (computer or mobile device).
+				</Typography>
+				<Typography paragraph>
+					<b>DATA CONTROLLER</b> means a natural or legal person who (either alone or jointly or in common with other persons)
+					determines the purposes for which and the manner in which any personal data are, or are to be, processed. For the purpose of
+					this Privacy Policy, we are a Data Controller of your data.
+				</Typography>
+				<Typography paragraph>
+					<b>DATA PROCESSORS (OR SERVICE PROVIDERS)</b> means any natural or legal person who processes the data on behalf of the Data
+					Controller. We may use the services of various Service Providers in order to process your data more effectively.
+				</Typography>
+				<Typography paragraph>
+					<b>DATA SUBJECT</b> is any living individual who is the subject of Personal Data.
+				</Typography>
+				<Typography paragraph>
+					<b>THE USER</b> is the individual using our Service. The User corresponds to the Data Subject, who is the subject of Personal
+					Data.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					3. Information Collection and Use
+				</Typography>
+				<Typography paragraph>
+					We collect several different types of information for various purposes to provide and improve our Service to you.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					4. Types of Data Collected
+				</Typography>
+				<Typography variant="h5" pb={2} fontWeight={800}>
+					Personal Data
+				</Typography>
+				<Typography paragraph>
+					While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to
+					contact or identify you (“<b>Personal Data</b>”). Personally identifiable information may include, but is not limited to:
+				</Typography>
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>Email address</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>First name and last name</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>Phone number</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>Address, State, Province, ZIP/Postal code, City</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>Cookies and Usage Data</ListItemText>
+					</ListItem>
+				</List>
+				<Typography paragraph>
+					We may use your Personal Data to contact you with newsletters, marketing or promotional materials and other information that
+					may be of interest to you. You may opt out of receiving any, or all, of these communications from us by following the
+					unsubscribe link or by emailing at <Link href="mailto:hello@wards.app">hello@wards.app</Link>.
+				</Typography>
+				<Typography variant="h5" pt={4} pb={2} fontWeight={800}>
+					Usage Data
+				</Typography>
+				<Typography paragraph>
+					We may also collect information that your browser sends whenever you visit our Service or when you access Service by or
+					through a mobile device (“<b>Usage Data</b>”).
+				</Typography>
+				<Typography paragraph>
+					This Usage Data may include information such as your computer's Internet Protocol address (e.g. IP address), browser type,
+					browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages,
+					unique device identifiers and other diagnostic data.
+				</Typography>
+				<Typography paragraph>
+					When you access Service with a mobile device, this Usage Data may include information such as the type of mobile device you
+					use, your mobile device unique ID, the IP address of your mobile device, your mobile operating system, the type of mobile
+					Internet browser you use, unique device identifiers and other diagnostic data.
+				</Typography>
+				<Typography variant="h5" pt={4} pb={2} fontWeight={800}>
+					Tracking Cookies Data
+				</Typography>
+				<Typography paragraph>
+					We use cookies and similar tracking technologies to track the activity on our Service and we hold certain information.
+				</Typography>
+				<Typography paragraph>
+					Cookies are files with a small amount of data which may include an anonymous unique identifier. Cookies are sent to your
+					browser from a website and stored on your device. Other tracking technologies are also used such as beacons, tags and scripts
+					to collect and track information and to improve and analyze our Service.
+				</Typography>
+				<Typography paragraph>
+					You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept
+					cookies, you may not be able to use some portions of our Service.
+				</Typography>
+				<Typography paragraph>Examples of Cookies we use:</Typography>
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>
+							<b>Session Cookies</b>: We use Session Cookies to operate our Service.
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							<b>Preference Cookies</b>: We use Preference Cookies to remember your preferences and various settings.
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							<b>Security Cookies</b>: We use Security Cookies for security purposes.
+						</ListItemText>
+					</ListItem>
+					{/* <ListItem>
+						<ListItemText>
+							<b>Advertising Cookies</b>: Advertising Cookies are used to serve you with advertisements that may be relevant to you and your
+							interests.
+						</ListItemText>
+					</ListItem> */}
+				</List>
+
+				<Typography variant="h5" pt={4} pb={2} fontWeight={800}>
+					Other Data
+				</Typography>
+
+				<Typography paragraph>
+					While using our Service, we may also collect the following information:
+					{/* sex, age, date of birth, place of birth, passport
+					details, citizenship, registration at place of residence and actual address, */}{' '}
+					telephone number (work, mobile), and other data.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					5. Use of Data
+				</Typography>
+				<Typography paragraph>Wards uses the collected data for various purposes:</Typography>
+
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>to provide and maintain our Service;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to notify you about changes to our Service;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to allow you to participate in interactive features of our Service when you choose to do so;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to provide customer support;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to gather analysis or valuable information so that we can improve our Service;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to monitor the usage of our Service;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to detect, prevent and address technical issues;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>to fulfill any other purpose for which you provide it;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							to carry out our obligations and enforce our rights arising from any contracts entered into between you and us, including
+							for billing and collection;
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							to provide you with notices about your account and/or subscription, including expiration and renewal notices,
+							email-instructions, etc.;
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							to provide you with news, special offers and general information about other goods, services and events which we offer
+							that are similar to those that you have already purchased or enquired about unless you have opted not to receive such
+							information;
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>in any other way we may describe when you provide the information;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>for any other purpose with your consent.</ListItemText>
+					</ListItem>
 				</List>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography variant="h4">2. How we use personal information</Typography>
-				<Typography paragraph>We may utilize Personal Information for the objectives listed below:</Typography>
-				<List>
-					<ListItem>
-						<ListItemText>To deliver, oversee, uphold, and/or scrutinize the Services;</ListItemText>
-					</ListItem>
-					<ListItem>
-						<ListItemText>To enhance our Services and engage in research activities;</ListItemText>
-					</ListItem>
-					<ListItem>
-						<ListItemText>To interact with you;</ListItemText>
-					</ListItem>
-					<ListItem>
-						<ListItemText>To devise new initiatives and services;</ListItemText>
-					</ListItem>
+				<Typography variant="h4" pb={3}>
+					6. Retention of Data
+				</Typography>
+				<Typography paragraph>
+					We will retain your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will
+					retain and use your Personal Data to the extent necessary to comply with our legal obligations (for example, if we are
+					required to retain your data to comply with applicable laws), resolve disputes, and enforce our legal agreements and
+					policies.
+				</Typography>
+				<Typography paragraph>
+					We will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period, except
+					when this data is used to strengthen the security or to improve the functionality of our Service, or we are legally obligated
+					to retain this data for longer time periods.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					7. Transfer of Data
+				</Typography>
+				<Typography paragraph>
+					Your information, including Personal Data, may be transferred to - and maintained on - computers located outside of your
+					state, province, country or other governmental jurisdiction where the data protection laws may differ from those of your
+					jurisdiction.
+				</Typography>
+				{/* //FIXME: Do we need this? */}
+				<Typography paragraph>
+					If you are located outside United States and choose to provide information to us, please note that we transfer the data,
+					including Personal Data, to United States and process it there.
+				</Typography>
+				<Typography paragraph>
+					Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that
+					transfer.
+				</Typography>
+				<Typography paragraph>
+					Wards will take all the steps reasonably necessary to ensure that your data is treated securely and in accordance with this
+					Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are
+					adequate controls in place including the security of your data and other personal information.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					8. Disclosure of Data
+				</Typography>
+				<Typography paragraph>We may disclose personal information that we collect, or you provide:</Typography>
+
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
 					<ListItem>
 						<ListItemText>
-							To hinder fraudulent activities, criminal conduct, or misuse of our Services, and to safeguard the integrity of our IT
-							infrastructure and networks;
+							<b>Disclosure for Law Enforcement.</b>
+							<br />
+							Under certain circumstances, we may be required to disclose your Personal Data if required to do so by law or in response
+							to valid requests by public authorities.
 						</ListItemText>
 					</ListItem>
 					<ListItem>
-						<ListItemText>To execute business transitions; and</ListItemText>
+						<ListItemText>
+							<b>Business Transaction.</b>
+							<br />
+							If we or our subsidiaries are involved in a merger, acquisition or asset sale, your Personal Data may be transferred.
+						</ListItemText>
 					</ListItem>
 					<ListItem>
 						<ListItemText>
-							To abide by legal responsibilities and procedures, and to safeguard our rights, privacy, safety, or assets, as well as
-							that of our affiliates, you, or other third parties.
+							<b>Other cases. We may disclose your information also:</b>
 						</ListItemText>
+
+						<List>
+							<ListItem>
+								<ListItemText>to our subsidiaries and affiliates;</ListItemText>
+							</ListItem>
+							<ListItem>
+								<ListItemText>to contractors, service providers, and other third parties we use to support our business;</ListItemText>
+							</ListItem>
+							<ListItem>
+								<ListItemText>to fulfill the purpose for which you provide it;</ListItemText>
+							</ListItem>
+							<ListItem>
+								<ListItemText>for the purpose of including your company's logo on our website;</ListItemText>
+							</ListItem>
+							<ListItem>
+								<ListItemText>for any other purpose disclosed by us when you provide the information;</ListItemText>
+							</ListItem>
+							<ListItem>
+								<ListItemText>with your consent in any other cases;</ListItemText>
+							</ListItem>
+							<ListItem>
+								<ListItemText>
+									if we believe disclosure is necessary or appropriate to protect the rights, property, or safety of the Company, our
+									customers, or others.
+								</ListItemText>
+							</ListItem>
+						</List>
 					</ListItem>
 				</List>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography variant="h4">3. Disclosure of personal information</Typography>
-				<Typography paragraph>
-					In specific situations, we may need to disclose your Personal Information to third parties without further notifying you,
-					unless it's mandated by law:
+				<Typography variant="h4" pb={3}>
+					9. Security of Data
 				</Typography>
-				<List>
+				<Typography paragraph>
+					The security of your data is important to us but remember that no method of transmission over the Internet or method of
+					electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we
+					cannot guarantee its absolute security.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					10. Your Data Protection Rights Under General Data Protection Regulation (GDPR)
+				</Typography>
+				<Typography paragraph>
+					If you are a resident of the European Union (EU) and European Economic Area (EEA), you have certain data protection rights,
+					covered by GDPR. - See more at{' '}
+					<Link href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">https://eur-lex.europa.eu/eli/reg/2016/679/oj</Link>
+				</Typography>
+				<Typography paragraph>
+					We aim to take reasonable steps to allow you to correct, amend, delete, or limit the use of your Personal Data.
+				</Typography>
+				<Typography paragraph>
+					If you wish to be informed what Personal Data we hold about you and if you want it to be removed from our systems, please
+					email us at <Link href="mailto:hello@wards.app">hello@wards.app</Link>.
+				</Typography>
+				<Typography paragraph>In certain circumstances, you have the following data protection rights:</Typography>
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>the right to access, update or to delete the information we have on you;</ListItemText>
+					</ListItem>
 					<ListItem>
 						<ListItemText>
-							Third-party Vendors and Service Providers: To help us manage our business operations and provide certain services and
-							functions, we might share your Personal Information with third-party vendors and service providers. These could include
-							hosting services, cloud services, IT service providers, email communication software, and web analytics services, among
-							others. These parties will access, process, or store your Personal Information solely for the purpose of carrying out
-							their responsibilities to us, as per our instructions.
+							the right of rectification. You have the right to have your information rectified if that information is inaccurate or
+							incomplete;
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>the right to object. You have the right to object to our processing of your Personal Data;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							the right of restriction. You have the right to request that we restrict the processing of your personal information;
 						</ListItemText>
 					</ListItem>
 					<ListItem>
 						<ListItemText>
-							Business Transactions: In the event of a significant business transaction such as strategic deals, reorganization,
-							bankruptcy, receivership, or a transition of service to a different provider (collectively referred to as a
-							"Transaction"), your Personal Information and other related information may be disclosed during the due diligence process
-							to counterparties and other parties involved in the Transaction. As a part of the Transaction, your information may be
-							transferred to a successor or affiliate along with other assets.
+							the right to data portability. You have the right to be provided with a copy of your Personal Data in a structured,
+							machine-readable and commonly used format;
 						</ListItemText>
 					</ListItem>
 					<ListItem>
 						<ListItemText>
-							Legal Obligations: There may be instances where we need to share your Personal Information, including details about your
-							interactions with our Services, with governmental authorities, industry counterparts, or other third parties. This may be
-							necessary (i) if we are required to do so by law or believe in good faith that such action is necessary to fulfill a
-							legal obligation, (ii) to safeguard and uphold our rights or property, (iii) if we determine that there has been a
-							violation of our terms, policies, or the law, (iv) to detect or prevent fraudulent activities or other illegal actions,
-							(v) to ensure the safety, security, and integrity of our products, employees, users, or the public, or (vi) to guard
-							against legal liability.
+							the right to withdraw consent. You also have the right to withdraw your consent at any time where we rely on your consent
+							to process your personal information;
 						</ListItemText>
+					</ListItem>
+				</List>
+				<Typography paragraph>
+					Please note that we may ask you to verify your identity before responding to such requests. Please note, we may not able to
+					provide Service without some necessary data.
+				</Typography>
+				<Typography paragraph>
+					You have the right to complain to a Data Protection Authority about our collection and use of your Personal Data. For more
+					information, please contact your local data protection authority in the European Economic Area (EEA).
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					11. Your Data Protection Rights under the California Privacy Protection Act (CalOPPA)
+				</Typography>
+				<Typography paragraph>
+					CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy. The
+					law's reach stretches well beyond California to require a person or company in the United States (and conceivable the world)
+					that operates websites collecting personally identifiable information from California consumers to post a conspicuous privacy
+					policy on its website stating exactly the information being collected and those individuals with whom it is being shared, and
+					to comply with this policy. - See more at:{' '}
+					<Link href="https://consumercal.org/about-cfc/cfc-education-foundation/california-online-privacy-protection-act-caloppa-3/">
+						https://consumercal.org/about-cfc/cfc-education-foundation/california-online-privacy-protection-act-caloppa-3/
+					</Link>
+				</Typography>
+				<Typography paragraph>According to CalOPPA we agree to the following:</Typography>
+
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>users can visit our site anonymously;</ListItemText>
 					</ListItem>
 					<ListItem>
 						<ListItemText>
-							Affiliates: We may disclose your Personal Information to our affiliated entities. An affiliate is an entity that is
-							controlled by, controls, or is under common control with Wards. Our affiliates may utilize the Personal Information we
-							share in accordance with this Privacy Policy.
+							our Privacy Policy link includes the word “Privacy”, and can easily be found on the page specified above on the home page
+							of our website;
 						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>users will be notified of any privacy policy changes on our Privacy Policy Page;</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							users are able to change their personal information by emailing us at{' '}
+							<Link href="mailto:hello@wards.app">hello@wards.app</Link>.
+						</ListItemText>
+					</ListItem>
+				</List>
+				<Typography paragraph>Our Policy on “Do Not Track” Signals:</Typography>
+				<Typography paragraph>
+					We honor Do Not Track signals and do not track, plant cookies, or use advertising when a Do Not Track browser mechanism is in
+					place. Do Not Track is a preference you can set in your web browser to inform websites that you do not want to be tracked.
+				</Typography>
+				<Typography paragraph>
+					You can enable or disable Do Not Track by visiting the Preferences or Settings page of your web browser.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					12. Service Providers
+				</Typography>
+				<Typography paragraph>
+					We may employ third party companies and individuals to facilitate our Service (“<b>Service Providers</b>”), provide Service
+					on our behalf, perform Service-related services or assist us in analyzing how our Service is used.
+				</Typography>
+				<Typography paragraph>
+					These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to
+					disclose or use it for any other purpose.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					13. Analytics
+				</Typography>
+				<Typography paragraph>
+					We may use third-party Service Providers to monitor and analyze the use of our Service such as, but not limited to:
+				</Typography>
+
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>Google Analytics</ListItemText>
 					</ListItem>
 				</List>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography variant="h4">4. Changes to the privacy policy</Typography>
-				<Typography paragraph>
-					This Privacy Policy may be subject to changes at our discretion from time to time. Whenever such changes are made, we will
-					make sure to update the version available on this page, unless there's a requirement for a different form of notification
-					under the applicable law.
+				<Typography variant="h4" pb={3}>
+					14. CI/CD tools
 				</Typography>
+				<Typography paragraph>
+					We may use third-party Service Providers to automate the development process of our Service, such as, but not limited to:
+				</Typography>
+
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>GitHub</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>GitLab CI/CD</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>Travis CI</ListItemText>
+					</ListItem>
+				</List>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					15. Payments
+				</Typography>
+				<Typography paragraph>
+					We may provide paid products and/or services within Service. In that case, we use third-party services for payment processing
+					(e.g. payment processors).
+				</Typography>
+				<Typography paragraph>
+					We will not store or collect your payment card details. That information is provided directly to our third-party payment
+					processors whose use of your personal information is governed by their Privacy Policy. These payment processors adhere to the
+					standards set by PCI-DSS as managed by the PCI Security Standards Council, which is a joint effort of brands like Visa,
+					Mastercard, American Express and Discover. PCI-DSS requirements help ensure the secure handling of payment information.
+				</Typography>
+				<Typography paragraph>The payment processors we work with are:</Typography>
+
+				<List sx={{ ml: 4, li: { display: 'list-item', listStyle: 'lower-alpha' } }}>
+					<ListItem>
+						<ListItemText>Paypal</ListItemText>
+					</ListItem>
+				</List>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					16. Links to Other Sites
+				</Typography>
+				<Typography paragraph>
+					Our Service may contain links to other sites that are not operated by us. If you click a third party link, you will be
+					directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit.
+				</Typography>
+				<Typography paragraph>
+					We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites
+					or services.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					17. Children's Privacy
+				</Typography>
+				<Typography paragraph>
+					Our Services are not intended for use by children under the age of 18 (“<b>Child</b>” or “<b>Children</b>”).
+				</Typography>
+				<Typography paragraph>
+					We do not knowingly collect personally identifiable information from Children under 18. If you become aware that a Child has
+					provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from Children
+					without verification of parental consent, we take steps to remove that information from our servers.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					18. Changes to This Privacy Policy
+				</Typography>
+				<Typography paragraph>
+					We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on
+					this page.
+				</Typography>
+				<Typography paragraph>
+					We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update
+					“effective date” at the top of this Privacy Policy.
+				</Typography>
+				<Typography paragraph>
+					You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when
+					they are posted on this page.
+				</Typography>
+			</Grid>
+			<Grid item xs={12}>
+				<Typography variant="h4" pb={3}>
+					19. Contact Us
+				</Typography>
+				<Typography paragraph>If you have any questions about this Privacy Policy, please contact us:</Typography>
+				<List>
+					<ListItem>
+						<ListItemText>
+							By email: <Link href="mailto:hello@wards.app">hello@wards.app</Link>
+						</ListItemText>
+					</ListItem>
+					<ListItem>
+						<ListItemText>
+							By phone number: <Link href="tel:+905526452977">+905526452977</Link>
+						</ListItemText>
+					</ListItem>
+				</List>
 			</Grid>
 		</Grid>
 	);

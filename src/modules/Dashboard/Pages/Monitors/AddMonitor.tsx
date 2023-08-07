@@ -34,14 +34,27 @@ import { Controller, ControllerRenderProps, UseFormReturn, useForm } from 'react
 
 import { COMPANY_EMAIL } from 'config/literals';
 import { Add, Visibility, VisibilityOff } from '@mui/icons-material';
+import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
+import useCreateMonitor, { CreateMonitorOptions } from 'modules/Dashboard/mutations/useCreateMonitor';
 
+// TODO: utilize those values instead
+enum CompareType {
+	SMALL = 'SMALL',
+	BIG = 'BIG',
+	SMALL_EQUAL = 'SMALL_EQUAL',
+	BIG_EQUAL = 'BIG_EQUAL',
+	EQUAL = 'EQUAL',
+	DOES_NOT_CONTAIN = 'DOES_NOT_CONTAIN',
+	NOT_EQUAL = 'NOT_EQUAL',
+	CONTAINS = 'CONTAINS'
+}
 enum AssertionNames {
-	RESPONSE_CODE = 'response.code',
-	RESPONSE_TIME = 'response.time',
-	RESPONSE_VALUE = 'response.value',
-	RESPONSE_JSON = 'response.json',
-	RESPONSE_HEADER = 'response.header',
-	SSL_CERTIFICATE_EXPIRES_IN = 'ssl_certificate.expires_in'
+	RESPONSE_CODE = 'RESPONSE_CODE',
+	RESPONSE_TIME = 'RESPONSE_TIME',
+	RESPONSE_VALUE = 'RESPONSE_VALUE',
+	RESPONSE_JSON = 'RESPONSE_JSON',
+	RESPONSE_HEADER = 'RESPONSE_HEADER',
+	SSL_CERTIFICATE_EXPIRES_IN = 'SSL_CERTIFICATE_EXPIRES_IN'
 }
 
 enum RequestType {
@@ -51,10 +64,11 @@ enum RequestType {
 }
 
 enum Region {
-	AMERICA = 'America',
-	EUROPE = 'Europe',
-	AUSTRALIA = 'Australia',
-	ASIA = 'Asia'
+	FRANKFURT = 'FRANKFURT',
+	IRELAND = 'IRELAND',
+	DUBAI = 'DUBAI',
+	SYDNEY = 'SYDNEY',
+	CALIFORNIA = 'CALIFORNIA'
 }
 type CreatableData = {
 	[key: `header-name-${number}`]: string;
@@ -87,7 +101,8 @@ const AddMonitor: React.FC = () => {
 	const addMonitorForm = useForm<AddMonitorFormValues>();
 	const theme = useTheme();
 	const xsOrSmaller = useMediaQuery(theme.breakpoints.only('xs'));
-
+	const { currentTeam } = useGetCurrentUser();
+	const { mutate: createMonitor } = useCreateMonitor();
 	const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [requestHeadersCount, setRequestHeadersCount] = useState<number[]>([]);
@@ -115,6 +130,44 @@ const AddMonitor: React.FC = () => {
 
 	const handleSubmit = (data: AddMonitorFormValues) => {
 		console.log('submitted', data);
+		const assertions: CreateMonitorOptions['metadata']['assertions'] = [];
+		const headers: CreateMonitorOptions['metadata']['headers'] = [];
+
+		assertionsCount.forEach((number) => {
+			assertions.push({
+				key: data[`assertion-key-${number}`],
+				value: data[`assertion-value-${number}`],
+				compareType: data[`assertion-compare-${number}`],
+				type: data[`assertion-name-${number}`]
+			});
+		});
+
+		requestHeadersCount.forEach((number) => {
+			headers.push({ key: data[`header-name-${number}`], value: data[`header-value-${number}`] });
+		});
+
+		const dataToSend: CreateMonitorOptions = {
+			teamId: currentTeam?.uuid || '',
+			name: data['monitor-name'],
+			url: data.url,
+			timeout: data['request-timeout'],
+			method: data['http-method'],
+			type: data['request-type'],
+			locations: data.regions,
+			interval: data['check-frequency'],
+			metadata: {
+				httpPassword: data['http-auth-password'],
+				httpUserName: data['http-auth-username'],
+				verifySSL: data['verify-ssl'],
+				requestBody: data['request-body'],
+				headers,
+				assertions
+			}
+		};
+		if (currentTeam?.id)
+			createMonitor({
+				...dataToSend
+			});
 	};
 
 	const toggleAdvancedSettings = () => {
@@ -263,7 +316,7 @@ const AddMonitor: React.FC = () => {
 											fullWidth
 											inputMode="url"
 											InputLabelProps={{ required: true }}
-											type="url"
+											type={isHttpRequest ? 'url' : 'text'}
 											helperText={fieldState.error?.message ?? ''}
 											placeholder={isHttpRequest ? 'https://example.com' : '8.8.8.8:53'}
 											error={!!fieldState.error?.message}
@@ -331,15 +384,15 @@ const AddMonitor: React.FC = () => {
 											{...field}
 											onChange={(e) => field.onChange(e.target.value)}
 										>
-											<MenuItem value="head">HEAD</MenuItem>
-											<MenuItem value="get">GET</MenuItem>
-											<MenuItem value="post">POST</MenuItem>
-											<MenuItem value="patch">PATCH</MenuItem>
-											<MenuItem value="put">PUT</MenuItem>
+											<MenuItem value="HEAD">HEAD</MenuItem>
+											<MenuItem value="GET">GET</MenuItem>
+											<MenuItem value="POST">POST</MenuItem>
+											<MenuItem value="PATCH">PATCH</MenuItem>
+											<MenuItem value="PUT">PUT</MenuItem>
 										</Select>
 									)}
 									name="http-method"
-									defaultValue="get"
+									defaultValue="GET"
 									control={addMonitorForm.control}
 								/>
 								<FormHelperText> </FormHelperText>
@@ -424,7 +477,7 @@ const AddMonitor: React.FC = () => {
 									control={addMonitorForm.control}
 									textFieldProps={{
 										label: 'Request body for POST, PUT, and PATCH requests',
-										placeholder: 'parameter1=first_value&parameter2=another_value',
+										placeholder: '{ "key1" : "value1", "key2" : 2, "key3" : true }',
 										multiline: true,
 										name: 'request-body',
 										fullWidth: true,
@@ -757,7 +810,7 @@ const AddMonitor: React.FC = () => {
 										</Select>
 									)}
 									name="regions"
-									defaultValue={[Region.AMERICA, Region.EUROPE, Region.ASIA, Region.AUSTRALIA]}
+									defaultValue={Object.values(Region) as Region[]}
 									control={addMonitorForm.control}
 								/>
 							</Grid>
@@ -795,11 +848,13 @@ const SelectAssertionValue: React.FC<SelectAssertionValueProps> = ({ assertionKe
 						<Controller
 							render={({ field }) => (
 								<Select fullWidth {...field} onChange={(e) => field.onChange(e.target.value)}>
-									<MenuItem value={`<`}>{` < `}</MenuItem>
+									<MenuItem value={CompareType.SMALL_EQUAL}>{` <=`}</MenuItem>
+									<MenuItem value={CompareType.BIG_EQUAL}>{` >= `}</MenuItem>
+									<MenuItem value={CompareType.EQUAL}>{` = `}</MenuItem>
 								</Select>
 							)}
 							name={`assertion-compare-${assertionKey}`}
-							defaultValue={'<'}
+							defaultValue={CompareType.EQUAL}
 							control={form.control}
 						/>
 					</Grid>
@@ -836,11 +891,12 @@ const SelectAssertionValue: React.FC<SelectAssertionValueProps> = ({ assertionKe
 						<Controller
 							render={({ field }) => (
 								<Select fullWidth {...field} onChange={(e) => field.onChange(e.target.value)}>
-									<MenuItem value={`<`}>{` < `}</MenuItem>
+									<MenuItem value={CompareType.SMALL_EQUAL}>{` <= `}</MenuItem>
+									<MenuItem value={CompareType.BIG_EQUAL}>{` >= `}</MenuItem>
 								</Select>
 							)}
 							name={`assertion-compare-${assertionKey}`}
-							defaultValue={'<'}
+							defaultValue={CompareType.SMALL_EQUAL}
 							control={form.control}
 						/>
 					</Grid>
@@ -881,11 +937,14 @@ const SelectAssertionValue: React.FC<SelectAssertionValueProps> = ({ assertionKe
 						<Controller
 							render={({ field }) => (
 								<Select fullWidth {...field} onChange={(e) => field.onChange(e.target.value)}>
-									<MenuItem value={'='}>{' = '}</MenuItem>
+									<MenuItem value={CompareType.CONTAINS}>{' Contains '}</MenuItem>
+									<MenuItem value={CompareType.DOES_NOT_CONTAIN}>{' Does not Contains '}</MenuItem>
+									<MenuItem value={CompareType.EQUAL}>{' = '}</MenuItem>
+									<MenuItem value={CompareType.NOT_EQUAL}>{' != '}</MenuItem>
 								</Select>
 							)}
 							name={`assertion-compare-${assertionKey}`}
-							defaultValue={'='}
+							defaultValue={CompareType.CONTAINS}
 							control={form.control}
 						/>
 					</Grid>
@@ -940,11 +999,12 @@ const SelectAssertionValue: React.FC<SelectAssertionValueProps> = ({ assertionKe
 						<Controller
 							render={({ field }) => (
 								<Select fullWidth {...field} onChange={(e) => field.onChange(e.target.value)}>
-									<MenuItem value={'='}>{` = `}</MenuItem>
+									{/* TODO: add rest from cronitor */}
+									<MenuItem value={CompareType.EQUAL}>{` = `}</MenuItem>
 								</Select>
 							)}
 							name={`assertion-compare-${assertionKey}`}
-							defaultValue={'='}
+							defaultValue={CompareType.EQUAL}
 							control={form.control}
 						/>
 					</Grid>
@@ -995,13 +1055,14 @@ const SelectAssertionValue: React.FC<SelectAssertionValueProps> = ({ assertionKe
 					</Grid>
 					<Grid item xs={12} sm={2}>
 						<Controller
+							// {/* TODO: add rest from cronitor */}
 							render={({ field }) => (
 								<Select required fullWidth {...field} onChange={(e) => field.onChange(e.target.value)}>
-									<MenuItem value={'='}>{` = `}</MenuItem>
+									<MenuItem value={CompareType.EQUAL}>{` = `}</MenuItem>
 								</Select>
 							)}
 							name={`assertion-compare-${assertionKey}`}
-							defaultValue={'='}
+							defaultValue={CompareType.EQUAL}
 							rules={{ required: true }}
 							control={form.control}
 						/>
@@ -1038,11 +1099,11 @@ const SelectAssertionValue: React.FC<SelectAssertionValueProps> = ({ assertionKe
 						<Controller
 							render={({ field }) => (
 								<Select fullWidth {...field} onChange={(e) => field.onChange(e.target.value)}>
-									<MenuItem value={`<`}>{` < `}</MenuItem>
+									<MenuItem value={CompareType.BIG}>{` > `}</MenuItem>
 								</Select>
 							)}
 							name={`assertion-compare-${assertionKey}`}
-							defaultValue={'<'}
+							defaultValue={CompareType.BIG}
 							control={form.control}
 						/>
 					</Grid>

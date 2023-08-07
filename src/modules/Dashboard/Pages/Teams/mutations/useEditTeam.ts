@@ -2,12 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import axiosInstance from 'services/api';
 
 interface EditTeamOptions {
-	teamName: string;
-	teamdId: string;
+	teamId: string;
+	name: string;
 }
 const useEditTeam = () => {
 	return useMutation({
-		mutationFn: ({ teamName, teamdId }: EditTeamOptions) => axiosInstance.put('api/team/', { teamName, teamdId })
+		mutationFn: ({ name, teamId }: EditTeamOptions) => axiosInstance.put(`api/team/${teamId}`, { name })
 	});
 };
 
