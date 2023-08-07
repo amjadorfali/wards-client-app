@@ -79,7 +79,7 @@ const Billing: React.FC = () => {
 				</Grid>
 
 				<Grid item>
-					<Button variant="contained" sx={{ textTransform: 'capitalize' }}>
+					<Button disabled variant="contained" sx={{ textTransform: 'capitalize' }}>
 						{' '}
 						Book a demo
 					</Button>
@@ -153,6 +153,7 @@ const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price
 
 			<CardActions sx={{ placeSelf: 'center' }}>
 				<Button
+					disabled
 					sx={{ textTransform: 'capitalize' }}
 					color={!isPopular ? 'secondary' : undefined}
 					variant={isPopular ? 'contained' : 'outlined'}

@@ -12,6 +12,7 @@ import MonitorSettings from 'modules/Dashboard/components/Monitors/MonitorSettin
 import MonitorMetrics from 'modules/Dashboard/components/Monitors/MonitorMetrics';
 import DateFilter from 'modules/Dashboard/components/Monitors/DateFilter';
 import { subDays } from 'date-fns';
+import { RoutesConfig } from 'config/Routes/routeConfig';
 
 const MonitorDetails: React.FC = () => {
 	const { monitorId } = useParams<{ monitorId: string }>();
@@ -54,7 +55,7 @@ const MonitorDetails: React.FC = () => {
 					<Button variant="outlined" component={RouterLink} to="" startIcon={<PauseCircleIcon />}>
 						Pause Monitor
 					</Button>
-					<Button variant="outlined" component={RouterLink} to="" startIcon={<SettingsIcon />}>
+					<Button variant="outlined" component={RouterLink} to={RoutesConfig.editMonitor} startIcon={<SettingsIcon />}>
 						Configure
 					</Button>
 				</Grid>

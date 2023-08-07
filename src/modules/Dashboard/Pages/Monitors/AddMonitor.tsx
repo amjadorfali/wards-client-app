@@ -37,6 +37,7 @@ import { Add, Visibility, VisibilityOff } from '@mui/icons-material';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 import useCreateMonitor, { CreateMonitorOptions } from 'modules/Dashboard/mutations/useCreateMonitor';
 import { toast } from 'react-toastify';
+import useEditMonitor from 'modules/Dashboard/mutations/useEditMonitor';
 
 // TODO: utilize those values instead
 enum CompareType {
@@ -96,15 +97,16 @@ interface AddMonitorFormValues extends CreatableData {
 	'request-timeout': number;
 }
 
-//TODO: Fix form ids issues that are popping as console errors
-const AddMonitor: React.FC = () => {
+//TODO: Fix edit monitor flow
+const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFormValues }> = ({ edit, existingMonitorDetails }) => {
 	// examples with mui components https://codesandbox.io/s/react-hook-form-v7-controller-forked-nxrd46?file=/src/index.js:697-708
-	const addMonitorForm = useForm<AddMonitorFormValues>();
+	const addMonitorForm = useForm<AddMonitorFormValues>({ defaultValues: existingMonitorDetails });
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const xsOrSmaller = useMediaQuery(theme.breakpoints.only('xs'));
 	const { currentTeam } = useGetCurrentUser();
 	const { mutate: createMonitor } = useCreateMonitor();
+	const { mutate: editMonitor } = useEditMonitor();
 	const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [requestHeadersCount, setRequestHeadersCount] = useState<number[]>([]);
@@ -166,19 +168,33 @@ const AddMonitor: React.FC = () => {
 				assertions
 			}
 		};
-		if (currentTeam?.id)
-			createMonitor(
-				{
-					...dataToSend
-				},
-				{
-					onSuccess: () => {
-						toast('Monitor Created!', { type: 'success' });
-						navigate('../');
+		if (currentTeam?.id) {
+			if (edit) {
+				editMonitor(
+					{ ...dataToSend },
+					{
+						onSuccess: () => {
+							toast('Monitor Saved!', { type: 'success' });
+							navigate('../');
+						},
+						onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
+					}
+				);
+			} else {
+				createMonitor(
+					{
+						...dataToSend
 					},
-					onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
-				}
-			);
+					{
+						onSuccess: () => {
+							toast('Monitor Created!', { type: 'success' });
+							navigate('../');
+						},
+						onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
+					}
+				);
+			}
+		}
 	};
 
 	const toggleAdvancedSettings = () => {
@@ -268,7 +284,7 @@ const AddMonitor: React.FC = () => {
 				</Button>
 			</Grid>
 			<Grid item xs={12}>
-				<Typography variant="h2">Create monitor</Typography>
+				<Typography variant="h2">{edit ? 'Edit' : 'Create'} monitor</Typography>
 			</Grid>
 			<br />
 			<br />
@@ -833,7 +849,7 @@ const AddMonitor: React.FC = () => {
 				{/* Submit */}
 				<Grid item container xs={12} justifyContent={'center'}>
 					<Button size="large" variant="contained" type="submit" sx={{ textTransform: 'capitalize' }}>
-						Create monitor
+						{edit ? 'Save' : 'Create'} monitor
 					</Button>
 				</Grid>
 			</Grid>

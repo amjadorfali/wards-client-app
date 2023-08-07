@@ -2,7 +2,7 @@
 // @ts-nocheck
 import React from 'react';
 import { Button, Divider, Grid, ListItemButton, Menu, MenuItem, MenuProps, Typography, alpha, styled, useTheme } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import List from '@mui/material/List';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -56,6 +56,7 @@ import useGetMonitors from 'modules/Dashboard/queries/useGetMonitors';
 import { secondsToMinutes } from 'date-fns';
 const Monitors: React.FC = () => {
 	const theme = useTheme();
+	const navigate = useNavigate();
 	const { currentTeam } = useGetCurrentUser();
 	const { data: monitors } = useGetMonitors(currentTeam?.uuid || '');
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -99,7 +100,7 @@ const Monitors: React.FC = () => {
 						<Grid maxHeight={'50svh'} overflow={'auto'} container item xs={12} justifyContent={'center'}>
 							<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
 								{monitors.data.data.map((item, index) => (
-									<React.Fragment key={item}>
+									<React.Fragment key={item.id}>
 										<ListItemButton
 											key={item}
 											component={RouterLink}
@@ -164,7 +165,13 @@ const Monitors: React.FC = () => {
 												open={open}
 												onClose={handleClose}
 											>
-												<MenuItem onClick={handleClose} disableRipple>
+												<MenuItem
+													onClick={(e) => {
+														handleClose(e);
+														navigate(`${item.id}/edit`);
+													}}
+													disableRipple
+												>
 													<EditNotifications />
 													Configure
 												</MenuItem>

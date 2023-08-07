@@ -13,6 +13,7 @@ export enum RoutesConfig {
 	dashboard = '/dashboard',
 	dashboardTeam = 'team',
 	monitors = 'monitors',
+	editMonitor = 'edit',
 	heartbeats = 'heartbeats',
 	new = 'new',
 	billing = 'billing',

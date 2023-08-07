@@ -27,6 +27,7 @@ const TeamRouteGuard = React.lazy(() => import('./Dashboard/TeamRouteGuard'));
 
 const Monitors = React.lazy(() => import('modules/Dashboard/Pages/Monitors/Monitors'));
 const AddMonitor = React.lazy(() => import('modules/Dashboard/Pages/Monitors/AddMonitor'));
+const EditMonitor = React.lazy(() => import('modules/Dashboard/Pages/Monitors/EditMonitor'));
 const MonitorDetails = React.lazy(() => import('modules/Dashboard/Pages/Monitors/MonitorDetails'));
 
 const Heartbeats = React.lazy(() => import('modules/Dashboard/Pages/Heartbeats'));
@@ -227,7 +228,17 @@ const router = createBrowserRouter([
 									},
 									{
 										path: ':monitorId',
-										element: <MonitorDetails />
+										element: <Outlet />,
+										children: [
+											{
+												index: true,
+												element: <MonitorDetails />
+											},
+											{
+												element: <EditMonitor />,
+												path: RoutesConfig.editMonitor
+											}
+										]
 									}
 								]
 							},

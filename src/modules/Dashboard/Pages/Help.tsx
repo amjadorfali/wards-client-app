@@ -4,7 +4,6 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
-import { RoutesConfig } from 'config/Routes/routeConfig';
 import { COMPANY_EMAIL } from 'config/literals';
 const Help: React.FC = () => {
 	// TODO: Add logic for help page
@@ -23,7 +22,7 @@ const Help: React.FC = () => {
 			</Typography>
 
 			<Card>
-				<CardActionArea sx={{ height: '100%' }}>
+				<CardActionArea disabled sx={{ height: '100%' }}>
 					<CardContent>
 						<Grid container justifyContent={'space-between'}>
 							<Grid item xs={9}>
@@ -45,6 +44,7 @@ const Help: React.FC = () => {
 
 			<Card>
 				<CardActionArea
+					disabled
 					onClick={() => {
 						console.log('route to demo');
 					}}
@@ -72,7 +72,12 @@ const Help: React.FC = () => {
 			<Typography paragraph textAlign={'center'}>
 				{' '}
 				or take a look at the{' '}
-				<Link component={RouterLink} to={RoutesConfig.FAQ}>
+				<Link
+					component={RouterLink}
+					// FIXME
+					// to={RoutesConfig.FAQ}
+					to={''}
+				>
 					frequently asked questions <ArrowForwardIosIcon sx={{ width: '0.8rem', height: '0.8rem' }} />
 				</Link>{' '}
 			</Typography>
