@@ -16,7 +16,6 @@ type RouteParams = {
 	editTeamId: string;
 };
 
-//TODO: Test when API is ready
 const EditTeam: React.FC = () => {
 	const { mutate: editTeam } = useEditTeam();
 	const params = useParams<RouteParams>();

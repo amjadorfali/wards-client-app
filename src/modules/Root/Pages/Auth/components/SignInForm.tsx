@@ -53,7 +53,6 @@ const SignInForm: React.FC<Props> = ({ onSignIn }) => {
 					label: 'Password',
 					name: 'password',
 					InputLabelProps: { required: true },
-					// FIXME: Fix issue with Safari Overriding passwords, as well as colors for input boxes on UserName and Password for all browsers
 					autoComplete: 'current-password',
 					type: showPassword ? 'text' : 'password',
 					sx: { minHeight: '5rem' },

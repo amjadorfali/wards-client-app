@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, InputAdornment } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputAdornment, Typography, useTheme } from '@mui/material';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -19,6 +19,7 @@ interface Props {
 	onSignUp: (email: string, password: string) => void;
 }
 const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
+	const theme = useTheme();
 	const signUpForm = useForm<SignUpFormValues>();
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -45,7 +46,6 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 				controller={{
 					rules: {
 						required: { value: true, message: 'Please enter your Email' }
-						//TODO: Add pattern for removing `+` from email
 
 						// pattern: {
 						// 	// eslint-disable-next-line no-useless-escape
@@ -66,7 +66,6 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 					label: 'Password',
 					name: 'password',
 					InputLabelProps: { required: true },
-					// FIXME: Fix issue with Safari Overriding passwords, as well as colors for input boxes on UserName and Password for all browsers
 					autoComplete: 'new-password',
 					type: showPassword ? 'text' : 'password',
 					sx: { minHeight: '5rem' },
@@ -109,6 +108,29 @@ const SignUpForm: React.FC<Props> = ({ onSignUp }) => {
 			<Grid container>
 				<Grid item>
 					<Link component={RouterLink} to={`/${RoutesConfig.signIn}`} children="Already have an account? Sign In" />
+				</Grid>
+			</Grid>
+
+			<Grid container pt={3}>
+				<Grid item>
+					<Typography variant="caption">
+						By clicking on "SIGN UP", you agree to our{' '}
+						<Link
+							sx={{ ...theme.typography.caption }}
+							component={RouterLink}
+							target="_blank"
+							to={`/${RoutesConfig.terms}`}
+							children="Terms and Conditions"
+						/>
+						and{' '}
+						<Link
+							sx={{ ...theme.typography.caption }}
+							component={RouterLink}
+							target="_blank"
+							to={`/${RoutesConfig.privacy}`}
+							children="Privacy Policy"
+						/>
+					</Typography>
 				</Grid>
 			</Grid>
 		</Box>

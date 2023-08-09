@@ -74,158 +74,155 @@ const Monitors: React.FC = () => {
 	//FIXME: This is still a demo, needs fixing for the logic/real data
 	return (
 		<>
-			{
-				// FIXME: This is temp code as a demo
-				monitors?.data.data.length ? (
-					<Grid container alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
-						<Grid
-							item
-							container
-							xs={12}
-							sx={{ justifyContent: { xs: 'center', sm: 'space-between' }, gap: { xs: 3, sm: 1 } }}
-							alignContent={'center'}
-							alignItems={'center'}
-							flexWrap={'wrap'}
-						>
-							<Grid item xs={12} sx={{ display: { xs: 'flex' }, justifyContent: { xs: 'center' } }} sm={6}>
-								<Typography variant="h1">Greetings, {USERNAME_FROM_EMAIL(currentUser?.attributes?.email ?? '')}</Typography>
-							</Grid>
-							<Grid item sx={{ display: { xs: 'flex' }, justifyContent: { xs: 'center' } }} sm={4} lg={4} xl={3}>
-								<Button component={RouterLink} to={RoutesConfig.new} variant="contained" size="medium">
-									Create monitor
-								</Button>
-							</Grid>
+			{monitors?.data.data.length ? (
+				<Grid container alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
+					<Grid
+						item
+						container
+						xs={12}
+						sx={{ justifyContent: { xs: 'center', sm: 'space-between' }, gap: { xs: 3, sm: 1 } }}
+						alignContent={'center'}
+						alignItems={'center'}
+						flexWrap={'wrap'}
+					>
+						<Grid item xs={12} sx={{ display: { xs: 'flex' }, justifyContent: { xs: 'center' } }} sm={6}>
+							<Typography variant="h1">Greetings, {USERNAME_FROM_EMAIL(currentUser?.attributes?.email ?? '')}</Typography>
 						</Grid>
-
-						<Grid maxHeight={'50svh'} overflow={'auto'} container item xs={12} justifyContent={'center'}>
-							<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
-								{monitors.data.data.map((item, index) => (
-									<React.Fragment key={item.id}>
-										<ListItemButton
-											key={item}
-											component={RouterLink}
-											to={`${item.id}`}
-											sx={{
-												borderTopRightRadius: index === 0 ? '1rem' : 0,
-												borderTopLeftRadius: index === 0 ? '1rem' : 0,
-												borderBottomRightRadius: index === monitors.data.data.length - 1 ? '1rem' : 0,
-												borderBottomLeftRadius: index === monitors.data.data.length - 1 ? '1rem' : 0
-											}}
-										>
-											<ListItemIcon>
-												{/* FIXME: Fix status */}
-												<Ping isSuccess={index % 2} />
-											</ListItemIcon>
-											<ListItemText
-												primary={
-													<>
-														{item.name}
-														{/* FIXME: Fix status */}
-														<Typography variant="subtitle2"> {index % 2 ? 'Up' : 'Down'}. 1h</Typography>
-													</>
-												}
-											/>
-
-											<ListItemIcon>
-												<Button
-													variant="text"
-													color="secondary"
-													onClick={(e) => {
-														e.stopPropagation();
-														e.preventDefault();
-													}}
-													sx={{ gap: 1, textTransform: 'lowercase' }}
-													//TODO: Route to edit
-												>
-													<NetworkPingIcon />
-													<Typography variant="subtitle2">{secondsToMinutes(item.interval ?? 0)} m</Typography>
-												</Button>
-											</ListItemIcon>
-											<ListItemIcon>
-												<Button
-													variant="text"
-													color="secondary"
-													onClick={(e) => {
-														e.stopPropagation();
-														e.stopPropagation();
-														e.preventDefault();
-														handleClick(e);
-													}}
-												>
-													<MoreHorizIcon />
-												</Button>
-											</ListItemIcon>
-
-											<StyledMenu
-												id="demo-customized-menu"
-												MenuListProps={{
-													'aria-labelledby': 'demo-customized-button'
-												}}
-												anchorEl={anchorEl}
-												open={open}
-												onClose={handleClose}
-											>
-												<MenuItem
-													onClick={(e) => {
-														handleClose(e);
-														navigate(`${item.id}/edit`);
-													}}
-													disableRipple
-												>
-													<EditNotifications />
-													Configure
-												</MenuItem>
-												<Divider sx={{ my: 0.5 }} />
-												<MenuItem onClick={handleClose} disableRipple>
-													<FileCopy />
-													Pause
-												</MenuItem>
-												<MenuItem onClick={handleClose} disableRipple>
-													<Archive />
-													Send test alert
-												</MenuItem>
-												<Divider sx={{ my: 0.5 }} />
-
-												<MenuItem sx={{ color: theme.palette.error.main }} onClick={handleClose} disableRipple>
-													<Delete sx={{ fill: theme.palette.error.main }} />
-													Delete
-												</MenuItem>
-											</StyledMenu>
-										</ListItemButton>
-										{index !== monitors.data.data.length - 1 && <Divider />}
-									</React.Fragment>
-								))}
-							</List>
-						</Grid>
-					</Grid>
-				) : (
-					<Grid minHeight={'60svh'} p={1} container alignContent={'center'} justifyContent={'center'}>
-						<Grid item xs={12} md={6} lg={5} xl={4} container gap={5} direction={'column'}>
-							<Typography variant={'h1'}>Create your first monitor</Typography>
-							<Typography variant="h3">
-								We will keep an eye on your server
-								<br />
-								and call or message you when it
-								<br />
-								goes down.
-							</Typography>
-
-							<Button
-								component={RouterLink}
-								to={RoutesConfig.new}
-								variant="contained"
-								sx={{ textTransform: 'capitalize', maxWidth: '50%' }}
-							>
+						<Grid item sx={{ display: { xs: 'flex' }, justifyContent: { xs: 'center' } }} sm={4} lg={4} xl={3}>
+							<Button component={RouterLink} to={RoutesConfig.new} variant="contained" size="medium">
 								Create monitor
 							</Button>
-							<br />
-						</Grid>
-						<Grid item xs={12} md={6} lg={5} xl={4}>
-							<UserInterface width={'100%'} height={'100%'} />
 						</Grid>
 					</Grid>
-				)
-			}
+
+					<Grid maxHeight={'50svh'} overflow={'auto'} container item xs={12} justifyContent={'center'}>
+						<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
+							{monitors.data.data.map((item, index) => (
+								<React.Fragment key={item.id}>
+									<ListItemButton
+										key={item}
+										component={RouterLink}
+										to={`${item.id}`}
+										sx={{
+											borderTopRightRadius: index === 0 ? '1rem' : 0,
+											borderTopLeftRadius: index === 0 ? '1rem' : 0,
+											borderBottomRightRadius: index === monitors.data.data.length - 1 ? '1rem' : 0,
+											borderBottomLeftRadius: index === monitors.data.data.length - 1 ? '1rem' : 0
+										}}
+									>
+										<ListItemIcon>
+											{/* FIXME: Fix status */}
+											<Ping isSuccess={index % 2} />
+										</ListItemIcon>
+										<ListItemText
+											primary={
+												<>
+													{item.name}
+													{/* FIXME: Fix status */}
+													<Typography variant="subtitle2"> {index % 2 ? 'Up' : 'Down'}. 1h</Typography>
+												</>
+											}
+										/>
+
+										<ListItemIcon
+											sx={{
+												gap: 2,
+												flexBasis: '14%',
+												display: {
+													xs: 'none',
+													md: 'flex'
+												},
+												color: 'secondary.main',
+												textTransform: 'lowercase'
+											}}
+										>
+											<NetworkPingIcon />
+											<Typography variant="subtitle2">{secondsToMinutes(item.interval ?? 0)} m</Typography>
+										</ListItemIcon>
+										<ListItemIcon>
+											<Button
+												variant="text"
+												color="secondary"
+												onClick={(e) => {
+													e.stopPropagation();
+													e.stopPropagation();
+													e.preventDefault();
+													handleClick(e);
+												}}
+											>
+												<MoreHorizIcon />
+											</Button>
+										</ListItemIcon>
+
+										<StyledMenu
+											id="demo-customized-menu"
+											MenuListProps={{
+												'aria-labelledby': 'demo-customized-button'
+											}}
+											anchorEl={anchorEl}
+											open={open}
+											onClose={handleClose}
+										>
+											<MenuItem
+												onClick={(e) => {
+													handleClose(e);
+													navigate(`${item.id}/edit`);
+												}}
+												disableRipple
+											>
+												<EditNotifications />
+												Configure
+											</MenuItem>
+											<Divider sx={{ my: 0.5 }} />
+											<MenuItem onClick={handleClose} disableRipple>
+												<FileCopy />
+												Pause
+											</MenuItem>
+											<MenuItem onClick={handleClose} disableRipple>
+												<Archive />
+												Send test alert
+											</MenuItem>
+											<Divider sx={{ my: 0.5 }} />
+
+											<MenuItem sx={{ color: theme.palette.error.main }} onClick={handleClose} disableRipple>
+												<Delete sx={{ fill: theme.palette.error.main }} />
+												Delete
+											</MenuItem>
+										</StyledMenu>
+									</ListItemButton>
+									{index !== monitors.data.data.length - 1 && <Divider />}
+								</React.Fragment>
+							))}
+						</List>
+					</Grid>
+				</Grid>
+			) : (
+				<Grid minHeight={'60svh'} p={1} container alignContent={'center'} justifyContent={'center'}>
+					<Grid item xs={12} md={6} lg={5} xl={4} container gap={5} direction={'column'}>
+						<Typography variant={'h1'}>Create your first monitor</Typography>
+						<Typography variant="h3">
+							We will keep an eye on your server
+							<br />
+							and call or message you when it
+							<br />
+							goes down.
+						</Typography>
+
+						<Button
+							component={RouterLink}
+							to={RoutesConfig.new}
+							variant="contained"
+							sx={{ textTransform: 'capitalize', maxWidth: '50%' }}
+						>
+							Create monitor
+						</Button>
+						<br />
+					</Grid>
+					<Grid item xs={12} md={6} lg={5} xl={4}>
+						<UserInterface width={'100%'} height={'100%'} />
+					</Grid>
+				</Grid>
+			)}
 		</>
 	);
 };

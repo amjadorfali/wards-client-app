@@ -146,8 +146,10 @@ const SignIn: React.FC = () => {
 					) : (
 						<>
 							<SignInForm onSignIn={handleSignIn} />
-							<Button onClick={() => setForgotPassword(true)}>Forget password</Button>
-							<Grid item>
+							<Button sx={{ alignSelf: 'start', p: 0 }} variant="text" onClick={() => setForgotPassword(true)}>
+								Forget password
+							</Button>
+							<Grid item sx={{ alignSelf: 'start' }}>
 								<Link component={RouterLink} to={`/${RoutesConfig.signUp}`} children="Need an account? Sign Up" />
 							</Grid>
 						</>

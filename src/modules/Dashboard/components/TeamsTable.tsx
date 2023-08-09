@@ -33,7 +33,6 @@ const issuesColumns: GridColDef[] = [
 	}
 ];
 
-//TODO: Integrate with real data
 const TeamsTable: React.FC = () => {
 	const { currentUser } = useGetCurrentUser();
 
