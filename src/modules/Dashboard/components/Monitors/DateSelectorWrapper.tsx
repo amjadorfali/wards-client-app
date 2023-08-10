@@ -3,9 +3,10 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange } from '@mui/icons-material';
 import { Button, Menu, styled } from '@mui/material';
+import { DateFilter } from 'utils/interfaces';
 
 export interface IDateComponentProps {
-	selectedDates?: { start: Date; end?: Date };
+	selectedDates?: DateFilter;
 	title: string;
 	onFocus?: () => void;
 	onDateSelect?: (date: { start: Date; end: Date }) => void;

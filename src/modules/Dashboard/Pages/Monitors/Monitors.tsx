@@ -112,7 +112,7 @@ const Monitors: React.FC = () => {
 									>
 										<ListItemIcon>
 											{/* FIXME: Fix status */}
-											<Ping isSuccess={index % 2} />
+											<Ping isSuccess={!!(index % 2)} />
 										</ListItemIcon>
 										<ListItemText
 											primary={

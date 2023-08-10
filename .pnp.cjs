@@ -41,6 +41,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tanstack/eslint-plugin-query", "npm:4.29.9"],\
             ["@tanstack/react-query", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:4.29.19"],\
             ["@tanstack/react-query-devtools", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:4.29.19"],\
+            ["@types/lodash", "npm:4.14.196"],\
             ["@types/node", "npm:20.4.0"],\
             ["@types/react", "npm:18.2.14"],\
             ["@types/react-date-range", "npm:1.4.4"],\
@@ -60,6 +61,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["framer-motion", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.12.18"],\
             ["husky", "npm:8.0.3"],\
             ["lint-staged", "npm:13.2.3"],\
+            ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-date-range", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:1.4.0"],\
@@ -2566,6 +2568,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-json-schema-npm-7.0.12-f05cfc0e99-00239e9723.zip/node_modules/@types/json-schema/",\
           "packageDependencies": [\
             ["@types/json-schema", "npm:7.0.12"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/lodash", [\
+        ["npm:4.14.196", {\
+          "packageLocation": "./.yarn/cache/@types-lodash-npm-4.14.196-06373ceef2-201d17c3e6.zip/node_modules/@types/lodash/",\
+          "packageDependencies": [\
+            ["@types/lodash", "npm:4.14.196"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5316,6 +5327,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["locate-path", "npm:6.0.0"],\
             ["p-locate", "npm:5.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["lodash", [\
+        ["npm:4.17.21", {\
+          "packageLocation": "./.yarn/cache/lodash-npm-4.17.21-6382451519-eb835a2e51.zip/node_modules/lodash/",\
+          "packageDependencies": [\
+            ["lodash", "npm:4.17.21"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8076,6 +8096,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tanstack/eslint-plugin-query", "npm:4.29.9"],\
             ["@tanstack/react-query", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:4.29.19"],\
             ["@tanstack/react-query-devtools", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:4.29.19"],\
+            ["@types/lodash", "npm:4.14.196"],\
             ["@types/node", "npm:20.4.0"],\
             ["@types/react", "npm:18.2.14"],\
             ["@types/react-date-range", "npm:1.4.4"],\
@@ -8095,6 +8116,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["framer-motion", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:10.12.18"],\
             ["husky", "npm:8.0.3"],\
             ["lint-staged", "npm:13.2.3"],\
+            ["lodash", "npm:4.17.21"],\
             ["prettier", "npm:2.8.8"],\
             ["react", "npm:18.2.0"],\
             ["react-date-range", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:1.4.0"],\

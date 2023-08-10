@@ -39,8 +39,7 @@ import useCreateMonitor, { CreateMonitorOptions } from 'modules/Dashboard/mutati
 import { toast } from 'react-toastify';
 import useEditMonitor from 'modules/Dashboard/mutations/useEditMonitor';
 
-// TODO: utilize those values instead
-enum CompareType {
+export enum CompareType {
 	SMALL = 'SMALL',
 	BIG = 'BIG',
 	SMALL_EQUAL = 'SMALL_EQUAL',

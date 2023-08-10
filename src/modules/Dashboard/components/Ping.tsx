@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import React from 'react';
 
-const Ping: React.FC<{ isSuccess: number; isInfinite?: number }> = ({ isSuccess, isInfinite }) => {
+const Ping: React.FC<{ isSuccess: boolean; isInfinite?: number }> = ({ isSuccess, isInfinite }) => {
 	return (
 		<Box
 			sx={{
@@ -11,9 +11,9 @@ const Ping: React.FC<{ isSuccess: number; isInfinite?: number }> = ({ isSuccess,
 				display: 'inline-block'
 			}}
 		>
-			<CircleMain isinfinite={isInfinite} issuccess={isSuccess} />
-			<CircleSecondary isinfinite={isInfinite} issuccess={isSuccess} />
-			<CircleTertiary isinfinite={isInfinite} issuccess={isSuccess} />
+			<CircleMain isinfinite={isInfinite} issuccess={Number(isSuccess)} />
+			<CircleSecondary isinfinite={isInfinite} issuccess={Number(isSuccess)} />
+			<CircleTertiary isinfinite={isInfinite} issuccess={Number(isSuccess)} />
 		</Box>
 	);
 };

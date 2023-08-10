@@ -1971,6 +1971,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.196":
+  version: 4.14.196
+  resolution: "@types/lodash@npm:4.14.196"
+  checksum: 201d17c3e62ae02a93c99ec78e024b2be9bd75564dd8fd8c26f6ac51a985ab280d28ce2688c3bcdfe785b0991cd9814edff19ee000234c7b45d9a697f09feb6a
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^3.0.0":
   version: 3.0.11
   resolution: "@types/mdast@npm:3.0.11"
@@ -4298,6 +4305,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash@npm:^4.17.21":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
+  languageName: node
+  linkType: hard
+
 "log-update@npm:^4.0.0":
   version: 4.0.0
   resolution: "log-update@npm:4.0.0"
@@ -6561,6 +6575,7 @@ __metadata:
     "@tanstack/eslint-plugin-query": ^4.29.9
     "@tanstack/react-query": ^4.29.19
     "@tanstack/react-query-devtools": ^4.29.19
+    "@types/lodash": ^4.14.196
     "@types/node": ^20.4.0
     "@types/react": ~18.2.14
     "@types/react-date-range": ^1.4.4
@@ -6580,6 +6595,7 @@ __metadata:
     framer-motion: ^10.12.18
     husky: ^8.0.3
     lint-staged: ^13.2.3
+    lodash: ^4.17.21
     prettier: 2.8.8
     react: ^18.2.0
     react-date-range: ^1.4.0

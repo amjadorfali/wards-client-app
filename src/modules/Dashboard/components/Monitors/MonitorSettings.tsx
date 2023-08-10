@@ -13,9 +13,23 @@ import {
 import React from 'react';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 import { ExpandMore } from '@mui/icons-material';
+import { HealthCheck } from 'utils/interfaces';
+import { millisecondsToSeconds, secondsToMinutes } from 'date-fns';
+import startCase from 'lodash/startCase';
+import { CompareType } from 'modules/Dashboard/Pages/Monitors/AddMonitor';
 
-const Locations = ['America', 'Europe', 'Asia', 'Australia'];
-const MonitorSettings: React.FC = () => {
+const COMPARE_TYPE_LABELS: { [key in CompareType]: string } = {
+	[CompareType.BIG]: '>',
+	[CompareType.BIG_EQUAL]: '>=',
+	[CompareType.EQUAL]: '=',
+	[CompareType.NOT_EQUAL]: '!=',
+	[CompareType.SMALL]: '<',
+	[CompareType.SMALL_EQUAL]: '<=',
+	[CompareType.CONTAINS]: 'Contains',
+	[CompareType.DOES_NOT_CONTAIN]: 'Does not contain'
+};
+// FIXME: Add missing data from API
+const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 	return (
 		<Grid container justifyContent={'space-between'} p={2}>
 			<Grid container item xs={12} p={3} gap={1}>
@@ -24,7 +38,7 @@ const MonitorSettings: React.FC = () => {
 				<Typography component={Grid} gap={1} alignItems={'flex-end'} container item variant="h3">
 					<Chip sx={{ p: 1 }} label={'GET'} color={'primary'} />
 					<Typography component={Grid} variant="subtitle2" fontWeight={300} item>
-						https://amjadorfali.com
+						{monitor.url}
 					</Typography>
 				</Typography>
 			</Grid>
@@ -33,7 +47,7 @@ const MonitorSettings: React.FC = () => {
 				<Typography variant="subtitle1">Interval</Typography>
 
 				<Typography component={Grid} variant="subtitle2" fontWeight={300} item xs={12}>
-					Every 5 minutes
+					Every {secondsToMinutes(monitor.interval ?? 0)} minutes
 				</Typography>
 			</Grid>
 
@@ -41,21 +55,21 @@ const MonitorSettings: React.FC = () => {
 				<Typography variant="subtitle1">Protocol</Typography>
 
 				<Typography component={Grid} variant="subtitle2" fontWeight={300} item xs={12}>
-					HTTP
+					{monitor.type}
 				</Typography>
 			</Grid>
 			<Grid container item xs={5} p={3} gap={1}>
 				<Typography variant="subtitle1">Request Timeout</Typography>
 
 				<Typography component={Grid} variant="subtitle2" fontWeight={300} item xs={12}>
-					10 seconds
+					{millisecondsToSeconds(monitor.timeout ?? 0)} seconds
 				</Typography>
 			</Grid>
 
 			<Grid container item xs={12} p={3} gap={1} mb={5}>
 				<Typography variant="subtitle1">Locations</Typography>
-				{Locations.map((location) => (
-					<Chip icon={<WifiTetheringIcon />} label={location} key={location} />
+				{monitor.locations?.map((location) => (
+					<Chip icon={<WifiTetheringIcon />} label={startCase(location?.toLowerCase())} key={location} />
 				))}
 			</Grid>
 			<Divider sx={{ width: '100%', my: 3 }} />
@@ -78,24 +92,21 @@ const MonitorSettings: React.FC = () => {
 						overflow: 'scroll'
 					}}
 				>
-					{/* <Grid item xs={12} md={6}> */}
 					<List>
-						<ListItem>
-							<ListItemText primary="ssl_certificate.expires_in" secondary={'> 15 days'} />
-						</ListItem>
-						<Divider />
-
-						<ListItem>
-							<ListItemText primary="response.code" secondary={'= 200'} />
-						</ListItem>
-						<Divider />
-
-						<ListItem>
-							<ListItemText primary="response.time" secondary={'< 500ms'} />
-						</ListItem>
-						<Divider />
+						{monitor.metadata.assertions.map((assertion, index) => (
+							<React.Fragment key={`${assertion.compareType}-${index}`}>
+								<ListItem>
+									<ListItemText
+										primary={startCase(assertion.type.toLowerCase())}
+										secondary={`${assertion.key ? `${assertion.key} ` : ''}${COMPARE_TYPE_LABELS[assertion.compareType]} ${
+											assertion.value
+										}`}
+									/>
+								</ListItem>
+								<Divider />
+							</React.Fragment>
+						))}
 					</List>
-					{/* </Grid> */}
 				</AccordionDetails>
 			</Accordion>
 
@@ -113,15 +124,14 @@ const MonitorSettings: React.FC = () => {
 					}}
 				>
 					<List>
-						<ListItem>
-							<ListItemText primary="Authorization" secondary={'Bearer 4jn243tbui5h98dfijgn49u5-45-tg4-rg56y-ged-f-ry-j5-tgerg45'} />
-						</ListItem>
-						<Divider />
-
-						<ListItem>
-							<ListItemText primary="name" secondary={'hi'} />
-						</ListItem>
-						<Divider />
+						{monitor.metadata.headers.map((header, index) => (
+							<React.Fragment key={header.key + index}>
+								<ListItem>
+									<ListItemText primary={header.key} secondary={header.value} />
+								</ListItem>
+								<Divider />
+							</React.Fragment>
+						))}
 					</List>
 				</AccordionDetails>
 			</Accordion>
@@ -143,15 +153,14 @@ const MonitorSettings: React.FC = () => {
 						overflow: 'scroll'
 					}}
 				>
-					{/* <Grid item xs={12} md={6}> */}
 					<List>
 						<ListItem>
-							<ListItemText primary="Verify SSL" secondary={'Yes'} />
+							<ListItemText primary="Verify SSL" secondary={monitor.metadata.verifySSL ? 'Yes' : 'No'} />
 						</ListItem>
 						<Divider />
 
 						<ListItem>
-							<ListItemText primary="Follow redirects" secondary={'No'} />
+							<ListItemText primary="Follow redirects" secondary={'Yes'} />
 						</ListItem>
 						<Divider />
 
@@ -160,22 +169,29 @@ const MonitorSettings: React.FC = () => {
 						</ListItem>
 						<Divider />
 
-						<ListItem>
-							<ListItemText primary="Auth username" secondary={'Username'} />
-						</ListItem>
-						<Divider />
+						{monitor.metadata.httpUserName && (
+							<>
+								<ListItem>
+									<ListItemText primary="Auth username" secondary={monitor.metadata.httpUserName} />
+								</ListItem>
+								<Divider />
+							</>
+						)}
+
+						{monitor.metadata.requestBody && (
+							<>
+								<ListItem>
+									<ListItemText primary="Request Body" secondary={monitor.metadata.requestBody} />
+								</ListItem>
+								<Divider />
+							</>
+						)}
 
 						<ListItem>
-							<ListItemText primary="Request Body" secondary={'"{ samir : "hello" }"'} />
-						</ListItem>
-						<Divider />
-
-						<ListItem>
-							<ListItemText primary="Created" secondary={'7/8/2023, 3:55:47 PM'} />
+							<ListItemText primary="Created" secondary={monitor.createdAt.toString()} />
 						</ListItem>
 						<Divider />
 					</List>
-					{/* </Grid> */}
 				</AccordionDetails>
 			</Accordion>
 

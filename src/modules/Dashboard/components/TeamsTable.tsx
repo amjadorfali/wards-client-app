@@ -13,7 +13,9 @@ const issuesColumns: GridColDef[] = [
 		headerName: '',
 		flex: 1,
 		disableColumnMenu: true,
-		sortable: false
+		sortable: false,
+		filterable: false,
+		hideable: false
 	},
 	{ field: 'monitors-count', headerName: 'Monitors', minWidth: 150 },
 

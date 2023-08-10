@@ -1,3 +1,5 @@
+import { CompareType } from 'modules/Dashboard/Pages/Monitors/AddMonitor';
+
 export type User = CustomCognitoUser & InternalUser;
 //TODO: Continue on interfaces
 export interface CustomCognitoUser {
@@ -37,13 +39,40 @@ interface Incident {
 	healthCheckId: string;
 }
 
-//TODO:Add healthcheck interface when its ready
-interface HealthCheck {
-	id: number;
+export interface HealthCheck {
+	id: string;
+	name: string;
+	method: string;
+	timeout: number;
+	enabled: boolean;
+	type: string;
+	inProgress: boolean;
+	interval: number;
+	lastChecked: Date;
+	url: string;
+	locations: string[];
+	createdAt: Date;
+	updatedAt: Date;
+	teamId: number;
+	assertionId: number;
+	metadata: {
+		verifySSL: boolean;
+		headers: { key: string; value: string }[];
+		assertions: { type: string; key: string; value: string; compareType: CompareType }[];
+		requestBody: string;
+		httpUserName: string;
+		httpPassword: string;
+		id: number;
+	};
 }
 
 enum IncidentStatus {
 	ONGOING = 'ONGOING',
 	RESOLVED = 'RESOLVED',
 	ACKNOWLEDGED = 'ACKNOWLEDGED'
+}
+
+export interface DateFilter {
+	start: Date;
+	end: Date;
 }

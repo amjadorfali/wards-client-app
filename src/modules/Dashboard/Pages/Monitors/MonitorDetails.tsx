@@ -11,8 +11,10 @@ import OverviewAccordion from 'modules/Dashboard/components/Monitors/OverviewAco
 import MonitorSettings from 'modules/Dashboard/components/Monitors/MonitorSettings';
 import MonitorMetrics from 'modules/Dashboard/components/Monitors/MonitorMetrics';
 import DateFilter from 'modules/Dashboard/components/Monitors/DateFilter';
-import { subDays } from 'date-fns';
+import { secondsToMinutes, subDays } from 'date-fns';
 import { RoutesConfig } from 'config/Routes/routeConfig';
+import useGetMonitorDetails from 'modules/Dashboard/queries/useGetMonitorDetails';
+import useGetMonitorOverview from 'modules/Dashboard/queries/useGetMonitorOverview';
 
 const MonitorDetails: React.FC = () => {
 	const { monitorId } = useParams<{ monitorId: string }>();
@@ -20,6 +22,9 @@ const MonitorDetails: React.FC = () => {
 		start: subDays(new Date(), 1),
 		end: new Date()
 	});
+
+	const { data: monitorDetails } = useGetMonitorDetails(monitorId);
+	const { data: monitorOverview } = useGetMonitorOverview(selectedDates, monitorId);
 	// TODO: Continue on logic for monitors details
 
 	// TransitionProps={{ unmountOnExit: true }}  might be useful on accordions if we face perf issues
@@ -32,16 +37,16 @@ const MonitorDetails: React.FC = () => {
 			</Grid>
 			<Grid item xs={12} container height={'fit-content'} gap={1}>
 				<Grid item alignSelf={'center'}>
-					<Ping isSuccess={Number(monitorId) % 2} isInfinite={1} />
+					<Ping isSuccess={monitorOverview?.data.status?.code === 1} isInfinite={1} />
 				</Grid>
 
 				<Grid item>
-					<Typography variant="h1">.com</Typography>
+					<Typography variant="h1">{monitorDetails?.data.name}</Typography>
 					<Typography mt={1} variant="caption">
-						<Typography variant="caption" color={Number(monitorId) % 2 ? 'success.main' : 'error.main'}>
-							{Number(monitorId) % 2 ? 'Up' : 'Down'}
+						<Typography variant="caption" color={monitorOverview?.data.status?.code ? 'success.main' : 'error.main'}>
+							{monitorOverview?.data.status?.code ? 'Up' : 'Down'}
 						</Typography>{' '}
-						. Checked every 3 minutes
+						. Checked every {secondsToMinutes(monitorDetails?.data.interval ?? 0)} minutes
 					</Typography>
 				</Grid>
 			</Grid>
@@ -64,8 +69,8 @@ const MonitorDetails: React.FC = () => {
 				</Grid>
 			</Grid>
 
-			<OverviewAccordion />
-			<MonitorMetrics />
+			<OverviewAccordion monitorOverview={monitorOverview?.data} />
+			<MonitorMetrics selectedDates={selectedDates} />
 
 			{/* <Accordion sx={{ flexBasis: '100%', width: '100%' }} defaultExpanded>
 				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-3-content" id={'panel-1-header'} sx={{ p: 2 }}>
@@ -78,7 +83,7 @@ const MonitorDetails: React.FC = () => {
 				</AccordionSummary>
 				<Divider />
 
-				<MonitorSettings />
+				{!!monitorDetails?.data && <MonitorSettings monitor={monitorDetails?.data} />}
 			</Accordion>
 		</Grid>
 	);

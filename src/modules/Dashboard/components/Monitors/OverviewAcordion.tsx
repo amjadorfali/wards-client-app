@@ -1,9 +1,11 @@
 import { Chip, Grid, Paper, Typography, useTheme } from '@mui/material';
+import { formatDistance } from 'date-fns';
+import { HealthCheckOverview } from 'modules/Dashboard/queries/useGetMonitorOverview';
 import React from 'react';
-import { useParams } from 'react-router-dom';
-const OverviewAccordion: React.FC = () => {
-	const { monitorId } = useParams<{ monitorId: string }>();
+
+const OverviewAccordion: React.FC<{ monitorOverview?: HealthCheckOverview }> = ({ monitorOverview }) => {
 	const theme = useTheme();
+
 	return (
 		<Grid container justifyContent={'space-between'} gap={1}>
 			<Grid
@@ -24,11 +26,12 @@ const OverviewAccordion: React.FC = () => {
 				<Typography component={Grid} gap={1} alignItems={'flex-end'} container item variant="h3">
 					<Chip
 						sx={{ p: 1 }}
-						label={Number(monitorId) % 2 ? 'Healthy' : 'Failing'}
-						color={Number(monitorId) % 2 ? 'success' : 'error'}
+						label={monitorOverview?.status?.code === 1 ? 'Healthy' : 'Failing'}
+						color={monitorOverview?.status?.code === 1 ? 'success' : 'error'}
 					/>
+					{/* FIXME: If paused, need to tackle this and show EndTime as well */}
 					<Typography component={Grid} variant="subtitle2" fontWeight={300} item>
-						for 8 days
+						for {formatDistance(new Date(), new Date(monitorOverview?.status?.startTime ?? 0))}
 					</Typography>
 				</Typography>
 			</Grid>
@@ -76,7 +79,7 @@ const OverviewAccordion: React.FC = () => {
 
 				<Grid item xs={12} gap={1} alignItems={'flex-end'} container>
 					<Typography sx={{ ...theme.typography.h2 }} component={Grid} item xs={12} sm={'auto'}>
-						100%
+						{monitorOverview?.uptime ?? '-'} %
 					</Typography>
 				</Grid>
 			</Grid>
@@ -98,7 +101,7 @@ const OverviewAccordion: React.FC = () => {
 
 				<Grid item xs={12} gap={1} alignItems={'flex-end'} container>
 					<Typography sx={{ ...theme.typography.h2 }} component={Grid} item xs={12} sm={'auto'}>
-						181 ms
+						{monitorOverview?.performance ?? '-'} ms
 					</Typography>
 				</Grid>
 			</Grid>

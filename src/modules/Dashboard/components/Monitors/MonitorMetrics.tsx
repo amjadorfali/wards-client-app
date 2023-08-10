@@ -2,12 +2,20 @@ import { Grid, MenuItem, Paper, Select, ToggleButton, ToggleButtonGroup } from '
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import React, { useMemo, useTransition } from 'react';
 import ResponseTimeChart from '../ResponseTimeChart';
+import useGetMonitorLogs, { HealthCheckLogs } from 'modules/Dashboard/queries/useGetMonitorLogs';
+import { useParams } from 'react-router-dom';
+import { DateFilter } from 'utils/interfaces';
+import { startCase } from 'lodash';
 
 enum Options {
 	METRICS = 'Metrics',
 	LOGS = 'Logs'
 }
-const MonitorMetrics: React.FC = () => {
+
+interface MonitorMetricsProps {
+	selectedDates: DateFilter;
+}
+const MonitorMetrics: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
 	const [alignment, setAlignment] = React.useState<Options>(Options.METRICS);
 
 	const handleChange = (_event: React.MouseEvent<HTMLElement>, newAlignment: Options) => {
@@ -24,7 +32,11 @@ const MonitorMetrics: React.FC = () => {
 				</ToggleButtonGroup>
 			</Grid>
 
-			{alignment === Options.METRICS ? <Metrics /> : alignment === Options.LOGS ? <Logs /> : null}
+			{alignment === Options.METRICS ? (
+				<Metrics selectedDates={selectedDates} />
+			) : alignment === Options.LOGS ? (
+				<Logs selectedDates={selectedDates} />
+			) : null}
 		</Grid>
 	);
 };
@@ -35,7 +47,7 @@ export enum MetricTypes {
 	UPTIME = 'UPTIME'
 }
 
-const Metrics: React.FC = () => {
+const Metrics: React.FC<MonitorMetricsProps> = () => {
 	const [metricType, setMetricType] = React.useState(MetricTypes.RESPONSE_TIME);
 
 	return (
@@ -58,47 +70,89 @@ const Metrics: React.FC = () => {
 	);
 };
 
-const eventsRows: GridRowsProp = [
-	{ id: 1, eventTime: new Date(), response: '200 OK', time: '150ms', location: 'US', status: 'Healthy' },
-	{ id: 2, eventTime: new Date(), response: '200 OK', time: '100ms', location: 'EU', status: 'Healthy' },
-	{ id: 3, eventTime: new Date(), response: '200 OK', time: '135ms', location: 'AU', status: 'Healthy' },
-	{ id: 4, eventTime: new Date(), response: '200 OK', time: '105ms', location: 'ASIA', status: 'Healthy' },
-	{ id: 5, eventTime: new Date(), response: '200 OK', time: '1020ms', location: 'US', status: 'Healthy' }
-];
-
 const eventsColumns: GridColDef[] = [
 	{ field: 'eventTime', headerName: 'Event Time', minWidth: 250 },
-	{ field: 'response', headerName: 'Response', minWidth: 200 },
-	{ field: 'time', headerName: 'Time', minWidth: 200 },
-	{ field: 'location', headerName: 'Location', minWidth: 150 },
-	{ field: 'status', headerName: 'Status', minWidth: 150 }
-];
-
-const issuesRows: GridRowsProp = [
-	{ id: 1, eventTime: new Date(), name: '200 OK', description: 'US' },
-	{ id: 2, eventTime: new Date(), name: '200 OK', description: 'EU' },
-	{ id: 3, eventTime: new Date(), name: '200 OK', description: 'AU' },
-	{ id: 4, eventTime: new Date(), name: '200 OK', description: 'ASIA' },
-	{ id: 5, eventTime: new Date(), name: '200 OK', description: 'US' }
+	{ field: 'responsecode', headerName: 'Response', minWidth: 200 },
+	{ field: 'responsetime', headerName: 'Time', minWidth: 200, valueFormatter: (params) => `${params.value} ms` },
+	{
+		field: 'location',
+		headerName: 'Location',
+		minWidth: 150,
+		valueFormatter: (params) => startCase(params.value?.toLowerCase() || '')
+	},
+	{
+		field: 'status',
+		headerName: 'Status',
+		minWidth: 150,
+		cellClassName: (params) => (params.value === 1 ? 'status-success' : 'status-error'),
+		valueFormatter: (params) => (params.value === 1 ? 'Healthy' : 'Failed')
+	}
 ];
 
 const issuesColumns: GridColDef[] = [
 	{ field: 'eventTime', headerName: 'Event Time', minWidth: 250 },
-	{ field: 'name', headerName: 'Name', minWidth: 200 },
-	{ field: 'description', headerName: 'Description', minWidth: 150 }
+	// { field: 'name', headerName: 'Name', minWidth: 250 },
+	{
+		field: 'location',
+		headerName: 'Location',
+		minWidth: 150,
+		valueFormatter: (params) => startCase(params.value?.toLowerCase() || '')
+	},
+	{
+		field: 'empty space',
+		headerName: '',
+		flex: 1,
+		disableColumnMenu: true,
+		sortable: false,
+		filterable: false,
+		hideable: false
+	},
+	{
+		field: 'description',
+		headerName: 'Description',
+		minWidth: 250
+		// renderCell: (params) => (
+		// 	<ul>
+		// 		{params.value?.map((assertion: AssertionResult) => (
+		// 			<li>{assertion.message}</li>
+		// 		))}
+		// 	</ul>
+		// )
+	}
 ];
 
+const getTableData = (logs?: HealthCheckLogs[]): GridRowsProp => {
+	return (
+		logs?.map((log) => ({
+			id: `${log.timestamp}-${log.region}`,
+			eventTime: log.timestamp,
+			responsecode: log.responsecode,
+			responsetime: log.responsetime,
+			location: log.region,
+			status: log.status,
+			// name: log.errreason,
+
+			description: log.errreason
+		})) ?? []
+	);
+};
 enum LogTypes {
 	EVENTS = 'Events',
 	INCIDENTS = 'Incidents'
 }
-const Logs: React.FC = () => {
+
+const Logs: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
 	const [logType, setLogType] = React.useState(LogTypes.EVENTS);
+	const { monitorId } = useParams<{ monitorId: string }>();
+
+	// FIXME: add pagination
+	const { data: logs } = useGetMonitorLogs(selectedDates, 0, 100, monitorId, logType === LogTypes.INCIDENTS);
+
 	const [isTransitioning, startTransition] = useTransition();
 
 	const [rows, columns] = useMemo(
-		() => (logType === LogTypes.EVENTS ? [eventsRows, eventsColumns] : [issuesRows, issuesColumns]),
-		[logType]
+		() => (logType === LogTypes.EVENTS ? [getTableData(logs?.data), eventsColumns] : [getTableData(logs?.data), issuesColumns]),
+		[logType, logs]
 	);
 	return (
 		<>
@@ -110,7 +164,20 @@ const Logs: React.FC = () => {
 			</Grid>
 			<Grid container item gap={5} justifyContent={'flex-end'} sx={{ width: '100%' }}>
 				<Grid item xs={12} sx={{ minHeight: { xs: '25vh', lg: '35vh' }, maxHeight: { xs: '50vh', lg: '35vh' }, width: '100%' }}>
-					<DataGrid loading={isTransitioning} rows={rows} columns={columns} />
+					<DataGrid
+						rowHeight={80}
+						sx={{
+							'& .status-success': {
+								bgcolor: 'success.dark'
+							},
+							'& .status-error': {
+								bgcolor: 'error.dark'
+							}
+						}}
+						loading={isTransitioning}
+						rows={rows}
+						columns={columns}
+					/>
 				</Grid>
 			</Grid>
 		</>
