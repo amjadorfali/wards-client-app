@@ -64,7 +64,7 @@ enum RequestType {
 	TCP = 'TCP'
 }
 
-enum Region {
+export enum Region {
 	FRANKFURT = 'FRANKFURT',
 	IRELAND = 'IRELAND',
 	DUBAI = 'DUBAI',
@@ -381,8 +381,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 								<Controller
 									render={({ field }) => (
 										<Select labelId="check-frequency" fullWidth {...field} onChange={(e) => field.onChange(Number(e.target.value))}>
-											<MenuItem value={30}>30 seconds</MenuItem>
-											<MenuItem value={45}>45 seconds</MenuItem>
+											{/* <MenuItem value={30}>30 seconds</MenuItem>
+											<MenuItem value={45}>45 seconds</MenuItem> */}
 											<MenuItem value={60}>1 minute</MenuItem>
 											<MenuItem value={120}>2 minutes</MenuItem>
 											<MenuItem value={180}>3 minutes</MenuItem>

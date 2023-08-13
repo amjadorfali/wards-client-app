@@ -1,4 +1,16 @@
-import { Grid, MenuItem, Paper, Select, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+	FormControl,
+	FormControlLabel,
+	FormLabel,
+	Grid,
+	MenuItem,
+	Paper,
+	Radio,
+	RadioGroup,
+	Select,
+	ToggleButton,
+	ToggleButtonGroup
+} from '@mui/material';
 import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import React, { useMemo, useTransition } from 'react';
 import ResponseTimeChart from '../ResponseTimeChart';
@@ -6,6 +18,9 @@ import useGetMonitorLogs, { HealthCheckLogs } from 'modules/Dashboard/queries/us
 import { useParams } from 'react-router-dom';
 import { DateFilter } from 'utils/interfaces';
 import { startCase } from 'lodash';
+import { Region } from 'modules/Dashboard/Pages/Monitors/AddMonitor';
+import useGetMonitorGraphData from 'modules/Dashboard/queries/useGetMonitorGraphData';
+import { format, isSameDay } from 'date-fns';
 
 enum Options {
 	METRICS = 'Metrics',
@@ -46,9 +61,24 @@ export enum MetricTypes {
 	RESPONSE_TIME = 'RESPONSE_TIME',
 	UPTIME = 'UPTIME'
 }
-
-const Metrics: React.FC<MonitorMetricsProps> = () => {
+type RegionSelection = 'all' | Region;
+const Metrics: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
+	const { monitorId } = useParams<{ monitorId: string }>();
 	const [metricType, setMetricType] = React.useState(MetricTypes.RESPONSE_TIME);
+	const [selectedRegion, setSelectedRegion] = React.useState<RegionSelection>('all');
+	const disabledRegionSelector = useMemo(
+		() => metricType !== MetricTypes.RESPONSE_TIME || isSameDay(selectedDates.start, selectedDates.end),
+		[metricType, selectedDates.end, selectedDates.start]
+	);
+	const { data: metrics } = useGetMonitorGraphData(
+		selectedDates,
+		selectedRegion === 'all' ? undefined : selectedRegion,
+		monitorId,
+		metricType === MetricTypes.UPTIME ? 'uptime' : undefined
+	);
+	const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSelectedRegion((event.target as HTMLInputElement).value as RegionSelection);
+	};
 
 	return (
 		<>
@@ -58,12 +88,42 @@ const Metrics: React.FC<MonitorMetricsProps> = () => {
 					<MenuItem value={MetricTypes.UPTIME}>Uptime</MenuItem>
 				</Select>
 			</Grid>
-			<Grid container item gap={5} justifyContent={'flex-end'} sx={{ width: '100%' }}>
+			<Grid container item gap={5} sx={{ width: '100%' }}>
 				<Grid item xs={12} sx={{ minHeight: { xs: '25vh', lg: '35vh' }, maxHeight: { xs: '50vh', lg: '35vh' }, width: '100%' }}>
 					<ResponseTimeChart
+						metrics={metrics?.data}
 						metricType={metricType}
+						options={{
+							isSameDay: isSameDay(selectedDates.start, selectedDates.end),
+							withLocation: selectedRegion !== 'all'
+						}}
 						ReactChartsComponentProps={{ style: { minHeight: { xs: '25vh', lg: '35vh' } }, theme: 'dark' }}
 					/>
+				</Grid>
+
+				<Grid item>
+					<FormControl>
+						<FormLabel id="demo-radio-buttons-group-label">Regions</FormLabel>
+						<RadioGroup
+							row
+							aria-labelledby="regions-selector"
+							defaultValue="all"
+							value={selectedRegion}
+							onChange={handleRegionChange}
+							name="regions-selector"
+						>
+							<FormControlLabel disabled={disabledRegionSelector} value="all" control={<Radio />} label="All" />
+							{Object.keys(Region).map((region) => (
+								<FormControlLabel
+									disabled={disabledRegionSelector}
+									key={region}
+									value={region}
+									control={<Radio />}
+									label={startCase(region.toLowerCase())}
+								/>
+							))}
+						</RadioGroup>
+					</FormControl>
 				</Grid>
 			</Grid>
 		</>
@@ -71,7 +131,13 @@ const Metrics: React.FC<MonitorMetricsProps> = () => {
 };
 
 const eventsColumns: GridColDef[] = [
-	{ field: 'eventTime', headerName: 'Event Time', minWidth: 250 },
+	{
+		field: 'eventTime',
+		headerName: 'Event Time',
+		minWidth: 250,
+		valueFormatter: (param) => format(new Date(param.value), 'yyyy/MM/dd - hh:mm:ss aa') + ' UTC'
+	},
+
 	{ field: 'responsecode', headerName: 'Response', minWidth: 200 },
 	{ field: 'responsetime', headerName: 'Time', minWidth: 200, valueFormatter: (params) => `${params.value} ms` },
 	{
@@ -141,13 +207,24 @@ enum LogTypes {
 	INCIDENTS = 'Incidents'
 }
 
+const ITEMS_PER_PAGE = 100;
 const Logs: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
 	const [logType, setLogType] = React.useState(LogTypes.EVENTS);
 	const { monitorId } = useParams<{ monitorId: string }>();
 
-	// FIXME: add pagination
-	const { data: logs } = useGetMonitorLogs(selectedDates, 0, 100, monitorId, logType === LogTypes.INCIDENTS);
+	const [paginationModel, setPaginationModel] = React.useState({
+		page: 0,
+		pageSize: ITEMS_PER_PAGE
+	});
 
+	const { data: logs, isLoading } = useGetMonitorLogs(
+		selectedDates,
+		paginationModel.page * paginationModel.pageSize,
+		paginationModel.pageSize,
+		monitorId,
+		logType === LogTypes.INCIDENTS
+	);
+	const fullCount = useMemo(() => (logs?.data[0] ? Number(logs.data[0].fullcount) : 0), [logs?.data]);
 	const [isTransitioning, startTransition] = useTransition();
 
 	const [rows, columns] = useMemo(
@@ -166,6 +243,11 @@ const Logs: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
 				<Grid item xs={12} sx={{ minHeight: { xs: '25vh', lg: '35vh' }, maxHeight: { xs: '50vh', lg: '35vh' }, width: '100%' }}>
 					<DataGrid
 						rowHeight={80}
+						paginationModel={paginationModel}
+						paginationMode="server"
+						onPaginationModelChange={setPaginationModel}
+						rowCount={fullCount}
+						pageSizeOptions={[ITEMS_PER_PAGE]}
 						sx={{
 							'& .status-success': {
 								bgcolor: 'success.dark'
@@ -174,9 +256,10 @@ const Logs: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
 								bgcolor: 'error.dark'
 							}
 						}}
-						loading={isTransitioning}
+						loading={isTransitioning || isLoading}
 						rows={rows}
 						columns={columns}
+						hideFooterSelectedRowCount
 					/>
 				</Grid>
 			</Grid>

@@ -1,9 +1,9 @@
 import React from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIosNew';
-import { Accordion, AccordionSummary, Button, Divider, Grid, Typography } from '@mui/material';
+import { Accordion, AccordionSummary, Button, Divider, Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Ping from 'modules/Dashboard/components/Ping';
-import { ExpandMore } from '@mui/icons-material';
+import { ExpandMore, Info } from '@mui/icons-material';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
 import SendIcon from '@mui/icons-material/Send';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -63,6 +63,19 @@ const MonitorDetails: React.FC = () => {
 					<Button variant="outlined" component={RouterLink} to={RoutesConfig.editMonitor} startIcon={<SettingsIcon />}>
 						Configure
 					</Button>
+				</Grid>
+				<Grid item>
+					<Tooltip
+						title={
+							<Typography paragraph color="inherit">
+								Filter by 1 Day only to see the full data instead of aggregations for Response Time Graph
+							</Typography>
+						}
+					>
+						<IconButton>
+							<Info color="primary" />
+						</IconButton>
+					</Tooltip>
 				</Grid>
 				<Grid item>
 					<DateFilter title="Choose dates" selectedDates={selectedDates} onDateSelect={(date) => setSelectedDates(date)} />

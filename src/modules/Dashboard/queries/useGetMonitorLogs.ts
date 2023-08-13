@@ -15,6 +15,7 @@ export interface HealthCheckLogs {
 	taskid: string;
 	timestamp: string;
 	assertions?: AssertionResult[];
+	fullcount?: string;
 }
 interface HealthCheckLogsQuery {
 	data: HealthCheckLogs[];

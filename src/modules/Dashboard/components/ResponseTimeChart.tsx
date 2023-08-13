@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { EChartsOption, ReactEChartsProps, ReactEcharts, RefProps } from 'config/echarts/ReactECharts';
 import useEchartsTheme from 'config/echarts/useEchartsTheme';
-import { generateDummyData, generateDummyUptimeData } from 'config/dummyData';
 import { MetricTypes } from './Monitors/MonitorMetrics';
+import { GraphData, OneDayData, Percentile, ResponseTimePercentiles, UptimeData } from '../queries/useGetMonitorGraphData';
 
 // interface DataItem {
 // 	name: string;
@@ -80,10 +80,10 @@ import { MetricTypes } from './Monitors/MonitorMetrics';
 
 const initialOption: EChartsOption = {
 	tooltip: {
-		trigger: 'axis'
+		trigger: 'axis',
+		valueFormatter: (option) => `${option.toString()} ms`
 	},
 	legend: {
-		data: ['EU', 'US', 'AE', 'AU'],
 		right: 10,
 		padding: 10
 	},
@@ -109,37 +109,36 @@ const initialOption: EChartsOption = {
 		splitLine: {
 			show: false
 		}
-	},
-	series: [
-		{
-			name: 'EU',
-			type: 'line',
-			showSymbol: false,
-			data: generateDummyData([200, 311])
-		},
-		{
-			name: 'US',
-			type: 'line',
-			showSymbol: false,
-			data: generateDummyData([100, 3, 400])
-		},
-		{
-			name: 'AE',
-			type: 'line',
-			showSymbol: false,
-			data: generateDummyData([30])
-		},
-		{
-			name: 'AU',
-			type: 'line',
-			showSymbol: false,
-			data: generateDummyData([])
-		}
-	]
+	}
+	// series: [
+	// 	{
+	// 		name: 'EU',
+	// 		type: 'line',
+	// 		showSymbol: false,
+	// 		data: generateDummyData([200, 311])
+	// 	},
+	// 	{
+	// 		name: 'US',
+	// 		type: 'line',
+	// 		showSymbol: false,
+	// 		data: generateDummyData([100, 3, 400])
+	// 	},
+	// 	{
+	// 		name: 'AE',
+	// 		type: 'line',
+	// 		showSymbol: false,
+	// 		data: generateDummyData([30])
+	// 	},
+	// 	{
+	// 		name: 'AU',
+	// 		type: 'line',
+	// 		showSymbol: false,
+	// 		data: generateDummyData([])
+	// 	}
+	// ]
 };
 
-const upTimeSeries: EChartsOption = {
-	...initialOption,
+const uptimeOptions: EChartsOption = {
 	yAxis: {
 		type: 'value',
 		axisLabel: {
@@ -151,40 +150,123 @@ const upTimeSeries: EChartsOption = {
 			show: false
 		}
 	},
-	series: [
-		{
-			name: 'Percentage',
-			type: 'line',
-			showSymbol: false,
-			data: generateDummyUptimeData()
-		}
-	]
+	tooltip: {
+		trigger: 'axis',
+		valueFormatter: (option) => `${option.toString()} %`
+	}
 };
 
 interface Props {
 	ReactChartsComponentProps?: Omit<ReactEChartsProps, 'option'>;
 	metricType: MetricTypes;
+	metrics?: GraphData;
+	options?: {
+		isSameDay?: boolean;
+		withLocation?: boolean;
+	};
 }
-const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps, metricType }) => {
+
+type SeriesData = {
+	name: string;
+	type: 'line';
+	showSymbol: boolean;
+	data: {
+		name: string;
+		value: (string | number)[];
+	}[];
+}[];
+const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps, metricType, metrics, options }) => {
 	useEchartsTheme();
-	const [option, setOption] = useState<EChartsOption>(initialOption);
+	const [option, setOption] = useState<EChartsOption>({ ...initialOption });
 	const chartRef = useRef<RefProps>(null);
 
 	useLayoutEffect(() => {
+		// console.log('metrics?.data', metrics);
+		// FIXME: Use switch for MetricTypes
 		chartRef.current?.clear();
-		switch (metricType) {
-			case MetricTypes.UPTIME:
-				setOption(upTimeSeries);
-
-				break;
-
-			case MetricTypes.RESPONSE_TIME:
-			default:
-				setOption(initialOption);
-
-				break;
+		if (metrics) {
+			if (options?.isSameDay) {
+				if (metricType === MetricTypes.UPTIME) {
+					const data: SeriesData = (metrics as OneDayData).map((uptimeData) => ({
+						name: uptimeData.region,
+						type: 'line',
+						showSymbol: false,
+						data: uptimeData.data.map((data) => ({
+							name: new Date(data.timestamp).toString(),
+							value: [new Date(data.timestamp).toISOString(), data.status]
+						}))
+					}));
+					setOption({
+						...initialOption,
+						...uptimeOptions,
+						legend: { ...initialOption.legend, data: data.map((line) => line.name) },
+						series: data
+					});
+				} else {
+					const data: SeriesData = (metrics as OneDayData).map((uptimeData) => ({
+						name: uptimeData.region,
+						type: 'line',
+						showSymbol: false,
+						data: uptimeData.data.map((data) => ({
+							name: new Date(data.timestamp).toString(),
+							value: [new Date(data.timestamp).toISOString(), data.responseTime]
+						}))
+					}));
+					setOption({
+						...initialOption,
+						legend: { ...initialOption.legend, data: data.map((line) => line.name) },
+						series: data
+					});
+				}
+			} else if (metricType === MetricTypes.UPTIME) {
+				const data: SeriesData = (metrics as UptimeData).map((uptimeData) => ({
+					name: uptimeData.region,
+					type: 'line',
+					showSymbol: false,
+					data: uptimeData.data.map((data) => ({
+						name: new Date(data.timestamp).toString(),
+						value: [new Date(data.timestamp).toISOString(), data.average_status_percentage]
+					}))
+				}));
+				setOption({
+					...initialOption,
+					...uptimeOptions,
+					legend: { ...initialOption.legend, data: data.map((line) => line.name) },
+					series: data
+				});
+			} else {
+				const data: SeriesData = Object.entries(metrics as ResponseTimePercentiles).map(([percentileKey, percentileData]) => ({
+					name: percentileKey,
+					type: 'line',
+					showSymbol: false,
+					data: (percentileData as Percentile[]).map((data) => ({
+						name: new Date(data.timestamp).toString(),
+						value: [new Date(data.timestamp).toISOString(), data.responseTime]
+					}))
+				}));
+				setOption({
+					...initialOption,
+					legend: { ...initialOption.legend, data: data.map((line) => line.name) },
+					series: data.reverse()
+				});
+			}
 		}
-	}, [metricType]);
+	}, [metrics, options?.isSameDay, options?.withLocation, metricType]);
+	// useLayoutEffect(() => {
+	// 	chartRef.current?.clear();
+	// 	switch (metricType) {
+	// 		case MetricTypes.UPTIME:
+	// 			setOption(upTimeSeries);
+
+	// 			break;
+
+	// 		case MetricTypes.RESPONSE_TIME:
+	// 		default:
+	// 			setOption(initialOption);
+
+	// 			break;
+	// 	}
+	// }, [metricType]);
 	// useEffect(() => {
 	// 	const interval = setInterval(function () {
 	// 		for (let i = 0; i < 10; i++) {
