@@ -1,6 +1,7 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import { ReactComponent as UserInterface } from 'assets/user-interface.svg';
+import ComingSoon from 'components/ComingSoon';
 
 const Heartbeats: React.FC = () => {
 	return (
@@ -17,9 +18,13 @@ const Heartbeats: React.FC = () => {
 					database backup!
 				</Typography>
 
-				<Button variant="outlined" sx={{ textTransform: 'capitalize' }}>
+				{/* <Button variant="outlined" sx={{ textTransform: 'capitalize' }}>
 					Get notified of the release!
-				</Button>
+				</Button> */}
+
+				<Grid item container justifyContent={'center'}>
+					<ComingSoon />
+				</Grid>
 				<br />
 			</Grid>
 			<Grid item xs={12} md={6} lg={6}>

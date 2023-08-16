@@ -1,7 +1,6 @@
 import { CompareType } from 'modules/Dashboard/Pages/Monitors/AddMonitor';
 
 export type User = CustomCognitoUser & InternalUser;
-//TODO: Continue on interfaces
 export interface CustomCognitoUser {
 	//Username is the subId of the user in cognito
 	username: string;

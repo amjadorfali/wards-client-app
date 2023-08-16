@@ -26,8 +26,11 @@ const MonitorDetails: React.FC = () => {
 	const { data: monitorDetails } = useGetMonitorDetails(monitorId);
 	const { data: monitorOverview } = useGetMonitorOverview(selectedDates, monitorId);
 	// TODO: Continue on logic for monitors details
+	/**
+	 * API calls for buttons
+	 *
+	 */
 
-	// TransitionProps={{ unmountOnExit: true }}  might be useful on accordions if we face perf issues
 	return (
 		<Grid container minHeight={'40svh'} gap={3}>
 			<Grid item xs={12}>
@@ -85,11 +88,6 @@ const MonitorDetails: React.FC = () => {
 			<OverviewAccordion monitorOverview={monitorOverview?.data} />
 			<MonitorMetrics selectedDates={selectedDates} />
 
-			{/* <Accordion sx={{ flexBasis: '100%', width: '100%' }} defaultExpanded>
-				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-3-content" id={'panel-1-header'} sx={{ p: 2 }}>
-					<Typography variant="h2">Metrics & Logs</Typography>
-				</AccordionSummary>
-			</Accordion> */}
 			<Accordion sx={{ flexBasis: '100%' }} defaultExpanded>
 				<AccordionSummary expandIcon={<ExpandMore />} aria-controls="panel-2-content" id={'panel-1-header'} sx={{ p: 2 }}>
 					<Typography variant="h2">Monitor Details</Typography>

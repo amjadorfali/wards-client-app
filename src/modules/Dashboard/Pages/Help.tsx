@@ -5,14 +5,20 @@ import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import { COMPANY_EMAIL } from 'config/literals';
+import ComingSoon from 'components/ComingSoon';
 const Help: React.FC = () => {
 	// TODO: Add logic for help page
 	return (
 		<Grid container item xs={11} sm={10} md={8} xl={7} justifyContent={'center'} alignSelf={'center'} gap={3}>
-			<Typography textAlign={'center'} variant={'h1'}>
-				Help & Support
-			</Typography>
+			<Grid item xs={12}>
+				<Typography textAlign={'center'} variant={'h1'}>
+					Help & Support
+				</Typography>
+			</Grid>
 
+			<Grid item>
+				<ComingSoon />
+			</Grid>
 			<Typography paragraph textAlign={'center'}>
 				You can reach us at{' '}
 				<Link sx={{ fontSize: 'inherit' }} href={`mailto:${COMPANY_EMAIL}`}>

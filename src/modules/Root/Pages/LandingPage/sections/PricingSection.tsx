@@ -142,7 +142,8 @@ const CustomBillingCard: React.FC<PricingContent> = ({ title, subtitle, features
 					component={RouterLink}
 					to={`${RoutesConfig.signUp}`}
 				>
-					Choose plan
+					{/* FIXME: Change to choose plan when billing is ready */}
+					Start now!
 				</Button>
 			</CardActions>
 		</Card>

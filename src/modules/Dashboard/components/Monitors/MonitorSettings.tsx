@@ -28,7 +28,7 @@ const COMPARE_TYPE_LABELS: { [key in CompareType]: string } = {
 	[CompareType.CONTAINS]: 'Contains',
 	[CompareType.DOES_NOT_CONTAIN]: 'Does not contain'
 };
-// FIXME: Add missing data from API
+
 const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 	return (
 		<Grid container justifyContent={'space-between'} p={2}>
@@ -159,16 +159,6 @@ const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 						</ListItem>
 						<Divider />
 
-						<ListItem>
-							<ListItemText primary="Follow redirects" secondary={'Yes'} />
-						</ListItem>
-						<Divider />
-
-						<ListItem>
-							<ListItemText primary="Keep cookies when redirecting" secondary={'Yes'} />
-						</ListItem>
-						<Divider />
-
 						{monitor.metadata.httpUserName && (
 							<>
 								<ListItem>
@@ -213,12 +203,12 @@ const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 						overflow: 'scroll'
 					}}
 				>
-					{/* <Grid item xs={12} md={6}> */}
 					<List>
 						<ListItem>
 							<ListItemText
 								primary="SSL Certificate"
 								secondary={
+									// FIXME: Add missing data from API
 									<>
 										Issued By: R3
 										<br />
@@ -229,7 +219,7 @@ const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 						</ListItem>
 						<Divider />
 
-						<ListItem>
+						{/* <ListItem>
 							<ListItemText
 								primary="Domain (amjadorfali.com)"
 								secondary={
@@ -243,7 +233,7 @@ const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 								}
 							/>
 						</ListItem>
-						<Divider />
+						<Divider /> */}
 					</List>
 					{/* </Grid> */}
 				</AccordionDetails>

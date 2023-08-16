@@ -10,7 +10,6 @@ import {
 	Divider,
 	Fab,
 	FormControlLabel,
-	FormGroup,
 	FormHelperText,
 	FormLabel,
 	Grid,
@@ -90,8 +89,8 @@ interface AddMonitorFormValues extends CreatableData {
 	'request-type': RequestType;
 	regions: Region[];
 	'verify-ssl': boolean;
-	'follow-redirects': boolean;
-	'keep-cookies': boolean;
+	// 'follow-redirects': boolean;
+	// 'keep-cookies': boolean;
 	'check-frequency': number;
 	'request-timeout': number;
 }
@@ -118,7 +117,7 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 	const assertionValues = addMonitorForm.watch(assertionNames);
 	const requestType = addMonitorForm.watch('request-type', RequestType.HTTP);
 
-	const followRedirects = addMonitorForm.watch('follow-redirects', true);
+	// const followRedirects = addMonitorForm.watch('follow-redirects', true);
 
 	const isHttpRequest = useMemo(() => requestType === RequestType.HTTP, [requestType]);
 
@@ -249,8 +248,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 			case RequestType.HTTP:
 				//Toggle on ssl, redirects, and add url
 				addMonitorForm.setValue('verify-ssl', true);
-				addMonitorForm.setValue('follow-redirects', true);
-				addMonitorForm.setValue('keep-cookies', true);
+				// addMonitorForm.setValue('follow-redirects', true);
+				// addMonitorForm.setValue('keep-cookies', true);
 				addMonitorForm.setValue('url', 'https://');
 				break;
 
@@ -258,8 +257,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 			case RequestType.UDP:
 				//Toggle off ssl, redirects, and remove url
 				addMonitorForm.setValue('verify-ssl', false);
-				addMonitorForm.setValue('follow-redirects', false);
-				addMonitorForm.setValue('keep-cookies', false);
+				// addMonitorForm.setValue('follow-redirects', false);
+				// addMonitorForm.setValue('keep-cookies', false);
 				addMonitorForm.setValue('url', '');
 
 				//Reset headers and assertions
@@ -513,8 +512,7 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 								/>
 							</Grid>
 
-							{/* TODO: Get back with ahmet if we are gonna add this */}
-							<FormGroup sx={{ flexDirection: 'row', justifyContent: 'space-between', flexBasis: '100%' }}>
+							{/* <FormGroup sx={{ flexDirection: 'row', justifyContent: 'space-between', flexBasis: '100%' }}>
 								<FormControlLabel
 									disabled={!isHttpRequest}
 									control={
@@ -557,7 +555,7 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 									}
 									label="Keep cookies when redirecting"
 								/>
-							</FormGroup>
+							</FormGroup> */}
 
 							{requestHeadersCount.map((headerKey) => (
 								<Grid

@@ -3,7 +3,6 @@ import {
 	Card,
 	CardActions,
 	CardContent,
-	Chip,
 	Divider,
 	Grid,
 	List,
@@ -18,6 +17,7 @@ import {
 import React from 'react';
 import { AttachMoney, Check } from '@mui/icons-material';
 import { NEW_PRICING_CONTENT, PricingContent } from 'config/pricing';
+import ComingSoon from 'components/ComingSoon';
 
 const Billing: React.FC = () => {
 	const [isAnnualPlan, setIsAnnualPlan] = React.useState(true);
@@ -38,6 +38,10 @@ const Billing: React.FC = () => {
 					<Typography variant="h1">Pick a plan</Typography>
 					<br />
 					<Typography variant="h3">During our beta period, you can use the platform at no charge!</Typography>
+				</Grid>
+
+				<Grid item>
+					<ComingSoon />
 				</Grid>
 
 				<Grid container item xs={12} sx={{ gap: { xs: 4, md: 0 }, placeItems: 'flex-end', justifyContent: 'space-between' }}>
@@ -120,7 +124,8 @@ const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price
 				>
 					{title}
 
-					{isPopular && <Chip label="Popular" color="primary" />}
+					{/* FIXME: once we finish billing */}
+					{/* {isPopular && <Chip label="Popular" color="primary" />} */}
 				</Typography>
 				<br />
 				<Grid container>

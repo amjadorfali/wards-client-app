@@ -7,6 +7,7 @@ import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 import useEditTeam from './mutations/useEditTeam';
 import { toast } from 'react-toastify';
+import ComingSoon from 'components/ComingSoon';
 
 interface EditTeamFormValues {
 	name: string;
@@ -114,6 +115,11 @@ const EditTeam: React.FC = () => {
 					</Grid>
 				</Grid>
 			)}
+
+			<Grid pt={4} item xs={12} container alignItems={'center'} justifyContent={'center'} gap={3}>
+				<Typography variant="h3">More features/settings are</Typography>
+				<ComingSoon />
+			</Grid>
 		</Grid>
 	);
 };

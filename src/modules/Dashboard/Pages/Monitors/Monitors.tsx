@@ -154,6 +154,7 @@ const Monitors: React.FC = () => {
 											</Button>
 										</ListItemIcon>
 
+										{/* FIXME: Handle menu actions */}
 										<StyledMenu
 											id="demo-customized-menu"
 											MenuListProps={{

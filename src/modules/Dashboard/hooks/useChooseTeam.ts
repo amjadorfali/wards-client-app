@@ -8,7 +8,6 @@ const useChooseTeam = () => {
 	const { teamId } = useParams<{ teamId: string }>();
 	const { internalUserQuery, currentTeam } = useGetCurrentUser();
 	const navigate = useNavigate();
-	// TODO: Test this shit really well
 	// This is checking if a team wasn't found in the useMemo, and if there isn't any team
 	// to show for the teamId in the params.
 	// If not, it finds the team in the cache, or the first team created by user
