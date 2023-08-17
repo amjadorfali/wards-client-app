@@ -52,7 +52,8 @@ const Billing: React.FC = () => {
 					<Grid item container xs={12} sm={8} md={6} lg={5} justifyContent={'space-between'} alignItems={'flex-end'}>
 						<Typography variant="body1">Monthly Plans</Typography>
 
-						<Switch sx={{ mb: '-0.3em' }} checked={isAnnualPlan} onChange={(e) => setIsAnnualPlan(e.target.checked)} />
+						{/* FIXME: Renable once billing is ready */}
+						<Switch disabled sx={{ mb: '-0.3em' }} checked={isAnnualPlan} onChange={(e) => setIsAnnualPlan(e.target.checked)} />
 						<Typography variant="body1" component={Grid} flexDirection={'column'} alignItems={'center'} container item xs={5}>
 							<Typography variant="subtitle1" color={'secondary'}>
 								(Save 20%)
@@ -63,7 +64,8 @@ const Billing: React.FC = () => {
 				</Grid>
 			</Grid>
 
-			<Grid item sx={{ gap: { xs: 3, md: 0 } }} container justifyContent={'space-between'} alignContent={'center'}>
+			{/* // FIXME: Fix justifyContent when pricing is ready */}
+			<Grid item sx={{ gap: { xs: 3, md: 0 } }} container justifyContent={'center'} alignContent={'center'}>
 				{Object.entries(NEW_PRICING_CONTENT).map(([key, content]) => (
 					<CustomCard key={key} {...content} />
 				))}
@@ -95,7 +97,7 @@ const Billing: React.FC = () => {
 
 export default Billing;
 
-const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price, isPopular }) => {
+const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price, isPopular, disablePrice }) => {
 	const theme = useTheme();
 	return (
 		<Card
@@ -104,7 +106,8 @@ const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price
 				borderRadius: 2,
 				px: 2.25,
 				py: 4,
-				flexBasis: { xs: '100%', md: '33%' }
+				// FIXME: Fix flexbasis when pricing is ready
+				flexBasis: { xs: '100%', md: '45%' }
 			}}
 			container
 			flexDirection={'column'}
@@ -124,20 +127,24 @@ const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price
 				>
 					{title}
 
-					{/* FIXME: once we finish billing */}
+					{/* FIXME: Re-add once billing is ready */}
 					{/* {isPopular && <Chip label="Popular" color="primary" />} */}
 				</Typography>
 				<br />
 				<Grid container>
-					<Grid item alignSelf={'flex-start'}>
-						<AttachMoney />
-					</Grid>
+					{!disablePrice && (
+						<Grid item alignSelf={'flex-start'}>
+							<AttachMoney />
+						</Grid>
+					)}
 					<Typography lineHeight={'3.5rem'} fontWeight={700} style={{ fontSize: '4rem' }}>
 						{price}
 					</Typography>
-					<Typography variant="subtitle1" component={Grid} item alignSelf={'flex-end'}>
-						/mo
-					</Typography>
+					{!disablePrice && (
+						<Typography variant="subtitle1" component={Grid} item alignSelf={'flex-end'}>
+							/mo
+						</Typography>
+					)}
 				</Grid>
 				<br />
 

@@ -204,20 +204,23 @@ const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 					}}
 				>
 					<List>
-						<ListItem>
-							<ListItemText
-								primary="SSL Certificate"
-								secondary={
-									// FIXME: Add missing data from API
-									<>
-										Issued By: R3
-										<br />
-										Expires On: 9/20/2023, 9:13:19 PM UTC
-									</>
-								}
-							/>
-						</ListItem>
-						<Divider />
+						{monitor.insights?.sslIssuedBy && (
+							<>
+								<ListItem>
+									<ListItemText
+										primary="SSL Certificate"
+										secondary={
+											<>
+												Issued By: {monitor.insights?.sslIssuedBy}
+												<br />
+												Expires On: {monitor.insights?.sslExpiresOn}
+											</>
+										}
+									/>
+								</ListItem>
+								<Divider />
+							</>
+						)}
 
 						{/* <ListItem>
 							<ListItemText
@@ -235,7 +238,6 @@ const MonitorSettings: React.FC<{ monitor: HealthCheck }> = ({ monitor }) => {
 						</ListItem>
 						<Divider /> */}
 					</List>
-					{/* </Grid> */}
 				</AccordionDetails>
 			</Accordion>
 		</Grid>

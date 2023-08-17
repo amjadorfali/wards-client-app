@@ -4,7 +4,6 @@ import {
 	Card,
 	CardActions,
 	CardContent,
-	Chip,
 	Divider,
 	Grid,
 	List,
@@ -73,7 +72,7 @@ export const PricingSection: React.FC = () => {
 
 export default PricingSection;
 
-const CustomBillingCard: React.FC<PricingContent> = ({ title, subtitle, features, price, isPopular }) => {
+const CustomBillingCard: React.FC<PricingContent> = ({ title, subtitle, features, price, isPopular, disablePrice }) => {
 	const theme = useTheme();
 	return (
 		<Card
@@ -101,20 +100,24 @@ const CustomBillingCard: React.FC<PricingContent> = ({ title, subtitle, features
 					variant={'h4'}
 				>
 					{title}
-
-					{isPopular && <Chip label="Popular" color="primary" />}
+					{/* FIXME: Re-add once billing is ready */}
+					{/* {isPopular && <Chip label="Popular" color="primary" />} */}
 				</Typography>
 				<br />
 				<Grid container>
-					<Grid item alignSelf={'flex-start'}>
-						<AttachMoney />
-					</Grid>
+					{!disablePrice && (
+						<Grid item alignSelf={'flex-start'}>
+							<AttachMoney />
+						</Grid>
+					)}
 					<Typography lineHeight={'3.5rem'} fontWeight={700} style={{ fontSize: '3rem' }}>
 						{price}
 					</Typography>
-					<Typography variant="subtitle1" component={Grid} item alignSelf={'flex-end'}>
-						/mo
-					</Typography>
+					{!disablePrice && (
+						<Typography variant="subtitle1" component={Grid} item alignSelf={'flex-end'}>
+							/mo
+						</Typography>
+					)}
 				</Grid>
 				<br />
 

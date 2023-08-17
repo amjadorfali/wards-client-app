@@ -23,7 +23,6 @@ interface HealthCheckLogsQuery {
 const useGetMonitorLogs = (selectedDates: DateFilter, offset = 0, limit = 0, monitorId?: string, incidentsOnly = false) => {
 	const { endDate, startDate } = useMemo(() => formatDateFilters(selectedDates), [selectedDates]);
 
-	console.log(import.meta.env.VITE_INTERNAL_METRIC_API_HOST);
 	return useQuery({
 		queryFn: () =>
 			axiosInstance

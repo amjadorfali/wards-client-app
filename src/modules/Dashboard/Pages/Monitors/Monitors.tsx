@@ -71,10 +71,9 @@ const Monitors: React.FC = () => {
 	};
 	const { currentUser } = useGetCurrentUser();
 
-	//FIXME: This is still a demo, needs fixing for the logic/real data
 	return (
 		<>
-			{monitors?.data.data.length ? (
+			{monitors?.data.length ? (
 				<Grid container alignContent={'center'} sx={{ justifyContent: 'center' }} gap={5}>
 					<Grid
 						item
@@ -97,29 +96,43 @@ const Monitors: React.FC = () => {
 
 					<Grid maxHeight={'50svh'} overflow={'auto'} container item xs={12} justifyContent={'center'}>
 						<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
-							{monitors.data.data.map((item, index) => (
-								<React.Fragment key={item.id}>
+							{monitors.data.map((monitor, index) => (
+								<React.Fragment key={monitor.id}>
 									<ListItemButton
-										key={item}
+										key={monitor.id}
 										component={RouterLink}
-										to={`${item.id}`}
+										to={`${monitor.id}`}
 										sx={{
 											borderTopRightRadius: index === 0 ? '1rem' : 0,
 											borderTopLeftRadius: index === 0 ? '1rem' : 0,
-											borderBottomRightRadius: index === monitors.data.data.length - 1 ? '1rem' : 0,
-											borderBottomLeftRadius: index === monitors.data.data.length - 1 ? '1rem' : 0
+											borderBottomRightRadius: index === monitors.data.length - 1 ? '1rem' : 0,
+											borderBottomLeftRadius: index === monitors.data.length - 1 ? '1rem' : 0
 										}}
 									>
 										<ListItemIcon>
-											{/* FIXME: Fix status */}
-											<Ping isSuccess={!!(index % 2)} />
+											<Ping
+												customcolor={
+													typeof monitor.insights?.status === 'number' && monitor.enabled
+														? monitor.insights?.status === 1
+															? theme.palette.success.main
+															: theme.palette.error.main
+														: theme.palette.warning.main
+												}
+											/>
 										</ListItemIcon>
 										<ListItemText
 											primary={
 												<>
-													{item.name}
-													{/* FIXME: Fix status */}
-													<Typography variant="subtitle2"> {index % 2 ? 'Up' : 'Down'}. 1h</Typography>
+													{monitor.name}
+													<Typography variant="subtitle2">
+														{monitor.enabled
+															? typeof monitor.insights.status === 'number'
+																? monitor.insights?.status === 1
+																	? 'Up'
+																	: 'Down'
+																: 'Pending'
+															: 'Paused'}
+													</Typography>
 												</>
 											}
 										/>
@@ -137,7 +150,7 @@ const Monitors: React.FC = () => {
 											}}
 										>
 											<NetworkPingIcon />
-											<Typography variant="subtitle2">{secondsToMinutes(item.interval ?? 0)} m</Typography>
+											<Typography variant="subtitle2">{secondsToMinutes(monitor.interval ?? 0)} m</Typography>
 										</ListItemIcon>
 										<ListItemIcon>
 											<Button
@@ -167,7 +180,7 @@ const Monitors: React.FC = () => {
 											<MenuItem
 												onClick={(e) => {
 													handleClose(e);
-													navigate(`${item.id}/edit`);
+													navigate(`${monitor.id}/edit`);
 												}}
 												disableRipple
 											>
@@ -175,23 +188,23 @@ const Monitors: React.FC = () => {
 												Configure
 											</MenuItem>
 											<Divider sx={{ my: 0.5 }} />
-											<MenuItem onClick={handleClose} disableRipple>
+											<MenuItem onClick={handleClose} disabled disableRipple>
 												<FileCopy />
 												Pause
 											</MenuItem>
-											<MenuItem onClick={handleClose} disableRipple>
+											<MenuItem onClick={handleClose} disabled disableRipple>
 												<Archive />
 												Send test alert
 											</MenuItem>
 											<Divider sx={{ my: 0.5 }} />
 
-											<MenuItem sx={{ color: theme.palette.error.main }} onClick={handleClose} disableRipple>
+											<MenuItem sx={{ color: theme.palette.error.main }} disabled onClick={handleClose} disableRipple>
 												<Delete sx={{ fill: theme.palette.error.main }} />
 												Delete
 											</MenuItem>
 										</StyledMenu>
 									</ListItemButton>
-									{index !== monitors.data.data.length - 1 && <Divider />}
+									{index !== monitors.data.length - 1 && <Divider />}
 								</React.Fragment>
 							))}
 						</List>

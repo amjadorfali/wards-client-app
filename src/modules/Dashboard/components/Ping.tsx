@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import React from 'react';
 
-const Ping: React.FC<{ isSuccess: boolean; isInfinite?: number }> = ({ isSuccess, isInfinite }) => {
+const Ping: React.FC<{ customcolor: string; isInfinite?: number }> = ({ isInfinite, customcolor }) => {
 	return (
 		<Box
 			sx={{
@@ -11,9 +11,9 @@ const Ping: React.FC<{ isSuccess: boolean; isInfinite?: number }> = ({ isSuccess
 				display: 'inline-block'
 			}}
 		>
-			<CircleMain isinfinite={isInfinite} issuccess={Number(isSuccess)} />
-			<CircleSecondary isinfinite={isInfinite} issuccess={Number(isSuccess)} />
-			<CircleTertiary isinfinite={isInfinite} issuccess={Number(isSuccess)} />
+			<CircleMain isinfinite={isInfinite} customcolor={customcolor} />
+			<CircleSecondary isinfinite={isInfinite} customcolor={customcolor} />
+			<CircleTertiary isinfinite={isInfinite} customcolor={customcolor} />
 		</Box>
 	);
 };
@@ -34,15 +34,10 @@ const StyledCircle = styled(Box)`
 	animation-timing-function: linear;
 `;
 
-const CircleMain = styled(StyledCircle)<{ issuccess: number; isinfinite?: number }>`
+const CircleMain = styled(StyledCircle)<{ customcolor: string; isinfinite?: number }>`
 	animation-iteration-count: ${({ isinfinite }) => (isinfinite ? 'infinite' : '2s')};
 	z-index: 3;
-	background: ${({
-		theme: {
-			palette: { error, success }
-		},
-		issuccess
-	}) => (issuccess ? success.main : error.main)};
+	background: ${({ customcolor }) => customcolor};
 	animation-name: pulsate-main-infinite;
 
 	@keyframes pulsate-main-infinite {
@@ -54,15 +49,10 @@ const CircleMain = styled(StyledCircle)<{ issuccess: number; isinfinite?: number
 		}
 	}
 `;
-const CircleSecondary = styled(StyledCircle)<{ issuccess: number; isinfinite?: number }>`
+const CircleSecondary = styled(StyledCircle)<{ customcolor: string; isinfinite?: number }>`
 	animation-iteration-count: ${({ isinfinite }) => (isinfinite ? 'infinite' : '2s')};
 	z-index: 2;
-	background: ${({
-		theme: {
-			palette: { error, success }
-		},
-		issuccess
-	}) => (issuccess ? success.main : error.main)}19;
+	background: ${({ customcolor }) => customcolor}19;
 	animation-name: pulsate-secondary-infinite;
 
 	@keyframes pulsate-secondary-infinite {
@@ -81,16 +71,11 @@ const CircleSecondary = styled(StyledCircle)<{ issuccess: number; isinfinite?: n
 	}
 `;
 
-const CircleTertiary = styled(StyledCircle)<{ issuccess: number; isinfinite?: number }>`
+const CircleTertiary = styled(StyledCircle)<{ customcolor: string; isinfinite?: number }>`
 	animation-iteration-count: ${({ isinfinite }) => (isinfinite ? 'infinite' : '2s')};
 
 	z-index: 1;
-	background: ${({
-		theme: {
-			palette: { error, success }
-		},
-		issuccess
-	}) => (issuccess ? success.main : error.main)}66;
+	background: ${({ customcolor }) => customcolor}66;
 	animation-name: pulsate-tertiary;
 
 	@keyframes pulsate-tertiary {

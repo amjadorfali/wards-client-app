@@ -176,7 +176,8 @@ const issuesColumns: GridColDef[] = [
 	{
 		field: 'description',
 		headerName: 'Description',
-		minWidth: 250
+		minWidth: 500
+
 		// renderCell: (params) => (
 		// 	<ul>
 		// 		{params.value?.map((assertion: AssertionResult) => (

@@ -5,8 +5,8 @@ import { DeepPartial } from 'react-hook-form';
 
 const useEditMonitor = () => {
 	return useMutation({
-		// FIXME: Fix route path (This is using the create route, it should be PUT)
-		mutationFn: (inputs: DeepPartial<CreateMonitorOptions>) => axiosInstance.post('api/task/health/', inputs)
+		mutationFn: ({ monitorId, ...inputs }: DeepPartial<CreateMonitorOptions> & { monitorId: string }) =>
+			axiosInstance.put(`api/task/health/${monitorId}`, inputs)
 	});
 };
 export default useEditMonitor;

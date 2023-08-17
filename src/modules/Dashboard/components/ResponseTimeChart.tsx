@@ -181,7 +181,6 @@ const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps, metricT
 	const chartRef = useRef<RefProps>(null);
 
 	useLayoutEffect(() => {
-		// console.log('metrics?.data', metrics);
 		// FIXME: Use switch for MetricTypes
 		chartRef.current?.clear();
 		if (metrics) {

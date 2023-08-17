@@ -59,7 +59,6 @@ const Settings: React.FC = () => {
 				onError: (error) => toast(error.message, { type: 'error' })
 			}
 		);
-		console.log(data);
 	};
 
 	const handleSubmitPassword = ({ newPassword, oldPassword }: UpdatePasswordFormValues) => {

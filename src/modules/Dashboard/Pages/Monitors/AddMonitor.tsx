@@ -27,7 +27,7 @@ import {
 	useMediaQuery,
 	useTheme
 } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import { Controller, ControllerRenderProps, UseFormReturn, useForm } from 'react-hook-form';
 
@@ -48,7 +48,7 @@ export enum CompareType {
 	NOT_EQUAL = 'NOT_EQUAL',
 	CONTAINS = 'CONTAINS'
 }
-enum AssertionNames {
+export enum AssertionNames {
 	RESPONSE_CODE = 'RESPONSE_CODE',
 	RESPONSE_TIME = 'RESPONSE_TIME',
 	RESPONSE_VALUE = 'RESPONSE_VALUE',
@@ -57,7 +57,7 @@ enum AssertionNames {
 	SSL_CERTIFICATE_EXPIRES_IN = 'SSL_CERTIFICATE_EXPIRES_IN'
 }
 
-enum RequestType {
+export enum RequestType {
 	HTTP = 'HTTP',
 	UDP = 'UDP',
 	TCP = 'TCP'
@@ -70,7 +70,7 @@ export enum Region {
 	SYDNEY = 'SYDNEY',
 	CALIFORNIA = 'CALIFORNIA'
 }
-type CreatableData = {
+export type CreatableData = {
 	[key: `header-name-${number}`]: string;
 	[key: `header-value-${number}`]: string;
 	[key: `assertion-name-${number}`]: AssertionNames;
@@ -79,7 +79,7 @@ type CreatableData = {
 	[key: `assertion-compare-${number}`]: string;
 };
 
-interface AddMonitorFormValues extends CreatableData {
+export interface AddMonitorFormValues extends CreatableData {
 	url: string;
 	'monitor-name': string;
 	'http-auth-username': string;
@@ -95,10 +95,16 @@ interface AddMonitorFormValues extends CreatableData {
 	'request-timeout': number;
 }
 
-//TODO: Fix edit monitor flow
-const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFormValues }> = ({ edit, existingMonitorDetails }) => {
+export type ExistingMonitorDetails = AddMonitorFormValues & { assertionsCount: number[]; headersCount: number[] };
+
+const AddMonitor: React.FC<{
+	edit?: true;
+	existingMonitorDetails?: ExistingMonitorDetails;
+}> = ({ edit, existingMonitorDetails }) => {
 	// examples with mui components https://codesandbox.io/s/react-hook-form-v7-controller-forked-nxrd46?file=/src/index.js:697-708
 	const addMonitorForm = useForm<AddMonitorFormValues>({ defaultValues: existingMonitorDetails });
+	const { monitorId } = useParams<{ monitorId: string }>();
+
 	const navigate = useNavigate();
 	const theme = useTheme();
 	const xsOrSmaller = useMediaQuery(theme.breakpoints.only('xs'));
@@ -107,8 +113,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 	const { mutate: editMonitor } = useEditMonitor();
 	const [advancedSettingsOpen, setAdvancedSettingsOpen] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
-	const [requestHeadersCount, setRequestHeadersCount] = useState<number[]>([]);
-	const [assertionsCount, setAssertionsCount] = useState<number[]>([]);
+	const [requestHeadersCount, setRequestHeadersCount] = useState<number[]>(existingMonitorDetails?.headersCount ?? []);
+	const [assertionsCount, setAssertionsCount] = useState<number[]>(existingMonitorDetails?.assertionsCount ?? []);
 
 	const assertionNames = useMemo(() => {
 		return assertionsCount.map((assertionKey) => `assertion-name-${assertionKey}` as `assertion-name-${number}`);
@@ -131,7 +137,6 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 	const toggleShowPassword = () => setShowPassword(!showPassword);
 
 	const handleSubmit = (data: AddMonitorFormValues) => {
-		console.log('submitted', data);
 		const assertions: CreateMonitorOptions['metadata']['assertions'] = [];
 		const headers: CreateMonitorOptions['metadata']['headers'] = [];
 
@@ -168,16 +173,17 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 		};
 		if (currentTeam?.id) {
 			if (edit) {
-				editMonitor(
-					{ ...dataToSend },
-					{
-						onSuccess: () => {
-							toast('Monitor Saved!', { type: 'success' });
-							navigate('../');
-						},
-						onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
-					}
-				);
+				monitorId &&
+					editMonitor(
+						{ ...dataToSend, monitorId },
+						{
+							onSuccess: () => {
+								toast('Monitor Saved!', { type: 'success' });
+								navigate('../');
+							},
+							onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
+						}
+					);
 			} else {
 				createMonitor(
 					{
@@ -192,6 +198,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 					}
 				);
 			}
+		} else {
+			toast('Something went wrong, please try again later.', { type: 'error' });
 		}
 	};
 
@@ -427,16 +435,16 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 								<Controller
 									render={({ field }) => (
 										<Select fullWidth {...field} onChange={(e) => field.onChange(Number(e.target.value))}>
-											<MenuItem value={5}>5 seconds</MenuItem>
-											<MenuItem value={10}>10 seconds</MenuItem>
-											<MenuItem value={15}>15 seconds</MenuItem>
-											<MenuItem value={20}>20 seconds</MenuItem>
-											<MenuItem value={25}>25 seconds</MenuItem>
-											<MenuItem value={30}>30 seconds</MenuItem>
+											<MenuItem value={5000}>5 seconds</MenuItem>
+											<MenuItem value={10000}>10 seconds</MenuItem>
+											<MenuItem value={15000}>15 seconds</MenuItem>
+											<MenuItem value={20000}>20 seconds</MenuItem>
+											<MenuItem value={25000}>25 seconds</MenuItem>
+											<MenuItem value={30000}>30 seconds</MenuItem>
 										</Select>
 									)}
 									name="request-timeout"
-									defaultValue={10}
+									defaultValue={10000}
 									control={addMonitorForm.control}
 								/>
 								<FormHelperText>This includes both open & read timeout.</FormHelperText>
@@ -759,7 +767,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 										label: 'Username',
 										name: 'http-auth-username',
 										fullWidth: true,
-										type: 'text'
+										type: 'text',
+										autoComplete: 'off'
 									}}
 								/>
 							</Grid>
@@ -778,7 +787,8 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 										label: 'Password',
 										helperText: addMonitorForm.formState.errors['http-auth-password']?.message ?? 'We store it in an encypted form',
 										name: 'http-auth-password',
-										autoComplete: 'off',
+										autoComplete: 'new-password',
+
 										fullWidth: true,
 										type: showPassword ? 'text' : 'password',
 										InputProps: {
@@ -814,6 +824,7 @@ const AddMonitor: React.FC<{ edit?: true; existingMonitorDetails?: AddMonitorFor
 									render={({ field }) => (
 										<Select
 											multiple
+											required
 											labelId="region"
 											fullWidth
 											{...field}

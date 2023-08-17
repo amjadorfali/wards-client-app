@@ -1,7 +1,6 @@
 import { Book } from '@mui/icons-material';
 import { Card, CardActionArea, CardContent, Grid, Link, Typography } from '@mui/material';
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import { COMPANY_EMAIL } from 'config/literals';
@@ -75,18 +74,19 @@ const Help: React.FC = () => {
 				</CardActionArea>
 			</Card>
 
-			<Typography paragraph textAlign={'center'}>
+			{/* <Typography paragraph textAlign={'center'}>
 				{' '}
 				or take a look at the{' '}
 				<Link
 					component={RouterLink}
-					// FIXME
+					// FIXME renable once we got FAQ
 					// to={RoutesConfig.FAQ}
 					to={''}
+					
 				>
 					frequently asked questions <ArrowForwardIosIcon sx={{ width: '0.8rem', height: '0.8rem' }} />
 				</Link>{' '}
-			</Typography>
+			</Typography> */}
 		</Grid>
 	);
 };
