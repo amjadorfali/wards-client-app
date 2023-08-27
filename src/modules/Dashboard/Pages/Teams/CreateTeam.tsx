@@ -27,9 +27,10 @@ const CreateTeam: React.FC = () => {
 			{
 				onSuccess: () => {
 					toast('Team created!', { type: 'success' });
-					internalUserQuery.refetch();
+
 					navigate('../');
 				},
+				onSettled: () => internalUserQuery.refetch(),
 				onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
 			}
 		);

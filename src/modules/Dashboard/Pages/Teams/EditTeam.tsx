@@ -45,9 +45,10 @@ const EditTeam: React.FC = () => {
 				{
 					onSuccess: () => {
 						toast('Changes are saved!', { type: 'success' });
-						internalUserQuery.refetch();
+
 						navigate('../');
 					},
+					onSettled: () => internalUserQuery.refetch(),
 					onError: () => toast('Something went wrong, please try again later.', { type: 'error' })
 				}
 			);

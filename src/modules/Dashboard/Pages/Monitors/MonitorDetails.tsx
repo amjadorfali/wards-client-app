@@ -38,8 +38,12 @@ const MonitorDetails: React.FC = () => {
 		end: new Date()
 	});
 
-	const { data: monitorDetails, isSuccess: monitorDetailedFetched } = useGetMonitorDetails(monitorId);
-	const { data: monitorOverview, isSuccess: monitorOverviewFetched } = useGetMonitorOverview(selectedDates, monitorId);
+	const { data: monitorDetails, isSuccess: monitorDetailedFetched, refetch: refetchMonitorDetails } = useGetMonitorDetails(monitorId);
+	const {
+		data: monitorOverview,
+		isSuccess: monitorOverviewFetched,
+		refetch: refetchMonitorOverview
+	} = useGetMonitorOverview(selectedDates, monitorId);
 	const { mutate: togglePauseMonitor } = useTogglePauseMonitor();
 	/**
 	 * API calls for buttons
@@ -50,7 +54,11 @@ const MonitorDetails: React.FC = () => {
 		if (monitorId)
 			togglePauseMonitor(monitorId, {
 				onSuccess: () => toast.success('Monitor paused'),
-				onError: () => toast.error('Something went wrong, please try again later')
+				onError: () => toast.error('Something went wrong, please try again later'),
+				onSettled: () => {
+					refetchMonitorOverview();
+					refetchMonitorDetails();
+				}
 			});
 		else toast.error('Something went wrong, please try again later');
 	};

@@ -258,10 +258,10 @@ const router = createBrowserRouter([
 								path: RoutesConfig.teams,
 								element: <Outlet />,
 								children: [
-									{
-										path: RoutesConfig.createTeam,
-										element: <CreateTeam />
-									},
+									// {
+									// 	path: RoutesConfig.createTeam,
+									// 	element: <CreateTeam />
+									// },
 									{
 										path: `${RoutesConfig.editTeam}/:editTeamId`,
 										element: <EditTeam />
