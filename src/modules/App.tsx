@@ -37,7 +37,7 @@ const Help = React.lazy(() => import('modules/Dashboard/Pages/Help'));
 const Settings = React.lazy(() => import('modules/Dashboard/Pages/Settings'));
 
 const Teams = React.lazy(() => import('modules/Dashboard/Pages/Teams/Teams'));
-const CreateTeam = React.lazy(() => import('modules/Dashboard/Pages/Teams/CreateTeam'));
+// const CreateTeam = React.lazy(() => import('modules/Dashboard/Pages/Teams/CreateTeam'));
 const EditTeam = React.lazy(() => import('modules/Dashboard/Pages/Teams/EditTeam'));
 
 /** Dashboard Pages End*/
