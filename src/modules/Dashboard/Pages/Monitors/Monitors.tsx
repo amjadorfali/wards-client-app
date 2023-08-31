@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import React from 'react';
 import { Button, Divider, Grid, ListItemButton, Menu, MenuItem, MenuProps, Typography, alpha, styled, useTheme } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -50,26 +48,50 @@ import { ReactComponent as UserInterface } from 'assets/user-interface.svg';
 import { RoutesConfig } from 'config/Routes/routeConfig';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 import { USERNAME_FROM_EMAIL } from 'utils/regex';
-import { Archive, Delete, EditNotifications, FileCopy } from '@mui/icons-material';
+import { Archive, Delete, EditNotifications, PauseCircle, PlayCircle } from '@mui/icons-material';
 import Ping from 'modules/Dashboard/components/Ping';
 import useGetMonitors from 'modules/Dashboard/queries/useGetMonitors';
 import { secondsToMinutes } from 'date-fns';
+import useTogglePauseMonitor from 'modules/Dashboard/mutations/useTogglePauseMonitor';
+import { toast } from 'react-toastify';
+import ConfirmDeleteMonitorDialog from 'modules/Dashboard/components/Monitors/ConfirmDeleteMonitor';
+import useDeleteMonitor from 'modules/Dashboard/mutations/useDeleteMonitor';
+import { HealthCheck } from 'utils/interfaces';
+
 const Monitors: React.FC = () => {
-	const theme = useTheme();
-	const navigate = useNavigate();
-	const { currentTeam } = useGetCurrentUser();
-	const { data: monitors } = useGetMonitors(currentTeam?.uuid || '');
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-	const open = Boolean(anchorEl);
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
+	const { currentTeam, currentUser } = useGetCurrentUser();
+	const { data: monitors, refetch: refetchMonitors } = useGetMonitors(currentTeam?.uuid || '');
+
+	const [deleteConfirmation, setDeleteConfirmation] = React.useState<string | undefined>();
+	const { mutate: togglePauseMonitor } = useTogglePauseMonitor();
+	const { mutate: deleteMonitor } = useDeleteMonitor();
+
+	const handlePauseMonitor = (monitorId: string, enabled: boolean) => {
+		togglePauseMonitor(monitorId, {
+			onSuccess: () => toast.success(enabled ? 'Monitor paused' : 'Monitor enabled'),
+			onError: () => toast.error('Something went wrong, please try again later'),
+			onSettled: () => refetchMonitors()
+		});
 	};
-	const handleClose = (e: React.MouseEvent<HTMLElement>) => {
-		e?.preventDefault();
-		e?.stopPropagation();
-		setAnchorEl(null);
+
+	const handleConfirmDeleteMonitor = (monitorId: string) => {
+		setDeleteConfirmation(monitorId);
 	};
-	const { currentUser } = useGetCurrentUser();
+
+	const handleDeleteMonitor = () => {
+		if (deleteConfirmation) {
+			deleteMonitor(deleteConfirmation, {
+				onSuccess: () => toast.success('Monitor deleted'),
+				onError: () => toast.error('Something went wrong, please try again later'),
+				onSettled: () => {
+					setDeleteConfirmation(undefined);
+					refetchMonitors();
+				}
+			});
+		} else {
+			toast.error('Something went wrong, please try again later');
+		}
+	};
 
 	return (
 		<>
@@ -88,7 +110,13 @@ const Monitors: React.FC = () => {
 							<Typography variant="h1">Greetings, {USERNAME_FROM_EMAIL(currentUser?.attributes?.email ?? '')}</Typography>
 						</Grid>
 						<Grid item sx={{ display: { xs: 'flex' }, justifyContent: { xs: 'center' } }} sm={4} lg={4} xl={3}>
-							<Button component={RouterLink} to={RoutesConfig.new} variant="contained" size="medium">
+							<Button
+								disabled={monitors?.data.length >= 5}
+								component={RouterLink}
+								to={RoutesConfig.new}
+								variant="contained"
+								size="medium"
+							>
 								Create monitor
 							</Button>
 						</Grid>
@@ -97,115 +125,14 @@ const Monitors: React.FC = () => {
 					<Grid maxHeight={'50svh'} overflow={'auto'} container item xs={12} justifyContent={'center'}>
 						<List sx={{ width: '100%', bgcolor: 'background.paper', borderRadius: '1rem', p: 0 }}>
 							{monitors.data.map((monitor, index) => (
-								<React.Fragment key={monitor.id}>
-									<ListItemButton
-										key={monitor.id}
-										component={RouterLink}
-										to={`${monitor.id}`}
-										sx={{
-											borderTopRightRadius: index === 0 ? '1rem' : 0,
-											borderTopLeftRadius: index === 0 ? '1rem' : 0,
-											borderBottomRightRadius: index === monitors.data.length - 1 ? '1rem' : 0,
-											borderBottomLeftRadius: index === monitors.data.length - 1 ? '1rem' : 0
-										}}
-									>
-										<ListItemIcon>
-											<Ping
-												customcolor={
-													typeof monitor.insights?.status === 'number' && monitor.enabled
-														? monitor.insights?.status === 1
-															? theme.palette.success.main
-															: theme.palette.error.main
-														: theme.palette.warning.main
-												}
-											/>
-										</ListItemIcon>
-										<ListItemText
-											primary={
-												<>
-													{monitor.name}
-													<Typography variant="subtitle2">
-														{monitor.enabled
-															? typeof monitor.insights.status === 'number'
-																? monitor.insights?.status === 1
-																	? 'Up'
-																	: 'Down'
-																: 'Pending'
-															: 'Paused'}
-													</Typography>
-												</>
-											}
-										/>
-
-										<ListItemIcon
-											sx={{
-												gap: 2,
-												flexBasis: '14%',
-												display: {
-													xs: 'none',
-													md: 'flex'
-												},
-												color: 'secondary.main',
-												textTransform: 'lowercase'
-											}}
-										>
-											<NetworkPingIcon />
-											<Typography variant="subtitle2">{secondsToMinutes(monitor.interval ?? 0)} m</Typography>
-										</ListItemIcon>
-										<ListItemIcon>
-											<Button
-												variant="text"
-												color="secondary"
-												onClick={(e) => {
-													e.stopPropagation();
-													e.stopPropagation();
-													e.preventDefault();
-													handleClick(e);
-												}}
-											>
-												<MoreHorizIcon />
-											</Button>
-										</ListItemIcon>
-
-										{/* FIXME: Handle menu actions */}
-										<StyledMenu
-											id="demo-customized-menu"
-											MenuListProps={{
-												'aria-labelledby': 'demo-customized-button'
-											}}
-											anchorEl={anchorEl}
-											open={open}
-											onClose={handleClose}
-										>
-											<MenuItem
-												onClick={(e) => {
-													handleClose(e);
-													navigate(`${monitor.id}/edit`);
-												}}
-												disableRipple
-											>
-												<EditNotifications />
-												Configure
-											</MenuItem>
-											<Divider sx={{ my: 0.5 }} />
-											<MenuItem onClick={handleClose} disabled disableRipple>
-												<FileCopy />
-												Pause
-											</MenuItem>
-											<MenuItem onClick={handleClose} disabled disableRipple>
-												<Archive />
-												Send test alert
-											</MenuItem>
-											<Divider sx={{ my: 0.5 }} />
-
-											<MenuItem sx={{ color: theme.palette.error.main }} disabled onClick={handleClose} disableRipple>
-												<Delete sx={{ fill: theme.palette.error.main }} />
-												Delete
-											</MenuItem>
-										</StyledMenu>
-									</ListItemButton>
-									{index !== monitors.data.length - 1 && <Divider />}
-								</React.Fragment>
+								<MonitorRow
+									key={monitor.id}
+									monitor={monitor}
+									monitorsCount={monitors?.data?.length}
+									index={index}
+									onPause={handlePauseMonitor}
+									onDelete={handleConfirmDeleteMonitor}
+								/>
 							))}
 						</List>
 					</Grid>
@@ -237,7 +164,163 @@ const Monitors: React.FC = () => {
 					</Grid>
 				</Grid>
 			)}
+
+			<ConfirmDeleteMonitorDialog
+				onClose={() => setDeleteConfirmation(undefined)}
+				onDelete={handleDeleteMonitor}
+				open={!!deleteConfirmation}
+				monitorName={monitors?.data.find((monitor) => monitor.id === deleteConfirmation)?.name ?? ''}
+			/>
 		</>
 	);
 };
 export default Monitors;
+
+interface MonitorRowProps {
+	monitor: HealthCheck;
+	index: number;
+	monitorsCount?: number;
+	onDelete: (monitorId: string) => void;
+	onPause: (monitorId: string, enabled: boolean) => void;
+}
+const MonitorRow: React.FC<MonitorRowProps> = ({ monitor, index, onDelete, onPause, monitorsCount = 0 }) => {
+	const theme = useTheme();
+	const navigate = useNavigate();
+
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const open = Boolean(anchorEl);
+
+	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		setAnchorEl(event.target as any);
+	};
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const handleClose = (_event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(null);
+	};
+	return (
+		<React.Fragment key={monitor.id}>
+			<ListItemButton
+				key={monitor.id}
+				component={RouterLink}
+				to={`${monitor.id}`}
+				sx={{
+					borderTopRightRadius: index === 0 ? '1rem' : 0,
+					borderTopLeftRadius: index === 0 ? '1rem' : 0,
+					borderBottomRightRadius: index === monitorsCount - 1 ? '1rem' : 0,
+					borderBottomLeftRadius: index === monitorsCount - 1 ? '1rem' : 0
+				}}
+			>
+				<ListItemIcon>
+					<Ping
+						customcolor={
+							typeof monitor.insights?.status === 'number' && monitor.enabled
+								? monitor.insights?.status === 1
+									? theme.palette.success.main
+									: theme.palette.error.main
+								: theme.palette.warning.main
+						}
+					/>
+				</ListItemIcon>
+				<ListItemText
+					primary={
+						<>
+							{monitor.name}
+							<Typography variant="subtitle2">
+								{monitor.enabled
+									? typeof monitor?.insights?.status === 'number'
+										? monitor.insights?.status === 1
+											? 'Up'
+											: 'Down'
+										: 'Pending'
+									: 'Paused'}
+							</Typography>
+						</>
+					}
+				/>
+
+				<ListItemIcon
+					sx={{
+						gap: 2,
+						flexBasis: '14%',
+						display: {
+							xs: 'none',
+							md: 'flex'
+						},
+						color: 'secondary.main',
+						textTransform: 'lowercase'
+					}}
+				>
+					<NetworkPingIcon />
+					<Typography variant="subtitle2">{secondsToMinutes(monitor.interval ?? 0)} m</Typography>
+				</ListItemIcon>
+				<ListItemIcon>
+					<Button
+						variant="text"
+						color="secondary"
+						onClick={(e) => {
+							// e.stopPropagation();
+							e.preventDefault();
+							handleClick(e);
+						}}
+					>
+						<MoreHorizIcon />
+					</Button>
+				</ListItemIcon>
+			</ListItemButton>
+
+			<StyledMenu
+				id="demo-customized-menu"
+				MenuListProps={{
+					'aria-labelledby': 'demo-customized-button'
+				}}
+				anchorEl={anchorEl}
+				open={open}
+				onClose={handleClose}
+			>
+				<MenuItem
+					onClick={(e) => {
+						handleClose(e);
+						navigate(`${monitor.id}/edit`);
+					}}
+					disableRipple
+				>
+					<EditNotifications />
+					Configure
+				</MenuItem>
+				<Divider sx={{ my: 0.5 }} />
+				<MenuItem
+					onClick={(e) => {
+						handleClose(e);
+						onPause(monitor.id, monitor.enabled);
+					}}
+					disableRipple
+				>
+					{monitor.enabled ? <PauseCircle /> : <PlayCircle />}
+					{monitor.enabled ? 'Pause' : 'Enable'} Monitor
+				</MenuItem>
+
+				{/* FIXME: Handle menu actions */}
+
+				<MenuItem onClick={handleClose} disabled disableRipple>
+					<Archive />
+					Send test alert
+				</MenuItem>
+				<Divider sx={{ my: 0.5 }} />
+
+				<MenuItem
+					sx={{ color: theme.palette.error.main }}
+					onClick={(e) => {
+						handleClose(e);
+						onDelete(monitor.id);
+					}}
+					disableRipple
+				>
+					<Delete sx={{ fill: theme.palette.error.main }} />
+					Delete
+				</MenuItem>
+			</StyledMenu>
+			{index !== monitorsCount - 1 && <Divider />}
+		</React.Fragment>
+	);
+};
