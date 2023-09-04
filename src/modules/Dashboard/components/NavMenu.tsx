@@ -51,6 +51,7 @@ interface PageLinkConfig {
 	Icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
 		muiName: string;
 	};
+	disabled?: boolean;
 }
 const featurePages: PageLinkConfig[] = [
 	{
@@ -61,7 +62,8 @@ const featurePages: PageLinkConfig[] = [
 	{
 		title: 'Heartbeats',
 		url: RoutesConfig.heartbeats,
-		Icon: TroubleshootIcon
+		Icon: TroubleshootIcon,
+		disabled: true
 	}
 ];
 const managementPages: PageLinkConfig[] = [
@@ -182,9 +184,15 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 
 			<Divider />
 			<List sx={{ height: '100%' }}>
-				{featurePages.map(({ title, url, Icon }) => (
+				{featurePages.map(({ title, url, Icon, disabled }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
+						<ListItemButton
+							disabled={disabled}
+							selected={pathname.includes(url)}
+							onClick={handleDrawerToggle}
+							component={RouterLink}
+							to={url}
+						>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -197,7 +205,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 			<List>
 				{managementPages.map(({ title, url, Icon }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
+						<ListItemButton disabled selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>
@@ -268,7 +276,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 					<ListItemIcon>
 						<SettingsIcon fontSize="small" />
 					</ListItemIcon>
-					Manage Teams
+					Manage Team
 				</MenuItem>
 			</Menu>
 		</>

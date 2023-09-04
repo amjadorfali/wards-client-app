@@ -328,8 +328,12 @@ const AddMonitor: React.FC<{
 												fullWidth
 											>
 												<ToggleButton value={RequestType.HTTP}>HTTP</ToggleButton>
-												<ToggleButton value={RequestType.UDP}>UDP</ToggleButton>
-												<ToggleButton value={RequestType.TCP}>TCP</ToggleButton>
+												<ToggleButton value={RequestType.UDP} disabled>
+													UDP
+												</ToggleButton>
+												<ToggleButton value={RequestType.TCP} disabled>
+													TCP
+												</ToggleButton>
 											</ToggleButtonGroup>
 										)}
 									/>

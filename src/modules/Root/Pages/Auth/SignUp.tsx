@@ -51,6 +51,8 @@ const SignUp: React.FC = () => {
 				onSuccess: async () => {
 					await refetchAll();
 					navigate(`${RoutesConfig.dashboard}/${RoutesConfig.dashboardTeam}/${getTeamId(currentUser)}`, { replace: true });
+					toast.success('Account created successfully!');
+					toast.info('Disabled features on the site are still under development.', { autoClose: false });
 				},
 				onError: (error) => {
 					setUserMessage(error.message);

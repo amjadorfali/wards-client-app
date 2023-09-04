@@ -17,12 +17,12 @@ export interface PricingContent {
 // FIXME: Fix pricing content
 export const NEW_PRICING_CONTENT: { [key in keyof typeof PricingTypes]?: PricingContent } = {
 	hobby: {
-		title: 'Hacker',
+		title: 'Beta Access',
 		// subtitle: 'For those just starting out',
 		subtitle: '',
-		price: 'Free, forever!',
+		price: 'Free!',
 		disablePrice: true,
-		priceDescription: 'Free, forever',
+		priceDescription: 'Free',
 		features: ['1 User', '5 Monitors', 'Email alerts', '1 Month Data Retention', 'Basic Support']
 		// features: []
 	}
