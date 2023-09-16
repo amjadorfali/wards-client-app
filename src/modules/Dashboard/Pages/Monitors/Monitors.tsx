@@ -138,7 +138,7 @@ const Monitors: React.FC = () => {
 					</Grid>
 				</Grid>
 			) : (
-				<Grid minHeight={'60svh'} p={1} container alignContent={'center'} justifyContent={'center'}>
+				<Grid sx={{ minHeight: { lg: '60vh' } }} p={1} container alignContent={'center'} justifyContent={'center'}>
 					<Grid item xs={12} md={6} lg={5} xl={4} container gap={5} direction={'column'}>
 						<Typography variant={'h1'}>Create your first monitor</Typography>
 						<Typography variant="h3">

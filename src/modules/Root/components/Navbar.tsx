@@ -20,12 +20,12 @@ import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { AttachMoney, EmailOutlined, Menu as MenuIcon } from '@mui/icons-material';
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import { RoutesConfig } from 'config/Routes/routeConfig';
-import { COMPANY_EMAIL } from 'config/literals';
 
 /** Used to set ids to scroll to */
 export enum ScrollTo {
 	FEATURES = 'features',
-	PLANS = 'plans'
+	PLANS = 'plans',
+	CONTACT = 'contact'
 }
 const pages = [
 	{
@@ -42,6 +42,11 @@ const pages = [
 		Icon: MonitorHeartIcon,
 		title: 'Try now',
 		key: ScrollTo.PLANS
+	},
+	{
+		Icon: EmailOutlined,
+		title: 'Contact',
+		key: ScrollTo.CONTACT
 	}
 ];
 
@@ -148,13 +153,6 @@ const Navbar: React.FC = () => {
 										</ListItemButton>
 									</ListItem>
 								))}
-
-								<ListItem>
-									<ListItemButton component={RouterLink} to={`mailto:${COMPANY_EMAIL}`} onClick={handleCloseNavMenu}>
-										<ListItemIcon children={<EmailOutlined />} sx={{ color: theme.palette.primary.main }} />
-										<ListItemText primary={'Contact'} />
-									</ListItemButton>
-								</ListItem>
 							</List>
 
 							<Grid container wrap="wrap" direction={'column'} p={2} gap={2}>
@@ -207,19 +205,15 @@ const Navbar: React.FC = () => {
 								{title}
 							</Button>
 						))}
-
-						<Button component={RouterLink} to={`mailto:${COMPANY_EMAIL}`} sx={{ my: 2, color: 'white', display: 'block' }}>
-							Contact
-						</Button>
 					</Box>
 
 					<Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }} gap={2} justifyContent={'flex-end'}>
-						{actions.map(({ link, text }) => (
+						{actions.map(({ link, text }, index) => (
 							<Button
 								component={RouterLink}
 								to={link}
-								variant="outlined"
-								color="secondary"
+								variant={index !== 0 ? 'contained' : 'outlined'}
+								color="primary"
 								key={link}
 								sx={{ my: 2, color: 'white', display: 'block' }}
 							>

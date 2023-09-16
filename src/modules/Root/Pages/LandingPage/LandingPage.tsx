@@ -4,7 +4,7 @@ import HeroSection from './sections/HeroSection';
 
 const FeaturesSection = React.lazy(() => import('./sections/FeaturesSection'));
 const PricingSection = React.lazy(() => import('./sections/PricingSection'));
-const CallToActionSection = React.lazy(() => import('./sections/CallToActionSection'));
+const ContactSection = React.lazy(() => import('./sections/ContactSection'));
 
 const LandingPage: React.FC = () => {
 	return (
@@ -13,7 +13,7 @@ const LandingPage: React.FC = () => {
 			<Suspense>
 				<FeaturesSection />
 				<PricingSection />
-				<CallToActionSection />
+				<ContactSection />
 			</Suspense>
 		</>
 	);
