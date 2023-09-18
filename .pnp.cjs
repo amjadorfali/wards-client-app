@@ -34,6 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@aws-sdk/util-utf8-browser", "npm:3.259.0"],\
             ["@emotion/react", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:11.11.1"],\
             ["@emotion/styled", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:11.11.0"],\
+            ["@hotjar/browser", "npm:1.0.9"],\
             ["@mui/icons-material", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:5.13.7"],\
             ["@mui/material", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:5.13.7"],\
             ["@mui/system", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:5.14.0"],\
@@ -1536,6 +1537,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@gar-promisify-npm-1.1.3-ac1a325862-4059f790e2.zip/node_modules/@gar/promisify/",\
           "packageDependencies": [\
             ["@gar/promisify", "npm:1.1.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@hotjar/browser", [\
+        ["npm:1.0.9", {\
+          "packageLocation": "./.yarn/cache/@hotjar-browser-npm-1.0.9-0314316466-829d1d7903.zip/node_modules/@hotjar/browser/",\
+          "packageDependencies": [\
+            ["@hotjar/browser", "npm:1.0.9"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8089,6 +8099,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@aws-sdk/util-utf8-browser", "npm:3.259.0"],\
             ["@emotion/react", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:11.11.1"],\
             ["@emotion/styled", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:11.11.0"],\
+            ["@hotjar/browser", "npm:1.0.9"],\
             ["@mui/icons-material", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:5.13.7"],\
             ["@mui/material", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:5.13.7"],\
             ["@mui/system", "virtual:c56b46d83dc705f61d645efafd50b5dd10b694a413a2075f2bfa433bbaa41df431f824c0f747468efbf1694d7d2f15adbae617c2c5c3f6b6e0b1978b92526b7c#npm:5.14.0"],\

@@ -1261,6 +1261,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hotjar/browser@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "@hotjar/browser@npm:1.0.9"
+  checksum: 829d1d790312897e45e4c602d46a9e000a95d6cf5975a34295feba52b24b252887d4b78a9eaee21636e2e869761b21b5e8ca5bb6ba99f7ef53483b31b65735c0
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -6568,6 +6575,7 @@ __metadata:
     "@aws-sdk/util-utf8-browser": ^3.259.0
     "@emotion/react": ^11.11.1
     "@emotion/styled": ^11.11.0
+    "@hotjar/browser": ^1.0.9
     "@mui/icons-material": ^5.13.7
     "@mui/material": ^5.13.7
     "@mui/system": ^5.14.0

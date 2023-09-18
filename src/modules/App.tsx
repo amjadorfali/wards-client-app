@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CssBaseline, ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material';
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom';
 import { LandingPage } from 'modules/Root/Pages/LandingPage';
@@ -10,6 +10,10 @@ import Loader from 'components/loaders/Loader';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import Hotjar from '@hotjar/browser';
+
+const hotjarVersion = 6;
+
 /** Root Pages */
 const Root = React.lazy(() => import('modules/Root/Root'));
 const PrivacyPolicy = React.lazy(() => import('modules/Root/Pages/PrivacyPolicy'));
@@ -309,6 +313,9 @@ const App: React.FC = () => {
 	// Choose appropriate colors from https://m2.material.io/inline-tools/color/
 	// Read more https://m2.material.io/design/color/the-color-system.html
 
+	useEffect(() => {
+		Hotjar.init(Number(import.meta.env.VITE_INTERNAL_HOTJAR_SITE_ID), hotjarVersion);
+	}, []);
 	return (
 		<QueryClientProvider client={queryClient}>
 			<RouterProvider router={router} />
