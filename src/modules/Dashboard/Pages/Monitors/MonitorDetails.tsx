@@ -38,12 +38,8 @@ const MonitorDetails: React.FC = () => {
 		end: new Date()
 	});
 
-	const { data: monitorDetails, isSuccess: monitorDetailedFetched, refetch: refetchMonitorDetails } = useGetMonitorDetails(monitorId);
-	const {
-		data: monitorOverview,
-		isSuccess: monitorOverviewFetched,
-		refetch: refetchMonitorOverview
-	} = useGetMonitorOverview(selectedDates, monitorId);
+	const { data: monitorDetails, isSuccess: monitorDetailedFetched, refetch: refetchMonitorDetails } = useGetMonitorDetails();
+	const { data: monitorOverview, isSuccess: monitorOverviewFetched, refetch: refetchMonitorOverview } = useGetMonitorOverview();
 	const { mutate: togglePauseMonitor } = useTogglePauseMonitor();
 	/**
 	 * API calls for buttons

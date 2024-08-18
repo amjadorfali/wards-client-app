@@ -8,7 +8,7 @@ import { ScrollTo } from 'modules/Root/components/Navbar';
 const content = {
 	title: "You can contact us 24/7 - We're here to help.",
 	subtitle: 'You can contact us on WhatsApp',
-	callToAction1: { text: 'Get started', link: RoutesConfig.signUp },
+	callToAction1: { text: 'Get started', link: RoutesConfig.dashboard },
 	callToAction2: { text: 'Email Us', link: `` },
 	callToAction3: { text: 'Call Us', link: `` }
 };

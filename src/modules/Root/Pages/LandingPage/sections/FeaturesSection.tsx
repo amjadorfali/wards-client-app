@@ -27,7 +27,7 @@ const content = {
 		</>
 	),
 	subtitle: ['Unlock a comprehensive set of features', ' tailored to enhance your monitoring experience.'],
-	button: { text: 'Get Started', link: RoutesConfig.signUp },
+	button: { text: 'Get Started', link: RoutesConfig.dashboard },
 	list: [
 		{
 			title: 'Health-checks',

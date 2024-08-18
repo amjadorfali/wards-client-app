@@ -1,8 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { useMemo } from 'react';
-import axiosInstance from 'services/api';
-import { formatDateFilters } from 'utils/formatDateFilters';
-import { DateFilter } from 'utils/interfaces';
+import { UseQueryResult } from '@tanstack/react-query';
+import { dummyRQConfig } from 'utils/dummy-config';
 
 export type AssertionResult = { message: string; isAssertionFailed: boolean };
 export interface HealthCheckLogs {
@@ -20,28 +17,35 @@ export interface HealthCheckLogs {
 interface HealthCheckLogsQuery {
 	data: HealthCheckLogs[];
 }
-const useGetMonitorLogs = (selectedDates: DateFilter, offset = 0, limit = 0, monitorId?: string, incidentsOnly = false) => {
-	const { endDate, startDate } = useMemo(() => formatDateFilters(selectedDates), [selectedDates]);
+const useGetMonitorLogs = (): UseQueryResult<HealthCheckLogsQuery, unknown> => {
+	// const { endDate, startDate } = useMemo(() => formatDateFilters(selectedDates), [selectedDates]);
 
-	return useQuery({
-		queryFn: () =>
-			axiosInstance
-				.put<HealthCheckLogsQuery>(
-					'/api/health/logs',
-					{
-						offset,
-						limit,
-						incidentsOnly,
-						taskId: monitorId,
-						startDate,
-						endDate
-					},
-					{ baseURL: import.meta.env.VITE_INTERNAL_METRIC_API_HOST }
-				)
-				.then((res) => res.data),
-		queryKey: ['monitorLogs', monitorId, startDate, endDate, offset, limit, incidentsOnly],
-		enabled: !!monitorId
-	});
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	//@ts-ignore
+	return {
+		...dummyRQConfig,
+		data: { data: [] }
+	};
+
+	// useQuery({
+	// 	queryFn: () =>
+	// 		axiosInstance
+	// 			.put<HealthCheckLogsQuery>(
+	// 				'/api/health/logs',
+	// 				{
+	// 					offset,
+	// 					limit,
+	// 					incidentsOnly,
+	// 					taskId: monitorId,
+	// 					startDate,
+	// 					endDate
+	// 				},
+	// 				{ baseURL: import.meta.env.VITE_INTERNAL_METRIC_API_HOST }
+	// 			)
+	// 			.then((res) => res.data),
+	// 	queryKey: ['monitorLogs', monitorId, startDate, endDate, offset, limit, incidentsOnly],
+	// 	enabled: !!monitorId
+	// });
 };
 
 export default useGetMonitorLogs;

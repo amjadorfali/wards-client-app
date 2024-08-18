@@ -1,14 +1,12 @@
-import { Auth } from '@aws-amplify/auth';
 import { AuthError } from '@aws-amplify/auth/lib-esm/Errors';
 import { useMutation } from '@tanstack/react-query';
-import { CustomCognitoUser } from 'utils/interfaces';
 
-const useVerifyCurrentUserAttrUpdate = (attr: keyof CustomCognitoUser['attributes']) => {
+const useVerifyCurrentUserAttrUpdate = () => {
 	const verifyCurrentUserAttribute = useMutation<void, AuthError, void, unknown>({
-		mutationFn: () => Auth.verifyCurrentUserAttribute(attr)
+		mutationFn: () => Promise.resolve()
 	});
 	const verifyCurrentUserAttributeSubmit = useMutation<string, AuthError, string, unknown>({
-		mutationFn: (verificationCode: string) => Auth.verifyCurrentUserAttributeSubmit(attr, verificationCode)
+		mutationFn: () => Promise.resolve('')
 	});
 
 	return { verifyCurrentUserAttribute, verifyCurrentUserAttributeSubmit };

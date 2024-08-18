@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import axiosInstance from 'services/api';
 
 export interface CreateMonitorOptions {
 	teamId: string;
@@ -21,7 +20,7 @@ export interface CreateMonitorOptions {
 }
 const useCreateMonitor = () => {
 	return useMutation({
-		mutationFn: (inputs: CreateMonitorOptions) => axiosInstance.post('api/task/health/', inputs)
+		mutationFn: (inputs: CreateMonitorOptions) => Promise.resolve(() => ({ inputs }))
 	});
 };
 export default useCreateMonitor;

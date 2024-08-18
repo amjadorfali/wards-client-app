@@ -1,9 +1,10 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { EChartsOption, ReactEChartsProps, ReactEcharts, RefProps } from 'config/echarts/ReactECharts';
 import useEchartsTheme from 'config/echarts/useEchartsTheme';
 import { MetricTypes } from './Monitors/MonitorMetrics';
 import { GraphData, OneDayData, Percentile, ResponseTimePercentiles, UptimeData } from '../queries/useGetMonitorGraphData';
-
+import { isArray } from 'lodash';
+import { generateDummyData, generateDummyUptimeData } from 'config/dummyData';
 // interface DataItem {
 // 	name: string;
 // 	value: [string, number];
@@ -175,7 +176,826 @@ type SeriesData = {
 		value: (string | number)[];
 	}[];
 }[];
-const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps, metricType, metrics, options }) => {
+
+// export interface ResponseTimePercentiles {
+// 	p10: Percentile[];
+// 	p50: Percentile[];
+// 	p90: Percentile[];
+// 	p95: Percentile[];
+// 	p99: Percentile[];
+// }
+
+// export type OneDayData = {
+// 	region: string;
+// 	data: {
+// 		responseTime: number;
+// 		status: number;
+// 		timestamp: string;
+// 	}[];
+// }[];
+
+// export type UptimeData = {
+// 	region: string;
+// 	data: {
+// 		average_status_percentage: number;
+// 		timestamp: string;
+// 	}[];
+// }[];
+
+const oneDayUptimeDummyData: OneDayData = [
+	{
+		region: 'EU',
+		data: [
+			{
+				responseTime: 200,
+				status: 100,
+				timestamp: '2021-09-29T13:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T14:00:00.000Z'
+			},
+
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T15:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T16:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T17:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T18:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T19:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T20:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T21:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T22:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T23:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T00:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T01:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T02:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T03:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T04:00:00.000Z'
+			},
+
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T05:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T06:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T07:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T08:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T09:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T10:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T11:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T12:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T13:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T14:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T15:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T16:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T17:00:00.000Z'
+			},
+
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T18:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T19:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T20:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T21:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T22:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T23:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T00:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T01:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T02:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T03:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T04:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T05:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-10-01T06:00:00.000Z'
+			}
+		]
+	},
+	{
+		region: 'US',
+		data: [
+			{
+				responseTime: 100,
+				status: 100,
+				timestamp: '2021-09-29T13:00:00.000Z'
+			},
+			{
+				responseTime: 3,
+				status: 90,
+				timestamp: '2021-09-29T14:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T15:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T16:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T17:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 80,
+				timestamp: '2021-09-29T18:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T19:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T20:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T21:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T22:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T23:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T00:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T01:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T02:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T03:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T04:00:00.000Z'
+			},
+
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T05:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T06:00:00.000Z'
+			},
+
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T07:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T08:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T09:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T10:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T11:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T12:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T13:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T14:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T15:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T16:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T17:00:00.000Z'
+			},
+
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T18:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T19:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 60,
+				timestamp: '2021-09-30T20:00:00.000Z'
+			},
+
+			{
+				responseTime: 400,
+				status: 40,
+				timestamp: '2021-09-30T21:00:00.000Z'
+			},
+
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T22:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T23:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T00:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T01:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T02:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T03:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T04:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T05:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-10-01T06:00:00.000Z'
+			}
+		]
+	}
+];
+
+const oneDayResponseTimeDummyData: OneDayData = [
+	{
+		region: 'EU',
+		data: [
+			{
+				responseTime: 200,
+				status: 100,
+				timestamp: '2021-09-29T13:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T14:00:00.000Z'
+			},
+
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T15:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T16:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T17:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T18:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T19:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T20:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T21:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T22:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-29T23:00:00.000Z'
+			},
+			{
+				responseTime: 311,
+				status: 100,
+				timestamp: '2021-09-30T00:00:00.000Z'
+			}
+		]
+	},
+	{
+		region: 'US',
+		data: [
+			{
+				responseTime: 100,
+				status: 100,
+				timestamp: '2021-09-29T13:00:00.000Z'
+			},
+			{
+				responseTime: 3,
+				status: 90,
+				timestamp: '2021-09-29T14:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T15:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T16:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T17:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 80,
+				timestamp: '2021-09-29T18:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T19:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T20:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T21:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T22:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-29T23:00:00.000Z'
+			},
+			{
+				responseTime: 400,
+				status: 100,
+				timestamp: '2021-09-30T00:00:00.000Z'
+			}
+		]
+	}
+];
+
+const uptimeData: UptimeData = [
+	{
+		region: 'EU',
+		data: [
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T13:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T14:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T15:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T16:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T17:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T18:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T19:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T20:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T21:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T22:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T23:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T00:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T01:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T02:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T03:00:00.000Z'
+			}
+		]
+	},
+	{
+		region: 'US',
+		data: [
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T13:00:00.000Z'
+			},
+			{
+				average_status_percentage: 90,
+				timestamp: '2021-09-29T14:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T15:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T16:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T17:00:00.000Z'
+			},
+			{
+				average_status_percentage: 80,
+				timestamp: '2021-09-29T18:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T19:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T20:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T21:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T22:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-29T23:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T00:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T01:00:00.000Z'
+			},
+			{
+				average_status_percentage: 100,
+				timestamp: '2021-09-30T02:00:00.000Z'
+			}
+		]
+	}
+];
+const responseTimeData: ResponseTimePercentiles = {
+	p10: [
+		{ responseTime: 200, timestamp: '2021-09-29T13:00:00.000Z' },
+		{ responseTime: 400, timestamp: '2021-09-29T14:00:00.000Z' },
+		{ responseTime: 30, timestamp: '2021-09-29T15:00:00.000Z' },
+		{ responseTime: 100, timestamp: '2021-09-29T16:00:00.000Z' },
+		{ responseTime: 320, timestamp: '2021-09-29T17:00:00.000Z' },
+		{ responseTime: 400, timestamp: '2021-09-29T18:00:00.000Z' },
+		{ responseTime: 100, timestamp: '2021-09-29T19:00:00.000Z' },
+		{ responseTime: 400, timestamp: '2021-09-29T20:00:00.000Z' },
+		{ responseTime: 200, timestamp: '2021-09-29T21:00:00.000Z' },
+		{ responseTime: 400, timestamp: '2021-09-29T22:00:00.000Z' },
+		{ responseTime: 450, timestamp: '2021-09-29T23:00:00.000Z' },
+		{ responseTime: 430, timestamp: '2021-09-30T00:00:00.000Z' }
+	],
+	p50: [
+		{ responseTime: 200, timestamp: '2021-09-29T13:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T14:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T15:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T16:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T17:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T18:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T19:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T20:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T21:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T22:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T23:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' }
+	],
+	p90: [
+		{ responseTime: 200, timestamp: '2021-09-29T13:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T14:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T15:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T16:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T17:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T18:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T19:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T20:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T21:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T22:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T23:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' }
+	],
+	p95: [
+		{ responseTime: 200, timestamp: '2021-09-29T13:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T14:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T15:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T16:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T17:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T18:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T19:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T20:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T21:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T22:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T23:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' }
+	],
+	p99: [
+		{ responseTime: 200, timestamp: '2021-09-29T13:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T14:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T15:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T16:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T17:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T18:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T19:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T20:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T21:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T22:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-29T23:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' },
+		{ responseTime: 311, timestamp: '2021-09-30T00:00:00.000Z' }
+	]
+};
+const ResponseTimeChart: React.FC<Props> = ({ ReactChartsComponentProps, metricType, options }) => {
+	const metrics = useMemo<GraphData>(() => {
+		if (options?.isSameDay) {
+			if (metricType === MetricTypes.UPTIME) {
+				return oneDayUptimeDummyData;
+			} else {
+				return oneDayResponseTimeDummyData;
+			}
+		} else if (metricType === MetricTypes.UPTIME) {
+			return uptimeData;
+		} else {
+			return responseTimeData;
+		}
+	}, [metricType, options?.isSameDay]);
+	// const metrics: GraphData = metricType === MetricTypes.RESPONSE_TIME ? generateDummyData([200, 311]) : generateDummyUptimeData();
 	useEchartsTheme();
 	const [option, setOption] = useState<EChartsOption>({ ...initialOption });
 	const chartRef = useRef<RefProps>(null);

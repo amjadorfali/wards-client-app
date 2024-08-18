@@ -1,6 +1,5 @@
 import useGetMonitorDetails from 'modules/Dashboard/queries/useGetMonitorDetails';
 import AddMonitor, { AssertionNames, CreatableData, ExistingMonitorDetails, Region, RequestType } from './AddMonitor';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { HealthCheck } from 'utils/interfaces';
 
@@ -28,8 +27,7 @@ const getAssertions = (monitor: HealthCheck['metadata']) => {
 	return { assertionsCount, headersCount, ...returnObj };
 };
 const EditMonitor = () => {
-	const { monitorId } = useParams<{ monitorId: string }>();
-	const { data: monitorDetails, isSuccess } = useGetMonitorDetails(monitorId);
+	const { data: monitorDetails, isSuccess } = useGetMonitorDetails();
 
 	const [existingMonitorDetails, setExistingMonitorDetails] = useState<ExistingMonitorDetails | undefined>();
 

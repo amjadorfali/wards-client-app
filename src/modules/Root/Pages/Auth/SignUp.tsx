@@ -22,20 +22,20 @@ const SignUp: React.FC = () => {
 	const { refetchAll, currentUser } = useGetCurrentUser();
 	const [userMessage, setUserMessage] = useState<string | undefined>();
 
-	const [userDetails, setUserDetails] = useState<CognitoUser | undefined>();
+	const [userDetails] = useState<CognitoUser | undefined>();
 
-	const [verifyUserAttrOpen, setValidateUserAttrOpen] = useState(false);
+	const [verifyUserAttrOpen] = useState(false);
 
 	const handleSignUp = (email: string, password: string) => {
 		setUserMessage(undefined);
 		signUp.mutate(
 			{ email, password },
 			{
-				onSuccess: (data) => {
-					if (!data.userConfirmed) {
-						setUserDetails(data.user);
-						setValidateUserAttrOpen(true);
-					}
+				onSuccess: () => {
+					// if (!data.userConfirmed) {
+					// 	setUserDetails(data.user);
+					// 	setValidateUserAttrOpen(true);
+					// }
 				},
 				onError: (error) => setUserMessage(error.message)
 			}

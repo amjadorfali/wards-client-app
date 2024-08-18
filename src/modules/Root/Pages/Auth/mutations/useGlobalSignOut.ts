@@ -1,4 +1,3 @@
-import { Auth } from '@aws-amplify/auth';
 import { AuthError } from '@aws-amplify/auth/lib-esm/Errors';
 import { useMutation } from '@tanstack/react-query';
 
@@ -8,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
  */
 const useGlobalSignOut = () => {
 	return useMutation<unknown, AuthError, void, unknown>({
-		mutationFn: () => Auth.signOut({ global: true })
+		mutationFn: () => Promise.resolve()
 	});
 };
 export default useGlobalSignOut;

@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import axiosInstance from 'services/api';
 
 interface EditTeamOptions {
 	teamId: string;
@@ -7,7 +6,7 @@ interface EditTeamOptions {
 }
 const useEditTeam = () => {
 	return useMutation({
-		mutationFn: ({ name, teamId }: EditTeamOptions) => axiosInstance.put(`api/team/${teamId}`, { name })
+		mutationFn: ({ name, teamId }: EditTeamOptions) => Promise.resolve(() => ({ name, teamId }))
 	});
 };
 

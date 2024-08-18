@@ -43,7 +43,7 @@ const Settings: React.FC = () => {
 	const verifyEmailForm = useForm<VerifyEmailFormValues>({ shouldUnregister: true });
 
 	const updateEmail = useUpdateUserAttr();
-	const { verifyCurrentUserAttribute, verifyCurrentUserAttributeSubmit } = useVerifyCurrentUserAttrUpdate('email');
+	const { verifyCurrentUserAttribute, verifyCurrentUserAttributeSubmit } = useVerifyCurrentUserAttrUpdate();
 	const changePassword = useChangePassword();
 
 	const [showPassword, setShowPassword] = useState(false);

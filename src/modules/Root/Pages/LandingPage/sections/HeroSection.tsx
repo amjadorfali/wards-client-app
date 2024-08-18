@@ -15,7 +15,7 @@ const ids = {
 const content = {
 	title: ['Simply', { special: 'Monitoring' }],
 	subtitle: 'Stay ahead of potential issues with our advanced Monitoring solution.',
-	callToAction: { text: 'Start Monitoring Now', link: RoutesConfig.signUp }
+	callToAction: { text: 'Start Monitoring Now', link: RoutesConfig.dashboard }
 };
 
 const HeroSection: React.FC = () => {

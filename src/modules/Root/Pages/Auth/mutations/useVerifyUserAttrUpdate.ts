@@ -15,8 +15,7 @@ const useVerifyUserAttrUpdate = (attr: keyof CustomCognitoUser['attributes']) =>
 			verificationCode: string;
 		}
 	>({
-		mutationFn: ({ user, verificationCode }: { user: CognitoUser; verificationCode: string }) =>
-			Auth.verifyUserAttributeSubmit(user, attr, verificationCode)
+		mutationFn: () => Promise.resolve('')
 	});
 
 	return { verifyUserAttribute, verifyUserAttributeSubmit };

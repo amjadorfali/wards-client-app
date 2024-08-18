@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import DashboardRouteGuard from './DashboardRouteGuard';
+// import DashboardRouteGuard from './DashboardRouteGuard';
 import DummyPage from 'modules/Root/Pages/DummyPage/DummyPage';
 import NavMenu from './components/NavMenu';
 import { Grid, Link, Paper, Typography } from '@mui/material';
@@ -17,9 +17,9 @@ const Home: React.FC = () => {
 		<>
 			<NavMenu>
 				<Suspense fallback={<DummyPage loadOnly />}>
-					<DashboardRouteGuard>
-						<Outlet />
-					</DashboardRouteGuard>
+					{/* <DashboardRouteGuard> */}
+					<Outlet />
+					{/* </DashboardRouteGuard> */}
 				</Suspense>
 
 				<Grid alignSelf={'center'} container alignContent={'flex-end'} justifyContent={'center'} item xs={11} md={10} lg={9} my={5}>

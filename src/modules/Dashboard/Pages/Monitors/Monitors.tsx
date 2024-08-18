@@ -59,8 +59,8 @@ import useDeleteMonitor from 'modules/Dashboard/mutations/useDeleteMonitor';
 import { HealthCheck } from 'utils/interfaces';
 
 const Monitors: React.FC = () => {
-	const { currentTeam, currentUser } = useGetCurrentUser();
-	const { data: monitors, refetch: refetchMonitors } = useGetMonitors(currentTeam?.uuid || '');
+	const { currentUser } = useGetCurrentUser();
+	const { data: monitors, refetch: refetchMonitors } = useGetMonitors();
 
 	const [deleteConfirmation, setDeleteConfirmation] = React.useState<string | undefined>();
 	const { mutate: togglePauseMonitor } = useTogglePauseMonitor();

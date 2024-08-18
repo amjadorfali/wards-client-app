@@ -51,8 +51,8 @@ const pages = [
 ];
 
 const actions = [
-	{ text: 'Sign In', link: RoutesConfig.signIn },
-	{ text: 'Sign Up', link: RoutesConfig.signUp }
+	{ text: 'Sign In', link: RoutesConfig.dashboard },
+	{ text: 'Sign Up', link: RoutesConfig.dashboard }
 ];
 
 const Navbar: React.FC = () => {
@@ -158,7 +158,7 @@ const Navbar: React.FC = () => {
 							<Grid container wrap="wrap" direction={'column'} p={2} gap={2}>
 								<Button
 									component={RouterLink}
-									to={RoutesConfig.signIn}
+									to={RoutesConfig.dashboard}
 									onClick={handleCloseNavMenu}
 									size="large"
 									color="primary"
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
 								</Button>
 								<Button
 									component={RouterLink}
-									to={RoutesConfig.signUp}
+									to={RoutesConfig.dashboard}
 									onClick={handleCloseNavMenu}
 									size="large"
 									color="primary"

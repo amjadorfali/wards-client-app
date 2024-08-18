@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import axiosInstance from 'services/api';
 
 interface CreateTeamOptions {
 	teamName: string;
@@ -7,11 +6,7 @@ interface CreateTeamOptions {
 }
 const useCreateTeam = () => {
 	return useMutation({
-		mutationFn: ({ teamName, userId }: CreateTeamOptions) =>
-			axiosInstance.post('api/team/', {
-				teamName,
-				userId
-			})
+		mutationFn: ({ teamName, userId }: CreateTeamOptions) => Promise.resolve(() => ({ teamName, userId }))
 	});
 };
 export default useCreateTeam;

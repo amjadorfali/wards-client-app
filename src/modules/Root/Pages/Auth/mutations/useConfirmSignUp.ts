@@ -1,4 +1,3 @@
-import { Auth } from '@aws-amplify/auth';
 import { AuthError } from '@aws-amplify/auth/lib-esm/Errors';
 import { useMutation } from '@tanstack/react-query';
 interface ConfirmSignUpParams {
@@ -7,7 +6,7 @@ interface ConfirmSignUpParams {
 }
 const useConfirmSignUp = () => {
 	return useMutation<unknown, AuthError, ConfirmSignUpParams, unknown>({
-		mutationFn: ({ username, code }: ConfirmSignUpParams) => Auth.confirmSignUp(username, code)
+		mutationFn: ({ username, code }: ConfirmSignUpParams) => Promise.resolve({ username, code })
 	});
 };
 

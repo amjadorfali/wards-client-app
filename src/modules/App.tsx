@@ -20,9 +20,9 @@ const PrivacyPolicy = React.lazy(() => import('modules/Root/Pages/PrivacyPolicy'
 const Terms = React.lazy(() => import('modules/Root/Pages/Terms'));
 
 const DummyPage = React.lazy(() => import('modules/Root/Pages/DummyPage/DummyPage'));
-const AuthRouteGuard = React.lazy(() => import('modules/Root/Pages/Auth/AuthRouteGuard'));
-const SignIn = React.lazy(() => import('modules/Root/Pages/Auth/SignIn'));
-const SignUp = React.lazy(() => import('modules/Root/Pages/Auth/SignUp'));
+// const AuthRouteGuard = React.lazy(() => import('modules/Root/Pages/Auth/AuthRouteGuard'));
+// const SignIn = React.lazy(() => import('modules/Root/Pages/Auth/SignIn'));
+// const SignUp = React.lazy(() => import('modules/Root/Pages/Auth/SignUp'));
 /** Root Pages End */
 
 /** Dashboard Pages */
@@ -175,22 +175,22 @@ const router = createBrowserRouter([
 				element: <DummyPage />,
 				path: RoutesConfig.dummy
 			},
-			{
-				element: (
-					<AuthRouteGuard>
-						<SignIn />
-					</AuthRouteGuard>
-				),
-				path: RoutesConfig.signIn
-			},
-			{
-				element: (
-					<AuthRouteGuard>
-						<SignUp />
-					</AuthRouteGuard>
-				),
-				path: RoutesConfig.signUp
-			},
+			// {
+			// 	element: (
+			// 		// <AuthRouteGuard>
+			// 		<SignIn />
+			// 		// </AuthRouteGuard>
+			// 	),
+			// 	path: RoutesConfig.signIn
+			// },
+			// {
+			// 	element: (
+			// 		// <AuthRouteGuard>
+			// 		<SignUp />
+			// 		// </AuthRouteGuard>
+			// 	),
+			// 	path: RoutesConfig.signUp
+			// },
 			{
 				// Route guard
 				path: '*',

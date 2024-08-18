@@ -15,7 +15,6 @@ import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import React, { useMemo, useTransition } from 'react';
 import ResponseTimeChart from '../ResponseTimeChart';
 import useGetMonitorLogs, { HealthCheckLogs } from 'modules/Dashboard/queries/useGetMonitorLogs';
-import { useParams } from 'react-router-dom';
 import { DateFilter } from 'utils/interfaces';
 import { startCase } from 'lodash';
 import { Region } from 'modules/Dashboard/Pages/Monitors/AddMonitor';
@@ -63,19 +62,13 @@ export enum MetricTypes {
 }
 type RegionSelection = 'all' | Region;
 const Metrics: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
-	const { monitorId } = useParams<{ monitorId: string }>();
 	const [metricType, setMetricType] = React.useState(MetricTypes.RESPONSE_TIME);
 	const [selectedRegion, setSelectedRegion] = React.useState<RegionSelection>('all');
 	const disabledRegionSelector = useMemo(
 		() => metricType !== MetricTypes.RESPONSE_TIME || isSameDay(selectedDates.start, selectedDates.end),
 		[metricType, selectedDates.end, selectedDates.start]
 	);
-	const { data: metrics } = useGetMonitorGraphData(
-		selectedDates,
-		selectedRegion === 'all' ? undefined : selectedRegion,
-		monitorId,
-		metricType === MetricTypes.UPTIME ? 'uptime' : undefined
-	);
+	const { data: metrics } = useGetMonitorGraphData();
 	const handleRegionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSelectedRegion((event.target as HTMLInputElement).value as RegionSelection);
 	};
@@ -209,22 +202,15 @@ enum LogTypes {
 }
 
 const ITEMS_PER_PAGE = 100;
-const Logs: React.FC<MonitorMetricsProps> = ({ selectedDates }) => {
+const Logs: React.FC<MonitorMetricsProps> = () => {
 	const [logType, setLogType] = React.useState(LogTypes.EVENTS);
-	const { monitorId } = useParams<{ monitorId: string }>();
 
 	const [paginationModel, setPaginationModel] = React.useState({
 		page: 0,
 		pageSize: ITEMS_PER_PAGE
 	});
 
-	const { data: logs, isLoading } = useGetMonitorLogs(
-		selectedDates,
-		paginationModel.page * paginationModel.pageSize,
-		paginationModel.pageSize,
-		monitorId,
-		logType === LogTypes.INCIDENTS
-	);
+	const { data: logs, isLoading } = useGetMonitorLogs();
 	const fullCount = useMemo(() => (logs?.data[0] ? Number(logs.data[0].fullcount) : 0), [logs?.data]);
 	const [isTransitioning, startTransition] = useTransition();
 
