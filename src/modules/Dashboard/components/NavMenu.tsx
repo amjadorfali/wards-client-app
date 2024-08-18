@@ -205,7 +205,7 @@ const CustomDrawer: React.FC<{ handleDrawerToggle?: () => void }> = ({ handleDra
 			<List>
 				{managementPages.map(({ title, url, Icon }) => (
 					<ListItem key={url} disablePadding>
-						<ListItemButton disabled selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
+						<ListItemButton selected={pathname.includes(url)} onClick={handleDrawerToggle} component={RouterLink} to={url}>
 							<ListItemIcon>
 								<Icon />
 							</ListItemIcon>

@@ -9,19 +9,14 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-	Paper,
-	Switch,
 	Typography,
 	useTheme
 } from '@mui/material';
 import React from 'react';
 import { AttachMoney, Check } from '@mui/icons-material';
 import { NEW_PRICING_CONTENT, PricingContent } from 'config/pricing';
-import ComingSoon from 'components/ComingSoon';
-
+import { Link as RouterLink } from 'react-router-dom';
 const Billing: React.FC = () => {
-	const [isAnnualPlan, setIsAnnualPlan] = React.useState(true);
-
 	return (
 		<Grid container minHeight={'40%'} sx={{ justifyContent: 'center', p: { xs: 2, md: 0 } }} gap={5}>
 			<Grid
@@ -37,22 +32,14 @@ const Billing: React.FC = () => {
 				<Grid item xs={12}>
 					<Typography variant="h1">Pick a plan</Typography>
 					<br />
-					<Typography variant="h3">During our beta period, you can use the platform at no charge!</Typography>
-				</Grid>
-
-				<Grid item>
-					<ComingSoon />
+					<Typography variant="h3">All plans come with a 30-day money-back guarantee.</Typography>
 				</Grid>
 
 				<Grid container item xs={12} sx={{ gap: { xs: 4, md: 0 }, placeItems: 'flex-end', justifyContent: 'space-between' }}>
-					<Grid item xs={12} md={6}>
-						<Typography color={'secondary'}>All plans come with a 60-day money-back guarantee.</Typography>
-					</Grid>
-
-					<Grid item container xs={12} sm={8} md={6} lg={5} justifyContent={'space-between'} alignItems={'flex-end'}>
+					{/* FIXME: Renable once billing is ready */}
+					{/* <Grid item container xs={12} sm={8} md={6} lg={5} justifyContent={'space-between'} alignItems={'flex-end'}>
 						<Typography variant="body1">Monthly Plans</Typography>
 
-						{/* FIXME: Renable once billing is ready */}
 						<Switch disabled sx={{ mb: '-0.3em' }} checked={isAnnualPlan} onChange={(e) => setIsAnnualPlan(e.target.checked)} />
 						<Typography variant="body1" component={Grid} flexDirection={'column'} alignItems={'center'} container item xs={5}>
 							<Typography variant="subtitle1" color={'secondary'}>
@@ -60,7 +47,7 @@ const Billing: React.FC = () => {
 							</Typography>
 							Annual Plans
 						</Typography>
-					</Grid>
+					</Grid> */}
 				</Grid>
 			</Grid>
 
@@ -69,27 +56,6 @@ const Billing: React.FC = () => {
 				{Object.entries(NEW_PRICING_CONTENT).map(([key, content]) => (
 					<CustomCard key={key} {...content} />
 				))}
-			</Grid>
-
-			<Grid gap={3} item container justifyContent={'space-between'} alignItems={'center'} component={Paper} p={2}>
-				<Grid item>
-					<Typography fontWeight={700}>
-						Enterprise ready.{' '}
-						<Typography variant="body1" fontWeight={400} component={'span'}>
-							Reach out for a custom quote.
-						</Typography>
-					</Typography>
-					<Typography pt={0.5} variant="body2">
-						Better Stack is designed to work great for large enterprises. Take a look at our feature comparison.
-					</Typography>
-				</Grid>
-
-				<Grid item>
-					<Button disabled variant="contained" sx={{ textTransform: 'capitalize' }}>
-						{' '}
-						Book a demo
-					</Button>
-				</Grid>
 			</Grid>
 		</Grid>
 	);
@@ -165,10 +131,12 @@ const CustomCard: React.FC<PricingContent> = ({ title, subtitle, features, price
 
 			<CardActions sx={{ placeSelf: 'center' }}>
 				<Button
-					disabled
 					sx={{ textTransform: 'capitalize' }}
 					color={!isPopular ? 'secondary' : undefined}
 					variant={isPopular ? 'contained' : 'outlined'}
+					component={RouterLink}
+					target="_blank"
+					to="https://wards.lemonsqueezy.com/checkout/buy/294d6b00-994e-4a76-a7f6-31c80e69171b?discount=0"
 				>
 					Choose plan
 				</Button>

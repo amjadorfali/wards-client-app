@@ -36,8 +36,8 @@ const MonitorDetails = React.lazy(() => import('modules/Dashboard/Pages/Monitors
 
 // const Heartbeats = React.lazy(() => import('modules/Dashboard/Pages/Heartbeats'));
 
-// const Billing = React.lazy(() => import('modules/Dashboard/Pages/Billing'));
-// const Help = React.lazy(() => import('modules/Dashboard/Pages/Help'));
+const Billing = React.lazy(() => import('modules/Dashboard/Pages/Billing'));
+const Help = React.lazy(() => import('modules/Dashboard/Pages/Help'));
 const Settings = React.lazy(() => import('modules/Dashboard/Pages/Settings'));
 
 const Teams = React.lazy(() => import('modules/Dashboard/Pages/Teams/Teams'));
@@ -250,14 +250,14 @@ const router = createBrowserRouter([
 							// 	path: RoutesConfig.heartbeats,
 							// 	element: <Heartbeats />
 							// },
-							// {
-							// 	path: RoutesConfig.billing,
-							// 	element: <Billing />
-							// },
-							// {
-							// 	path: RoutesConfig.help,
-							// 	element: <Help />
-							// },
+							{
+								path: RoutesConfig.billing,
+								element: <Billing />
+							},
+							{
+								path: RoutesConfig.help,
+								element: <Help />
+							},
 							{
 								path: RoutesConfig.teams,
 								element: <Outlet />,

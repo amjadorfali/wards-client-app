@@ -1,4 +1,3 @@
-import { COMPANY_EMAIL } from 'config/literals';
 import React from 'react';
 
 const ErrorMessage: React.FC = () => {
@@ -30,7 +29,7 @@ const ErrorMessage: React.FC = () => {
 			<h1 style={{ flexBasis: '100%', textAlign: 'center' }}>Something went wrong, please try accessing this page again shortly.</h1>
 
 			<h3 style={{ flexBasis: '100%', textAlign: 'center' }}>
-				If the problem persists, please contact us on <a href={`mailto:${COMPANY_EMAIL}`}>{COMPANY_EMAIL}</a>
+				If the problem persists, please contact us on <a href={``}>EMAIL_HERE</a>
 			</h3>
 		</div>
 	);

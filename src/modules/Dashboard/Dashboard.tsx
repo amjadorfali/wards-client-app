@@ -6,7 +6,6 @@ import NavMenu from './components/NavMenu';
 import { Grid, Link, Paper, Typography } from '@mui/material';
 import { Help as HelpIcon, WhatsApp } from '@mui/icons-material';
 import useChooseTeam from './hooks/useChooseTeam';
-import { COMPANY_EMAIL, COMPANY_PHONE } from 'config/literals';
 
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -27,10 +26,9 @@ const Home: React.FC = () => {
 					<Grid gap={2} item component={Paper} display={'flex'} justifyContent={'center'} alignItems={'center'} p={3}>
 						<HelpIcon />
 						<Typography paragraph m={0} textAlign={'center'}>
-							Need help? <Link sx={{ fontSize: 'inherit' }} href={`mailto:${COMPANY_EMAIL}`} children="Email" /> /{' '}
-							<Link sx={{ fontSize: 'inherit' }} href={`tel:${COMPANY_PHONE}`} children={'Call'} /> us, or send us a message on
-							WhatsApp <Link sx={{ fontSize: 'inherit' }} href={`tel:${COMPANY_PHONE}`} children={COMPANY_PHONE} />{' '}
-							<WhatsApp color="success" />
+							Need help? <Link sx={{ fontSize: 'inherit' }} href={``} children="Email" /> /{' '}
+							<Link sx={{ fontSize: 'inherit' }} href={``} children={'Call'} /> us, or send us a message on WhatsApp{' '}
+							<Link sx={{ fontSize: 'inherit' }} href={``} children={'PHONE_NUMBER_HERE'} /> <WhatsApp color="success" />
 						</Typography>
 					</Grid>
 				</Grid>

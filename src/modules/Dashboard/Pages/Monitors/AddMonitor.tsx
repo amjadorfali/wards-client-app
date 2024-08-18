@@ -31,7 +31,6 @@ import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import ControlledTextField from 'components/inputs/ControlledTextfield';
 import { Controller, ControllerRenderProps, UseFormReturn, useForm } from 'react-hook-form';
 
-import { COMPANY_EMAIL } from 'config/literals';
 import { Add, Visibility, VisibilityOff } from '@mui/icons-material';
 import useGetCurrentUser from 'modules/Root/Pages/Auth/queries/useGetCurrentUser';
 import useCreateMonitor, { CreateMonitorOptions } from 'modules/Dashboard/mutations/useCreateMonitor';
@@ -491,8 +490,8 @@ const AddMonitor: React.FC<{
 							<br />
 							<Typography paragraph>
 								If you need something extra you can't configure here, please let us know at{' '}
-								<Link href={`mailto:${COMPANY_EMAIL}`} sx={{ fontSize: 'inherit' }}>
-									{COMPANY_EMAIL}
+								<Link href={``} sx={{ fontSize: 'inherit' }}>
+									EMAIL_HERE
 								</Link>{' '}
 								and we'll make it happen!
 							</Typography>

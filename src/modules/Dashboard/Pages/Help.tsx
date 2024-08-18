@@ -3,8 +3,8 @@ import { Card, CardActionArea, CardContent, Grid, Link, Typography } from '@mui/
 import React from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
-import { COMPANY_EMAIL } from 'config/literals';
-import ComingSoon from 'components/ComingSoon';
+import { Link as RouterLink } from 'react-router-dom';
+
 const Help: React.FC = () => {
 	// TODO: Add logic for help page
 	return (
@@ -15,28 +15,31 @@ const Help: React.FC = () => {
 				</Typography>
 			</Grid>
 
-			<Grid item>
-				<ComingSoon />
-			</Grid>
+			<Grid item></Grid>
 			<Typography paragraph textAlign={'center'}>
 				You can reach us at{' '}
-				<Link sx={{ fontSize: 'inherit' }} href={`mailto:${COMPANY_EMAIL}`}>
-					{COMPANY_EMAIL}
+				<Link sx={{ fontSize: 'inherit' }} href={``}>
+					EMAIL_HERE
 				</Link>
 				. We'll get back to you as soon as we can, typically within a few hours.
 			</Typography>
 
-			<Card>
-				<CardActionArea disabled sx={{ height: '100%' }}>
+			<Card elevation={10}>
+				<CardActionArea
+					component={RouterLink}
+					to={'https://calendar.app.google/aiFyvFkPdB2kxFW86'}
+					target={'_blank'}
+					sx={{ height: '100%' }}
+				>
 					<CardContent>
 						<Grid container justifyContent={'space-between'}>
 							<Grid item xs={9}>
-								<Book sx={{ width: '2.5rem', height: '2.5rem' }} color="secondary" />
+								<VideoCallIcon sx={{ width: '2.5rem', height: '2.5rem' }} color="secondary" />
 								<Typography gutterBottom variant="h2" component="div" sx={{ mt: 2 }}>
-									Documentation{' '}
+									Book a demo call
 								</Typography>
 								<Typography paragraph variant="body2" color="text.secondary">
-									Learn how to integrate Better Stack with your existing services using our APIs and integrations.
+									Book a demo with one of our experts to see how Wards fits into your existing workflow.
 								</Typography>
 							</Grid>
 							<Grid item xs={3} alignSelf={'center'} textAlign={'center'}>
@@ -48,22 +51,16 @@ const Help: React.FC = () => {
 			</Card>
 
 			<Card>
-				<CardActionArea
-					disabled
-					onClick={() => {
-						console.log('route to demo');
-					}}
-					sx={{ height: '100%' }}
-				>
+				<CardActionArea disabled sx={{ height: '100%' }}>
 					<CardContent>
 						<Grid container justifyContent={'space-between'}>
 							<Grid item xs={9}>
-								<VideoCallIcon sx={{ width: '2.5rem', height: '2.5rem' }} color="secondary" />
+								<Book sx={{ width: '2.5rem', height: '2.5rem' }} color="secondary" />
 								<Typography gutterBottom variant="h2" component="div" sx={{ mt: 2 }}>
-									Book a demo call{' '}
+									Documentation
 								</Typography>
 								<Typography paragraph variant="body2" color="text.secondary">
-									Book a demo with one of our experts to see how Better Stack fits into your existing workflow.
+									Learn how to integrate Wards with your existing services using our APIs and integrations.
 								</Typography>
 							</Grid>
 							<Grid item xs={3} alignSelf={'center'} textAlign={'center'}>

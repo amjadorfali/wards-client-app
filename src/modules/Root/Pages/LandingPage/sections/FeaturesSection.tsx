@@ -51,7 +51,7 @@ const content = {
 			imgDemo: MonitorDetails as string
 		},
 		{
-			title: 'Real-time Alarms - COMING SOON',
+			title: 'Real-time Alarms',
 			subtitle:
 				'Receive instant notifications and alarms when health-checks fail, empowering you to take immediate action and prevent potential downtime.',
 			Icon: AccessAlarmIcon,

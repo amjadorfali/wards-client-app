@@ -568,7 +568,7 @@ const PrivacyPolicy: React.FC = () => {
 					</ListItem>
 					<ListItem>
 						<ListItemText>
-							By phone number: <Link href="tel:+905526452977">+905526452977</Link>
+							By phone number: <Link href="">PHONE_NUMBER_HERE</Link>
 						</ListItemText>
 					</ListItem>
 				</List>

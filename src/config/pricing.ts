@@ -19,11 +19,11 @@ export const NEW_PRICING_CONTENT: { [key in keyof typeof PricingTypes]?: Pricing
 	hobby: {
 		title: 'Beta Access',
 		// subtitle: 'For those just starting out',
-		subtitle: '',
-		price: 'Free!',
-		disablePrice: true,
+		subtitle: 'Explore the full potential of our platform as we build it.',
+		price: '1.99',
+		disablePrice: false,
 		priceDescription: 'Free',
-		features: ['1 User', '5 Monitors', 'Email alerts', '1 Month Data Retention', 'Basic Support']
+		features: ['∞ Users (Coming soon)', '∞ Monitors', '∞ Email alerts (Coming soon)', '∞ Data Retention', '24/7 Customer Support']
 		// features: []
 	}
 	// supporter: {

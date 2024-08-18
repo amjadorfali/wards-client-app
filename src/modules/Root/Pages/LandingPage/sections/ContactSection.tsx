@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { RoutesConfig } from 'config/Routes/routeConfig';
-import { COMPANY_EMAIL, COMPANY_PHONE } from 'config/literals';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { Mail, Phone } from '@mui/icons-material';
 import { ScrollTo } from 'modules/Root/components/Navbar';
@@ -10,8 +9,8 @@ const content = {
 	title: "You can contact us 24/7 - We're here to help.",
 	subtitle: 'You can contact us on WhatsApp',
 	callToAction1: { text: 'Get started', link: RoutesConfig.signUp },
-	callToAction2: { text: 'Email Us', link: `mailto:${COMPANY_EMAIL}` },
-	callToAction3: { text: 'Call Us', link: `tel:${COMPANY_PHONE}` }
+	callToAction2: { text: 'Email Us', link: `` },
+	callToAction3: { text: 'Call Us', link: `` }
 };
 export const ContactSection: React.FC = () => {
 	return (
