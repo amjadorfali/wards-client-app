@@ -2,9 +2,8 @@ import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { EChartsOption, ReactEChartsProps, ReactEcharts, RefProps } from 'config/echarts/ReactECharts';
 import useEchartsTheme from 'config/echarts/useEchartsTheme';
 import { MetricTypes } from './Monitors/MonitorMetrics';
+
 import { GraphData, OneDayData, Percentile, ResponseTimePercentiles, UptimeData } from '../queries/useGetMonitorGraphData';
-import { isArray } from 'lodash';
-import { generateDummyData, generateDummyUptimeData } from 'config/dummyData';
 // interface DataItem {
 // 	name: string;
 // 	value: [string, number];
